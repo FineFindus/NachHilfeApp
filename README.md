@@ -1,27 +1,33 @@
+# NachHilfe App 
 
 
-# App
-Eine App mit dessen Hilfe Schüler Nachhilfe sucher können. 
-Die App soll mit Flutter programmiert werden, als Backend wird Firebase verwendet. Bei Problemen / Skalierungsproblemen wird auf einen eigenen Linux Server mit docker gewechselt.
-Der Benutzer kann nach Nachhilfe sucher, andere sollen sich anschließen können, oder Nachhilfe geben können. Hierbei soll der Ersteller einen Benachrichtigung mit Firebase Push Services erhalten. Danach soll die möglichkeit zu externen Kontakt bestehen (z.B. per Email).
+# About
 
-## Zeitplanung
+[[Dieser Artikel ist auch in Deutsch verfügbar]](https://github.com/FineFindus/NachHilfeApp/blob/master/README.de.md)
 
-| Zeit (Woche) | Ziel                                                      |
+In this app pupils can search for coaching/private tutoring.
+The App is written in Flutter for the backend will firebase be used, if any problems appear, the backend will be change to a custom linux based server with docker.
+
+The user can search for coaching, other user can follow or accept the offer and coach.
+The creater should get a message with firebase push services. Then there should be a possiblility for external contact (ex. withj email).
+
+
+## Timetable
+
+| Time (weeks) | Goal                                                      | 
 |--------------|-----------------------------------------------------------|
-| 4            | Einfache UI, LogIn                                        |
-| 10           | Funktionaler Backend-Server                               |
-| 16           | Vollständige UI                                           |
-|              | andere Funktionalitäten (Performance, Push-Services, etc) |
-|              | Backend Server                                            |
+|  4           | basic UI, LogIn                                           |
+| 10           | funtional backend-server                                  |
+| 16           | fully funtional UI                                        |
+|              | other functions (performance, push-services, etc)         |
+|              | backend server                                            |
 
-## Aussehen
-Eine Suche sollte folgende Informationen enthalten:
-* Fach
-* Thema (Auswahl von Liste, sontiges)
-* Klassenstufe
-* Ablaufdatum (automatisch löschen)
-* Kontakt Möglichkeit (erst freigegeben bei Annahme)
-* Name
-* Ort?
-
+## UI
+a offer should consist of the following informations:
+* Subject
+* lesson (from a list, option with other)
+* year
+* end date (delete automatically)
+* contact (only accesseble after accepting)
+* name
+* place?
