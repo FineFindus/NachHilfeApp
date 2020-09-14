@@ -1,7 +1,14 @@
+import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  try {
+    ApiClient.getOffers();
+  } catch (e) {
+    print(e.runtimeType);
+  }
+
   runApp(MyApp());
 }
 
