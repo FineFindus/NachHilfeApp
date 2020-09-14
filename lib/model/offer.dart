@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:NachHilfeApp/api/subjectValue.dart';
 import 'package:flutter/material.dart';
 
 import 'package:NachHilfeApp/utils/enums.dart';
@@ -27,7 +28,7 @@ class Offer {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'subject': subject?.toMap(),
+      'subject': getSubjectValue(subject),
       'name': name,
       'contact': contact,
       'topic': topic,
