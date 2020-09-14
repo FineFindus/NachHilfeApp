@@ -25,7 +25,7 @@ The creator should get a message with firebase push services. Then there should 
 ## UI
 A offer should consist of the following informations:
 * Subject
-* lesson (from a list, option with other)
+* lesson/topic (from a list, option with other)
 * year
 * end date (delete automatically)
 * contact (only accesseble after accepting)

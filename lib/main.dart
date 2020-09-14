@@ -1,5 +1,5 @@
 import 'package:NachHilfeApp/api/api_client.dart';
-import 'package:NachHilfeApp/widgets/widgets.dart';
+import 'package:NachHilfeApp/screens/offer_list_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,32 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Test'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Angebot"),
-      ),
-      body: Center(
-        child: ListView(children: [
-          OfferCard(),
-        ]),
-      ),
+      home: OfferListScreen(),
     );
   }
 }

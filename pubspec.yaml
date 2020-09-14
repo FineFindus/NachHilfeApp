@@ -32,6 +32,12 @@ dependencies:
   #dio for better http request
   dio: ^3.0.10
 
+  #parse unix timestamp
+  intl: ^0.16.1
+  #animations
+  animations: ^1.1.2
+  #provider
+  provider: ^4.3.2+2
 
 dev_dependencies:
   flutter_test:
