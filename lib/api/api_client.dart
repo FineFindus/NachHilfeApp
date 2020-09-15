@@ -1,6 +1,7 @@
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/utils/exceptions.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
 class ApiClient {
   static final String url = 'https://jsonplaceholder.typicode.com/photos';
@@ -16,6 +17,11 @@ class ApiClient {
       //request was successful
       print(response.data.toString());
       //user could not reach server
+      print(json.decode(response.data.toString()));
+      // return json
+      //     .decode(response.data.toString())['results']
+      //     .map((data) => Offer.fromJson(data))
+      //     .toList();
     } else if (response.statusCode == 404) {
       throw StatusCode4Exception();
     } else {

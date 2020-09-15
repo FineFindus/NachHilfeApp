@@ -23,7 +23,7 @@ class OfferCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text("${getSubjectValue(offer.subject)}  ${offer.year}"),
+            title: Text("${getTranlatedSubject(offer.subject)}  ${offer.year}"),
             subtitle: Text(offer.topic),
             trailing: Text(formattedDate),
           ),

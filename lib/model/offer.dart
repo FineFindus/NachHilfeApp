@@ -28,7 +28,7 @@ class Offer {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'subject': getSubjectValue(subject),
+      'subject': subject.toString(),
       'name': name,
       'contact': contact,
       'topic': topic,
@@ -42,7 +42,7 @@ class Offer {
 
     return Offer(
       id: map['id'],
-      subject: (map['subject']),
+      subject: (getSubjectFromString(map['subject'])),
       name: map['name'],
       contact: map['contact'],
       topic: map['topic'],

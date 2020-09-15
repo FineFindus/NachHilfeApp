@@ -38,6 +38,8 @@ dependencies:
   animations: ^1.1.2
   #provider
   provider: ^4.3.2+2
+  #animated list
+  implicitly_animated_reorderable_list: ^0.2.3
 
 dev_dependencies:
   flutter_test:
