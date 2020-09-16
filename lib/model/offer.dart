@@ -13,6 +13,7 @@ class Offer {
   final String topic;
   final int year;
   final int endDate;
+  final bool isAccepted;
 
   ///The Offer model
   Offer({
@@ -23,6 +24,7 @@ class Offer {
     @required this.topic,
     @required this.year,
     @required this.endDate,
+    @required this.isAccepted,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,6 +36,7 @@ class Offer {
       'topic': topic,
       'year': year,
       'endDate': endDate,
+      'isAccepted': isAccepted,
     };
   }
 
@@ -41,17 +44,23 @@ class Offer {
     if (map == null) return null;
 
     return Offer(
-      id: map['id'],
-      subject: (getSubjectFromString(map['subject'])),
-      name: map['name'],
-      contact: map['contact'],
-      topic: map['topic'],
-      year: map['year'],
-      endDate: map['endDate'],
-    );
+        id: map['id'],
+        subject: (getSubjectFromString(map['subject'])),
+        name: map['name'],
+        contact: map['contact'],
+        topic: map['topic'],
+        year: map['year'],
+        endDate: map['endDate'],
+        isAccepted: map['isAccepted']);
   }
 
   String toJson() => json.encode(toMap());
 
   factory Offer.fromJson(String source) => Offer.fromMap(json.decode(source));
+
+  ///Override toString, so the data of the offer is returned istead of intance
+  @override
+  String toString() {
+    return "Offer{id: $id, subject: $subject, name: $name, contact: $name, topic: $topic, year: $year, endDate: $endDate, isAccepted: $isAccepted}";
+  }
 }

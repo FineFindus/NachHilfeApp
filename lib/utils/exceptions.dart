@@ -14,6 +14,7 @@ class ServerException implements Exception {
   }
 }
 
+///This exception is throw when a 404 error appears
 class StatusCode4Exception implements Exception {
   String _message;
 

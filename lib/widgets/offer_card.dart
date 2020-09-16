@@ -1,6 +1,5 @@
 import 'package:NachHilfeApp/api/subjectValue.dart';
 import 'package:NachHilfeApp/model/offer.dart';
-import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +14,8 @@ class OfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //parse date
-    var date = DateTime.fromMillisecondsSinceEpoch(offer.endDate);
+    var date = DateTime.fromMillisecondsSinceEpoch(
+        offer.endDate + Duration(hours: 2).inMilliseconds);
     var formattedDate = DateFormat("dd.MM").format(date);
 
     return Card(

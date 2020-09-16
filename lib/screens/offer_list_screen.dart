@@ -1,3 +1,4 @@
+import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
@@ -32,69 +33,84 @@ class _OfferListScreenState extends State<OfferListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Angebote"),
-        centerTitle: true,
-      ),
-      //fab to create screen
-      floatingActionButton: OpenContainer(
-        closedElevation: 0.0,
-        closedShape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        appBar: AppBar(
+          title: Text("Angebote"),
+          centerTitle: true,
         ),
-        closedBuilder: (context, action) => FloatingActionButton(
-          elevation: 0.0,
-          onPressed: action,
-          child: const Icon(Icons.add),
+        //fab to create screen
+        floatingActionButton: OpenContainer(
+          closedElevation: 0.0,
+          closedShape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+          ),
+          closedBuilder: (context, action) => FloatingActionButton(
+            elevation: 0.0,
+            onPressed: action,
+            child: const Icon(Icons.add),
+          ),
+          openBuilder: (context, action) => OfferCreateScreen(),
         ),
-        openBuilder: (context, action) => OfferCreateScreen(),
-      ),
-      //list of items
-      body: Center(
-          child: RefreshIndicator(
-        onRefresh: () async {
-          setState(() {
-            print("object");
-            offers.add(
-              Offer(
-                  id: 2,
-                  subject: Subject.math,
-                  name: "Test",
-                  contact: "Jonathan@benzler.com",
-                  topic: "Functions",
-                  year: 13,
-                  endDate: DateTime.now().millisecondsSinceEpoch),
-            );
-          });
-          print(offers);
-        },
-        child: ImplicitlyAnimatedList<Offer>(
-          items: offers,
-          areItemsTheSame: (a, b) => a.id == b.id,
-          itemBuilder: (context, animation, item, index) {
-            return SizeFadeTransition(
-              sizeFraction: 0.7,
-              curve: Curves.easeInOut,
-              animation: animation,
-              child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      print(index);
-                      offers.removeAt(index);
-                    });
-                  },
-                  child: OfferCard(offer: item)),
-            );
-          },
-          removeItemBuilder: (context, animation, oldItem) {
-            return SizeTransition(
-              sizeFactor: animation,
-              axis: Axis.vertical,
-              child: OfferCard(offer: oldItem),
-            );
-          },
-        ),
-      )),
-    );
+        //list of items
+        body: Center(
+          child: FutureBuilder<List<Offer>>(
+            future: ApiClient.getOffers(),
+            builder: (context, snapshot) {
+              if (snapshot.data != null)
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) =>
+                      OfferCard(offer: snapshot.data[index]),
+                );
+              else
+                return CircularProgressIndicator();
+            },
+          ),
+        )
+
+        //     child: RefreshIndicator(
+        //   onRefresh: () async {
+        //     setState(() {
+        //       print("object");
+        //       offers.add(
+        //         Offer(
+        //             id: 2,
+        //             subject: Subject.math,
+        //             name: "Test",
+        //             contact: "Jonathan@benzler.com",
+        //             topic: "Functions",
+        //             year: 13,
+        //             endDate: DateTime.now().millisecondsSinceEpoch),
+        //       );
+        //     });
+        //     print(offers);
+        //   },
+        //   child: ImplicitlyAnimatedList<Offer>(
+        //     items: offers,
+        //     areItemsTheSame: (a, b) => a.id == b.id,
+        //     itemBuilder: (context, animation, item, index) {
+        //       return SizeFadeTransition(
+        //         sizeFraction: 0.7,
+        //         curve: Curves.easeInOut,
+        //         animation: animation,
+        //         child: GestureDetector(
+        //             onTap: () {
+        //               setState(() {
+        //                 print(index);
+        //                 offers.removeAt(index);
+        //               });
+        //             },
+        //             child: OfferCard(offer: item)),
+        //       );
+        //     },
+        //     removeItemBuilder: (context, animation, oldItem) {
+        //       return SizeTransition(
+        //         sizeFactor: animation,
+        //         axis: Axis.vertical,
+        //         child: OfferCard(offer: oldItem),
+        //       );
+        //     },
+        //   ),
+        // )),
+        );
   }
 }

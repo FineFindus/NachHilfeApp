@@ -1,20 +1,15 @@
-import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/screens/offer_list_screen.dart';
+import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  try {
-    ApiClient.getOffers();
-  } catch (e) {
-    print(e.runtimeType);
-  }
-
+void main() async {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(Subject.math);
     return MaterialApp(
       title: 'Nachhilfe',
       theme: ThemeData(
