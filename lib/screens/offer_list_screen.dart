@@ -52,18 +52,51 @@ class _OfferListScreenState extends State<OfferListScreen> {
         ),
         //list of items
         body: Center(
-          child: FutureBuilder<List<Offer>>(
-            future: ApiClient.getOffers(),
-            builder: (context, snapshot) {
-              if (snapshot.data != null)
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) =>
-                      OfferCard(offer: snapshot.data[index]),
-                );
-              else
-                return CircularProgressIndicator();
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await Future.delayed(Duration(seconds: 2));
+              setState(() {});
             },
+            child: FutureBuilder<List<Offer>>(
+              future: ApiClient.getOffers(),
+              builder: (context, snapshot) {
+                //check if connection is done
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    print("new data");
+                    return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) =>
+                          OfferCard(offer: snapshot.data[index]),
+                    );
+                  } else if (snapshot.hasError) {
+                    print(snapshot.error);
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.error, size: 60, color: Colors.red),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(
+                              "An error occured, please ensured that you´re connected to the internet"),
+                        ),
+                        const SizedBox(height: 10),
+                        FloatingActionButton(
+                          tooltip: "Retry",
+                          mini: true,
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: Icon(Icons.refresh),
+                        ),
+                      ],
+                    );
+                  }
+                }
+                return CircularProgressIndicator();
+              },
+            ),
           ),
         )
 

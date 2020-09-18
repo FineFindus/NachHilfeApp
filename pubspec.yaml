@@ -31,7 +31,8 @@ dependencies:
 
   #dio for better http request
   dio: ^3.0.10
-
+  #cache manager
+  dio_http_cache: ^0.2.9
   #parse unix timestamp
   intl: ^0.16.1
   #animations
