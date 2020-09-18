@@ -2,7 +2,7 @@
 
 ## Über
 
-[[You can also view this in english]](https://github.com/FineFindus/NachHilfeApp#readme)
+[[english]](https://github.com/FineFindus/NachHilfeApp#readme)
 
 Eine App mit dessen Hilfe Schüler Nachhilfe suchen können. 
 Die App soll mit Flutter programmiert werden, als Backend wird Firebase verwendet. Bei Problemen / Skalierungsproblemen wird auf einen eigenen Linux Server mit docker gewechselt.
@@ -12,11 +12,11 @@ Der Benutzer kann nach Nachhilfe suchen, andere sollen sich anschließen können
 
 | Zeit (Woche) | Ziel                                                      |
 |--------------|-----------------------------------------------------------|
-| 4            | Einfache UI, LogIn                                        |
+| 4            | Einfache UI, Daten von Server empfangen                   |
 | 10           | Funktionaler Backend-Server                               |
-| 16           | Vollständige UI                                           |
-|              | andere Funktionalitäten (Performance, Push-Services, etc) |
-|              | Backend Server                                            |
+| 20           | Vollständige UI                                           |
+| 25             | andere Funktionalitäten (Performance, Push-Services, etc) |
+| ?           | Backend Server vervollständigen                                         |
 
 ## Aussehen
 Eine Suche sollte folgende Informationen enthalten:
