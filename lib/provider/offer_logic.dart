@@ -7,6 +7,7 @@ class OfferLogic extends ChangeNotifier {
   List<Offer> _offers = [];
 
   ///Returns the list of availeble offers.
+  ///It loads them from a server via REST api.
   Future<List<Offer>> get offers async {
     //return offers
     return await ApiClient.getOffers();
