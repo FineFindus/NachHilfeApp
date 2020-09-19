@@ -1,4 +1,5 @@
 import 'package:NachHilfeApp/screens/offer_list_screen.dart';
+import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OfferListScreen(),
+      home: OnboardingScreen(),
     );
   }
 }
