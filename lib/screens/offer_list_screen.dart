@@ -27,6 +27,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
         contact: "Jonathan@benzler.com",
         topic: "Functions",
         year: 11,
+        isAccepted: false,
         endDate: DateTime.now().millisecondsSinceEpoch)
   ];
 

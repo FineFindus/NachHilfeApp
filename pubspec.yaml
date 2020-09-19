@@ -41,6 +41,8 @@ dependencies:
   provider: ^4.3.2+2
   #animated list
   implicitly_animated_reorderable_list: ^0.2.3
+  #keychain to securely store the name/contact of the user
+  flutter_keychain: ^1.0.0
 
 dev_dependencies:
   flutter_test:
