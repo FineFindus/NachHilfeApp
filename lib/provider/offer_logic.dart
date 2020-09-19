@@ -8,6 +8,7 @@ class OfferLogic extends ChangeNotifier {
 
   ///Returns the list of availeble offers.
   Future<List<Offer>> get offers async {
+    //return offers
     return await ApiClient.getOffers();
   }
 }
