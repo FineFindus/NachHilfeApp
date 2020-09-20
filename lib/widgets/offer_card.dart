@@ -18,14 +18,29 @@ class OfferCard extends StatelessWidget {
         offer.endDate + Duration(hours: 2).inMilliseconds);
     var formattedDate = DateFormat("dd.MM").format(date);
 
+    //is date nearer then 3 days? if yes, make the text red, to indicate its soon
+    var redText = (DateTime.now().millisecondsSinceEpoch +
+            Duration(days: 3).inMilliseconds) >=
+        offer.endDate;
+
+    print(DateTime.now().millisecondsSinceEpoch +
+        Duration(days: 3).inMilliseconds);
+
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
-            title: Text("${getTranlatedSubject(offer.subject)}  ${offer.year}"),
+            onTap: () => print(offer.endDate),
+            title: Text(
+                "${getTranlatedSubject(context, offer.subject)}  ${offer.year}"),
             subtitle: Text(offer.topic),
-            trailing: Text(formattedDate),
+            trailing: Text(
+              formattedDate,
+              style: redText
+                  ? TextStyle(color: Colors.red, fontWeight: FontWeight.w700)
+                  : null,
+            ),
           ),
         ));
   }

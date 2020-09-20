@@ -1,40 +1,42 @@
 //return a string from the subject enum value
+import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
+import 'package:flutter/cupertino.dart';
 
-String getTranlatedSubject(Subject subject) {
+String getTranlatedSubject(BuildContext context, Subject subject) {
   switch (subject) {
     case Subject.math:
-      return "Mathe";
+      return S.of(context).subject_math;
       break;
     case Subject.english:
-      return "Englisch";
+      return S.of(context).subject_english;
       break;
     case Subject.german:
-      return "Englisch";
+      return S.of(context).subject_german;
       break;
     case Subject.art:
-      return "Kunst";
+      return S.of(context).subject_art;
       break;
     case Subject.biologie:
-      return "Biologie";
+      return S.of(context).subject_biologie;
       break;
     case Subject.chemistry:
-      return "Chemie";
+      return S.of(context).subject_chemistry;
       break;
     case Subject.geography:
-      return "Erdkunde";
+      return S.of(context).subject_geography;
       break;
     case Subject.history:
-      return "Geschichte";
+      return S.of(context).subject_history;
       break;
     case Subject.music:
-      return "Musik";
+      return S.of(context).subject_music;
       break;
     case Subject.physical_education:
-      return "Sport";
+      return S.of(context).subject_physical_education;
       break;
     case Subject.physics:
-      return "Physik";
+      return S.of(context).subject_physics;
       break;
     default:
       return "Error";

@@ -1,4 +1,5 @@
 import 'package:NachHilfeApp/api/api_client.dart';
+import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
@@ -6,9 +7,6 @@ import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:animations/animations.dart';
 import "package:flutter/material.dart";
-import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
-import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import 'package:provider/provider.dart';
 
 class OfferListScreen extends StatefulWidget {
   @override
@@ -35,7 +33,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Angebote"),
+          title: Text(S.of(context).offer_list_appbar_title),
           centerTitle: true,
         ),
         //fab to create screen
@@ -45,6 +43,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
             borderRadius: BorderRadius.all(Radius.circular(25.0)),
           ),
           closedBuilder: (context, action) => FloatingActionButton(
+            tooltip: S.of(context).offer_list_fab_create,
             elevation: 0.0,
             onPressed: action,
             child: const Icon(Icons.add),
@@ -64,7 +63,6 @@ class _OfferListScreenState extends State<OfferListScreen> {
                 //check if connection is done
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
-                    print("new data");
                     return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) =>
@@ -79,12 +77,13 @@ class _OfferListScreenState extends State<OfferListScreen> {
                         const SizedBox(height: 10),
                         Padding(
                           padding: const EdgeInsets.all(18.0),
-                          child: Text(
-                              "An error occured, please ensured that you´re connected to the internet"),
+                          child:
+                              Text(S.of(context).offer_list_connection_error),
                         ),
                         const SizedBox(height: 10),
                         FloatingActionButton(
-                          tooltip: "Retry",
+                          tooltip:
+                              S.of(context).offer_list_connection_error_retry,
                           mini: true,
                           onPressed: () {
                             setState(() {});
@@ -99,52 +98,6 @@ class _OfferListScreenState extends State<OfferListScreen> {
               },
             ),
           ),
-        )
-
-        //     child: RefreshIndicator(
-        //   onRefresh: () async {
-        //     setState(() {
-        //       print("object");
-        //       offers.add(
-        //         Offer(
-        //             id: 2,
-        //             subject: Subject.math,
-        //             name: "Test",
-        //             contact: "Jonathan@benzler.com",
-        //             topic: "Functions",
-        //             year: 13,
-        //             endDate: DateTime.now().millisecondsSinceEpoch),
-        //       );
-        //     });
-        //     print(offers);
-        //   },
-        //   child: ImplicitlyAnimatedList<Offer>(
-        //     items: offers,
-        //     areItemsTheSame: (a, b) => a.id == b.id,
-        //     itemBuilder: (context, animation, item, index) {
-        //       return SizeFadeTransition(
-        //         sizeFraction: 0.7,
-        //         curve: Curves.easeInOut,
-        //         animation: animation,
-        //         child: GestureDetector(
-        //             onTap: () {
-        //               setState(() {
-        //                 print(index);
-        //                 offers.removeAt(index);
-        //               });
-        //             },
-        //             child: OfferCard(offer: item)),
-        //       );
-        //     },
-        //     removeItemBuilder: (context, animation, oldItem) {
-        //       return SizeTransition(
-        //         sizeFactor: animation,
-        //         axis: Axis.vertical,
-        //         child: OfferCard(offer: oldItem),
-        //       );
-        //     },
-        //   ),
-        // )),
-        );
+        ));
   }
 }

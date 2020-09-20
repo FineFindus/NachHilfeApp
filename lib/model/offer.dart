@@ -17,7 +17,7 @@ class Offer {
 
   ///The Offer model
   Offer({
-    @required this.id,
+    this.id,
     @required this.subject,
     @required this.name,
     @required this.contact,

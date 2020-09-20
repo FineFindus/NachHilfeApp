@@ -1,3 +1,4 @@
+import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ListTile(
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "Please input your name and how to contact you (e.g. email.address)."),
+                        child: Text(S.of(context).onboaring_title),
                       ),
                     ),
                     ListTile(
@@ -59,20 +59,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           maxLines: null,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            labelText: "Name",
+                            labelText:
+                                S.of(context).onboarding_textfield_label_name,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
                           ),
                           validator: (value) {
                             //check if value is not empty
                             if (value.isEmpty) {
-                              return 'Please enter your name';
+                              return S
+                                  .of(context)
+                                  .onborading_textfield_error_name_empty;
                             }
                             //create regex
                             var regex = RegExp(r"[0-9]");
                             //check if word contains numbers
                             if (regex.hasMatch(value))
-                              return 'The name can only consist of alphabetic letters';
+                              return S
+                                  .of(context)
+                                  .onborading_textfield_error_name_numbers;
                             return null;
                           },
                         ),
@@ -87,13 +92,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           maxLines: null,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            labelText: "Contact",
+                            labelText: S
+                                .of(context)
+                                .onboarding_textfield_label_contact,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
-                              return 'Please enter how to contact you';
+                              return S
+                                  .of(context)
+                                  .onborading_textfield_error_contact_empty;
                             }
                             return null;
                           },
@@ -107,7 +116,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             data: CupertinoThemeData(
                                 primaryColor: CupertinoColors.activeBlue),
                             child: CupertinoButton.filled(
-                                child: Text("Ok"),
+                                child: Text(S.of(context).ok),
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
                                     if (nameTextController.text
@@ -130,18 +139,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                           .pushReplacement(MaterialPageRoute(
                                         builder: (context) => OfferListScreen(),
                                       ));
-                                    } else {
-                                      print(await FlutterKeychain.get(
-                                          key: 'user_name'));
-                                      print(await FlutterKeychain.get(
-                                          key: 'user_contact'));
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: Text("Fehler"),
-                                          content: Text("Please input data"),
-                                        ),
-                                      );
                                     }
                                   }
                                 })),
