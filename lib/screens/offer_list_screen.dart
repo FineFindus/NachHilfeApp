@@ -54,10 +54,10 @@ class _OfferListScreenState extends State<OfferListScreen> {
         body: Center(
           child: RefreshIndicator(
             onRefresh: () async {
-              await Future.delayed(Duration(seconds: 2));
               setState(() {});
+              await Future.delayed(Duration(seconds: 2));
             },
-            child: FutureBuilder<List<Offer>>(
+            child: FutureBuilder<List<dynamic>>(
               future: ApiClient.getOffers(),
               builder: (context, snapshot) {
                 //check if connection is done

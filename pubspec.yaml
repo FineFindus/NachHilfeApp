@@ -44,6 +44,9 @@ dependencies:
   provider: ^4.3.2+2
   #keychain to securely store the name/contact of the user
   flutter_keychain: ^1.0.0
+  #additional material icons
+  mdi: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:

@@ -23,15 +23,11 @@ class OfferCard extends StatelessWidget {
             Duration(days: 3).inMilliseconds) >=
         offer.endDate;
 
-    print(DateTime.now().millisecondsSinceEpoch +
-        Duration(days: 3).inMilliseconds);
-
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
-            onTap: () => print(offer.endDate),
             title: Text(
                 "${getTranlatedSubject(context, offer.subject)}  ${offer.year}"),
             subtitle: Text(offer.topic),
