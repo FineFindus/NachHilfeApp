@@ -17,8 +17,8 @@ class ApiClient {
     //create dio for http request
     Dio dio = new Dio();
     //set options like timeout, etc.
-    dio.options.connectTimeout = 10000; //10s
-    dio.options.receiveTimeout = 10000; //10s
+    dio.options.connectTimeout = 30000; //30s
+    dio.options.receiveTimeout = 30000; //10s
 
     //create cache
     dio.interceptors
@@ -26,10 +26,9 @@ class ApiClient {
 
     //get response from server with cache
     try {
+      //get data
       response =
           await dio.get(url, options: buildCacheOptions(Duration(hours: 8)));
-
-      print(response.data.runtimeType);
 
       //check the status code
       if (response.statusCode == 200 && response.data != null) {

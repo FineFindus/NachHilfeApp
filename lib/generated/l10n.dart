@@ -43,6 +43,16 @@ class S {
     );
   }
 
+  /// `Create`
+  String get create {
+    return Intl.message(
+      'Create',
+      name: 'create',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Please input your name and how to contact you (e.g. email.address).`
   String get onboaring_title {
     return Intl.message(
@@ -138,6 +148,86 @@ class S {
     return Intl.message(
       'Create',
       name: 'offer_list_fab_create',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create new Search`
+  String get offer_create_title {
+    return Intl.message(
+      'Create new Search',
+      name: 'offer_create_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Class and year`
+  String get offer_create_class_and_year {
+    return Intl.message(
+      'Class and year',
+      name: 'offer_create_class_and_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Topic`
+  String get offer_create_topic {
+    return Intl.message(
+      'Topic',
+      name: 'offer_create_topic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `End date`
+  String get offer_create_end_date {
+    return Intl.message(
+      'End date',
+      name: 'offer_create_end_date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview`
+  String get offer_create_preview {
+    return Intl.message(
+      'Preview',
+      name: 'offer_create_preview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here is a small preview of your search. Do you want to create this search?`
+  String get offer_create_preview_text {
+    return Intl.message(
+      'Here is a small preview of your search. Do you want to create this search?',
+      name: 'offer_create_preview_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose a subject`
+  String get offer_create_dialog_subject_title {
+    return Intl.message(
+      'Choose a subject',
+      name: 'offer_create_dialog_subject_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose a class`
+  String get offer_create_dialog_class_title {
+    return Intl.message(
+      'Choose a class',
+      name: 'offer_create_dialog_class_title',
       desc: '',
       args: [],
     );

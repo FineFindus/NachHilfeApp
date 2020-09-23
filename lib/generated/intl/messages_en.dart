@@ -21,6 +21,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "create" : MessageLookupByLibrary.simpleMessage("Create"),
+    "offer_create_class_and_year" : MessageLookupByLibrary.simpleMessage("Class and year"),
+    "offer_create_dialog_class_title" : MessageLookupByLibrary.simpleMessage("Choose a class"),
+    "offer_create_dialog_subject_title" : MessageLookupByLibrary.simpleMessage("Choose a subject"),
+    "offer_create_end_date" : MessageLookupByLibrary.simpleMessage("End date"),
+    "offer_create_preview" : MessageLookupByLibrary.simpleMessage("Preview"),
+    "offer_create_preview_text" : MessageLookupByLibrary.simpleMessage("Here is a small preview of your search. Do you want to create this search?"),
+    "offer_create_title" : MessageLookupByLibrary.simpleMessage("Create new Search"),
+    "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Topic"),
     "offer_list_appbar_title" : MessageLookupByLibrary.simpleMessage("Searches"),
     "offer_list_connection_error" : MessageLookupByLibrary.simpleMessage("An error occured, please ensured that you´re connected to the internet."),
     "offer_list_connection_error_retry" : MessageLookupByLibrary.simpleMessage("Retry"),
