@@ -3,7 +3,7 @@
   "ok": "OK",
   "create": "Create",
   "onboaring_title": "Please input your name and how to contact you (e.g. email.address).",
-  "onboarding_textfield_label_name": "Name",
+  "onboarding_textfield_label_name": "Mail",
   "onboarding_textfield_label_contact": "How to contact you",
   "onborading_textfield_error_name_empty": "Please enter your name",
   "onborading_textfield_error_name_numbers": "The name can only consist of alphabetic letters",
@@ -30,5 +30,17 @@
   "subject_chemistry": "chemistry",
   "subject_biologie": "biologie",
   "subject_physics": "physics",
-  "subject_music": "music"
+  "subject_music": "music",
+  "subject_math-topics": {
+    "year_5": {
+      "topic_0": "Basiswissen",
+      "topic_1": "Daten",
+      "topic_2": "Brüche",
+      "topic_4": "Länge/Zeit",
+      "topic_5": "Flächen",
+      "topic_7": "Geld/Gewicht"
+
+    }
+
+  }
 }

@@ -10,10 +10,8 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  //text controller for user name
-  TextEditingController nameTextController = TextEditingController();
-  //text controller for contact
-  TextEditingController contactTextController = TextEditingController();
+  //text controller for user mail
+  TextEditingController mailTextController = TextEditingController();
 
   //form key
   final _formKey = GlobalKey<FormState>();
@@ -21,8 +19,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void dispose() {
     //dispose text controller
-    nameTextController.dispose();
-    contactTextController.dispose();
+    mailTextController.dispose();
     super.dispose();
   }
 
@@ -55,8 +52,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
                           cursorColor: Theme.of(context).primaryColor,
-                          controller: nameTextController,
+                          controller: mailTextController,
                           maxLines: null,
+                          keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
                             labelText:
@@ -72,38 +70,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   .onborading_textfield_error_name_empty;
                             }
                             //create regex
-                            var regex = RegExp(r"[0-9]");
+                            var regex = RegExp(
+                                r"^[a-zA-Z]+\.+[a-zA-Z]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?igs-buchholz\.de$");
                             //check if word contains numbers
-                            if (regex.hasMatch(value))
+                            if (!regex.hasMatch(value))
                               return S
                                   .of(context)
                                   .onborading_textfield_error_name_numbers;
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          cursorColor: Theme.of(context).primaryColor,
-                          controller: contactTextController,
-                          maxLines: null,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: S
-                                .of(context)
-                                .onboarding_textfield_label_contact,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                          ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return S
-                                  .of(context)
-                                  .onborading_textfield_error_contact_empty;
-                            }
                             return null;
                           },
                         ),
@@ -119,20 +92,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 child: Text(S.of(context).ok),
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
-                                    if (nameTextController.text
-                                            .trim()
-                                            .isNotEmpty &&
-                                        contactTextController.text
-                                            .trim()
-                                            .isNotEmpty) {
-                                      await storeNameAndContact(
-                                          nameTextController.text.trim(),
-                                          contactTextController.text.trim());
-
-                                      print(await FlutterKeychain.get(
-                                          key: 'user_name'));
-                                      print(await FlutterKeychain.get(
-                                          key: 'user_contact'));
+                                    if (mailTextController.text
+                                        .trim()
+                                        .isNotEmpty) {
+                                      await storeMailAddress(
+                                          mailTextController.text.trim());
 
                                       //push and replace with new screen
                                       Navigator.of(context)
@@ -157,11 +121,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ///Stores the users name and contact (e.g. email address) in the keychain for ios
   /// and the keystore for android.
   /// This can only be used with android api 18 and above.
-  Future<void> storeNameAndContact(String name, String contact) async {
-    //store name
-    await FlutterKeychain.put(key: 'user_name', value: name);
-
-    //store user contact
-    await FlutterKeychain.put(key: 'user_contact', value: contact);
+  Future<void> storeMailAddress(String mail) async {
+    //store email address
+    await FlutterKeychain.put(key: 'user_email', value: mail);
   }
 }

@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_list_fab_create" : MessageLookupByLibrary.simpleMessage("Create"),
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),
     "onboarding_textfield_label_contact" : MessageLookupByLibrary.simpleMessage("How to contact you"),
-    "onboarding_textfield_label_name" : MessageLookupByLibrary.simpleMessage("Name"),
+    "onboarding_textfield_label_name" : MessageLookupByLibrary.simpleMessage("Mail"),
     "onboaring_title" : MessageLookupByLibrary.simpleMessage("Please input your name and how to contact you (e.g. email.address)."),
     "onborading_textfield_error_contact_empty" : MessageLookupByLibrary.simpleMessage("Please enter how to contact you"),
     "onborading_textfield_error_name_empty" : MessageLookupByLibrary.simpleMessage("Please enter your name"),

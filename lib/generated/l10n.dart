@@ -63,10 +63,10 @@ class S {
     );
   }
 
-  /// `Name`
+  /// `Mail`
   String get onboarding_textfield_label_name {
     return Intl.message(
-      'Name',
+      'Mail',
       name: 'onboarding_textfield_label_name',
       desc: '',
       args: [],
