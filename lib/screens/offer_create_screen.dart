@@ -134,7 +134,10 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
           isActive: _currentStep >= 1,
           state: _currentStep == 1 ? StepState.editing : StepState.indexed,
           title: Text(S.of(context).offer_create_topic),
-          content: ChooseTopic()),
+          content: ChooseTopic(
+            subject: _subject,
+            year: _year,
+          )),
       Step(
           isActive: _currentStep >= 2,
           state: _currentStep == 2 ? StepState.editing : StepState.indexed,

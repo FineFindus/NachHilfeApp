@@ -1,33 +1,25 @@
-import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
+import 'package:NachHilfeApp/utils/topic_list.dart';
 import 'package:flutter/material.dart';
 
 class ChooseTopic extends StatefulWidget {
+  final int year;
+  final Subject subject;
+
+  const ChooseTopic({Key key, this.year, this.subject}) : super(key: key);
   @override
   _ChooseTopicState createState() => _ChooseTopicState();
 }
 
 class _ChooseTopicState extends State<ChooseTopic> {
-  List<bool> values = [
-    false,
-    true,
-    true,
-    true,
-    true,
-    false,
-    false,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-  ];
+  List<dynamic> stringValues = [];
+  List<bool> values = [];
+
+  @override
+  void initState() {
+    test(widget.year, widget.subject);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +27,10 @@ class _ChooseTopicState extends State<ChooseTopic> {
       child: ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 10,
+        itemCount: stringValues.length,
         itemBuilder: (context, index) => CheckboxListTile(
           value: values[index],
-          title: Text("Basiswissen"),
+          title: Text(stringValues[index]),
           onChanged: (value) => setState(() {
             values[index] = value;
           }),
@@ -48,7 +40,9 @@ class _ChooseTopicState extends State<ChooseTopic> {
     );
   }
 
-  createTopicList(int year, Subject subject) {
-    return S.of(context).create;
+  test(int year, Subject subject) async {
+    var result = await createTopicsList(context, year, subject);
+    stringValues = result;
+    values = List<bool>.generate(stringValues.length, (int index) => false);
   }
 }

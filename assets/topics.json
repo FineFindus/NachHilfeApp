@@ -1,5 +1,5 @@
 {
-    "five": {
+    "5": {
         "Subject.math": [
             "Daten",
             "Brüche",
@@ -13,14 +13,27 @@
             "My free time",
             "Let´s celebrate",
             "Where I live"
+        ],
+        "Subject.german": [
+            "Grammatik"
         ]
     },
-    "6": {},
+    "6": {
+        "Subject.math": [
+            "Winkel und Koordinaten",
+            "Brüche +/-"
+        ],
+        "Subject.english": [],
+        "Subject.german": []
+
+    },
     "7": {},
     "8": {},
     "9": {},
     "10": {},
-    "11": {},
+    "11": {
+        "Subject.math": ["Beschreibende Statistik"]
+    },
     "12": {},
     "13": {}
 }
