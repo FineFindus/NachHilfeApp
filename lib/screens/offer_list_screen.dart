@@ -1,12 +1,14 @@
 import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/model/offer.dart';
-import 'package:NachHilfeApp/provider/offer_logic.dart';
+import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class OfferListScreen extends StatefulWidget {
   @override
@@ -21,8 +23,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
     Offer(
         id: 1,
         subject: Subject.math,
-        name: "Jonathan",
-        contact: "Jonathan@benzler.com",
+        name: "Jonathan@igs-buchholz.de",
         topic: "Functions",
         year: 11,
         isAccepted: false,
@@ -30,11 +31,25 @@ class _OfferListScreenState extends State<OfferListScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    //test if user is logged in, else push the login screen
+    _isLoggedIn();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(S.of(context).offer_list_appbar_title),
           centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: logOut,
+            )
+          ],
         ),
         //fab to create screen
         floatingActionButton: OpenContainer(
@@ -99,5 +114,27 @@ class _OfferListScreenState extends State<OfferListScreen> {
             ),
           ),
         ));
+  }
+
+  ///Checks if the user is logged in by chekcing the keychain.
+  ///If the returned value is null the login screen is pushed.
+  Future<void> _isLoggedIn() async {
+    var storage = FlutterSecureStorage();
+    var mail = await storage.read(key: "user_email");
+    if (mail == null) {
+      //push new screen
+      Navigator.of(context).pushReplacement(CupertinoPageRoute(
+        builder: (context) => OnboardingScreen(),
+      ));
+    }
+  }
+
+  ///LogOut function,
+  ///Deletes the keyCahin and pushes the login screen
+  logOut() async {
+    var storage = FlutterSecureStorage();
+    await storage.deleteAll();
+    //show login screen
+    _isLoggedIn();
   }
 }

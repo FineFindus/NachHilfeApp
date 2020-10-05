@@ -2,7 +2,7 @@ import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -89,7 +89,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             data: CupertinoThemeData(
                                 primaryColor: CupertinoColors.activeBlue),
                             child: CupertinoButton.filled(
-                                child: Text(S.of(context).ok),
+                                child: Text(
+                                  S.of(context).ok,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
                                 onPressed: () async {
                                   if (_formKey.currentState.validate()) {
                                     if (mailTextController.text
@@ -123,6 +126,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   /// This can only be used with android api 18 and above.
   Future<void> storeMailAddress(String mail) async {
     //store email address
-    await FlutterKeychain.put(key: 'user_email', value: mail);
+    var storage = FlutterSecureStorage();
+    await storage.write(key: "user_email", value: mail);
   }
 }

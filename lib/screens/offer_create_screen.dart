@@ -1,7 +1,8 @@
+import 'package:NachHilfeApp/utils/topic_list.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
 
@@ -30,6 +31,17 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   //picked date by datepicker
   DateTime pickedDate = DateTime.now().add(Duration(days: 4));
 
+  //list to choose topic
+  List<dynamic> stringValues = [];
+  List<bool> values = [];
+
+  @override
+  void initState() {
+    super.initState();
+    //get topic values
+    updateTopics();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +49,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
         title: Text(S.of(context).offer_create_title),
       ),
       body: Stepper(
+        physics: BouncingScrollPhysics(),
         steps: _mySteps(),
         currentStep: this._currentStep,
         onStepTapped: (step) {
@@ -110,10 +123,12 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
                   context: context,
                   builder: (context) => _ChooseYearDialog(
                         startPosition: _year,
-                        onValueChanged: (value) => setState(() {
-                          _year = value;
-                        }),
-                      )),
+                        onValueChanged: (value) {
+                          setState(() {
+                            _year = value;
+                          });
+                        },
+                      )).then((value) => updateTopics()),
             ),
             ListTile(
               leading: Icon(Icons.class_),
@@ -122,22 +137,38 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
                   context: context,
                   builder: (context) => _ChooseSubjectDialog(
                         startPosition: _subject,
-                        onSubjectChanged: (value) => setState(() {
-                          _subject = value;
-                        }),
-                      )),
+                        onSubjectChanged: (value) {
+                          setState(() {
+                            _subject = value;
+                          });
+                        },
+                      )).then((value) => updateTopics()),
             ),
           ],
         ),
       ),
       Step(
-          isActive: _currentStep >= 1,
-          state: _currentStep == 1 ? StepState.editing : StepState.indexed,
-          title: Text(S.of(context).offer_create_topic),
-          content: ChooseTopic(
-            subject: _subject,
-            year: _year,
-          )),
+        isActive: _currentStep >= 1,
+        state: _currentStep == 1 ? StepState.editing : StepState.indexed,
+        title: Text(S.of(context).offer_create_topic),
+        content: ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: stringValues.length,
+          itemBuilder: (context, index) => CheckboxListTile(
+            value: values[index],
+            title: index != values.length - 1
+                ? Text(stringValues[index])
+                : TextField(
+                    decoration: InputDecoration(labelText: stringValues[index]),
+                  ),
+            onChanged: (value) => setState(() {
+              values[index] = value;
+            }),
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+        ),
+      ),
       Step(
           isActive: _currentStep >= 2,
           state: _currentStep == 2 ? StepState.editing : StepState.indexed,
@@ -183,19 +214,50 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       });
   }
 
+  updateTopics() async {
+    try {
+      var result = await createTopicsList(context, _year, _subject);
+      //add base knowledge option
+      result.insert(0, "Basiswissen");
+      //add other option at the end
+      result.add("Anderes");
+      //refresh
+      setState(() {
+        stringValues = result;
+        values = List<bool>.generate(stringValues.length, (int index) => false);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   ///Creates an [Offer], from the choosen data
   Future<Offer> createOffer() async {
     //get name and conact
-    var name = await FlutterKeychain.get(key: "user_name");
-    var contact = await FlutterKeychain.get(key: "user_contact");
+    var storage = FlutterSecureStorage();
+    var name = await storage.read(key: "user_email");
+
+    //get topics
+    var choosenTopics = [];
+
+    for (var i = 0; i < stringValues.length; i++) {
+      if (values[i]) {
+        //add to choosen topics
+        //if is not last element
+        if (i != values.length - 1)
+          choosenTopics.add(stringValues[i]);
+        else
+          choosenTopics.add("value");
+      }
+    }
 
     //create offer
     Offer offer = Offer(
         year: _year,
         subject: _subject,
         name: name,
-        contact: contact,
-        topic: "Functions",
+        topic:
+            "${choosenTopics.toString().replaceAll("[", "").replaceAll("]", "")}",
         isAccepted: false,
         endDate: pickedDate.millisecondsSinceEpoch);
 

@@ -9,7 +9,6 @@ class Offer {
   final int id;
   final Subject subject;
   final String name;
-  final String contact;
   final String topic;
   final int year;
   final int endDate;
@@ -20,7 +19,6 @@ class Offer {
     this.id,
     @required this.subject,
     @required this.name,
-    @required this.contact,
     @required this.topic,
     @required this.year,
     @required this.endDate,
@@ -32,7 +30,6 @@ class Offer {
       'id': id,
       'subject': subject.toString(),
       'name': name,
-      'contact': contact,
       'topic': topic,
       'year': year,
       'endDate': endDate,
@@ -47,7 +44,6 @@ class Offer {
         id: map['id'],
         subject: (getSubjectFromString(map['subject'])),
         name: map['name'],
-        contact: map['contact'],
         topic: map['topic'],
         year: map['year'],
         endDate: map['endDate'],

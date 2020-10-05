@@ -15,24 +15,81 @@
             "Where I live"
         ],
         "Subject.german": [
+            "Rechtscreibung",
             "Grammatik"
         ]
     },
     "6": {
         "Subject.math": [
             "Winkel und Koordinaten",
-            "Brüche +/-"
+            "Brüche +/-",
+            "Kreis und Kreismuster",
+            "Rechnen mit Dezimalzahlen",
+            "Rechteckt und Quader",
+            "Daten"
         ],
-        "Subject.english": [],
-        "Subject.german": []
-
+        "Subject.english": [
+            "Friends",
+            "Stars",
+            "London",
+            "Food and drink",
+            "In the  news",
+            "Goodbye Greenwich"
+        ],
+        "Subject.german": [
+            "Argumentieren",
+            "Berichten",
+            "Lyrik",
+            "Grammatik und Rechtschreibung",
+            "Erzählen: Fabelnund Sagen"
+        ]
     },
-    "7": {},
-    "8": {},
+    "7": {
+        "Subject.math": [
+            "Rationale Zahlen",
+            "Zuordnungen",
+            "Brüche +/-",
+            "Prozentrechnung",
+            "Dreiecke",
+            "Terme"
+        ],
+        "Subject.english": [
+            "England now and then",
+            "Adventures in Wales",
+            "Made in Scottland",
+            "Norther Ireland",
+            "Welcome to Ireland"
+        ],
+        "Subject.german": [
+            "Referat",
+            "Einen Film erschließen",
+            "Ganzschrift",
+            "Balladen",
+            "Rechtscreibung",
+            "Grammatik"
+        ]
+    },
+    "8": {
+        "Subject.math":[
+            "Lineare Funktionen",
+            "Prozent- und Zinsrechung",
+            "Gleichungen",
+            "Stochastik",
+            "Flächen und Körper",
+            "Terme und Binome"
+        ],"Subject.english": [
+            "Zoom in und Gateway to NY",
+            "Teens in the midwest",
+            "In the Northeast",
+            "California Dreams"
+        ]
+    },
     "9": {},
     "10": {},
     "11": {
-        "Subject.math": ["Beschreibende Statistik"]
+        "Subject.math": [
+            "Beschreibende Statistik"
+        ]
     },
     "12": {},
     "13": {}
