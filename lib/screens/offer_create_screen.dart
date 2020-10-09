@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:NachHilfeApp/utils/topic_list.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
@@ -11,6 +14,7 @@ import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:NachHilfeApp/widgets/offer_card.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 
 class OfferCreateScreen extends StatefulWidget {
 //form key to validate input
@@ -35,11 +39,21 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   List<dynamic> stringValues = [];
   List<bool> values = [];
 
+  //text controller for other topic field
+  TextEditingController otherController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     //get topic values
     updateTopics();
+  }
+
+  @override
+  void dispose() {
+    //dispose controller
+    otherController.dispose();
+    super.dispose();
   }
 
   @override
@@ -160,6 +174,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             title: index != values.length - 1
                 ? Text(stringValues[index])
                 : TextField(
+                    controller: otherController,
                     decoration: InputDecoration(labelText: stringValues[index]),
                   ),
             onChanged: (value) => setState(() {
@@ -201,6 +216,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     return _steps;
   }
 
+  ///Shows a date picker to pick a ending date for the offer
+  ///the date is saved with setstate as pickedDate
   chooseDate() async {
     DateTime date = await showDatePicker(
       context: context,
@@ -244,13 +261,22 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       if (values[i]) {
         //add to choosen topics
         //if is not last element
-        if (i != values.length - 1)
-          choosenTopics.add(stringValues[i]);
-        else
-          choosenTopics.add("value");
+        if (i != values.length - 1) choosenTopics.add(stringValues[i]);
+        //else
+        //choosenTopics.add("value");
       }
     }
 
+    //check if text controller is not empty
+    if (otherController.text.trim().isNotEmpty && values.last) {
+      //load bad words list to filter
+      //filter for bad words
+      final filter = ProfanityFilter.filterAdditionally(await _loadBadWords());
+      //filter the text from the text field
+      String cleanedString = filter.censor(otherController.text.trim());
+      //add string
+      choosenTopics.add(cleanedString);
+    }
     //create offer
     Offer offer = Offer(
         year: _year,
@@ -262,6 +288,21 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
         endDate: pickedDate.millisecondsSinceEpoch);
 
     return offer;
+  }
+
+  ///Loads a list with bad wods from assets and returns a string list
+  Future<List<String>> _loadBadWords() async {
+    var json = await rootBundle.loadString("assets/bad_word.json");
+    //decode the file and get the year and subject
+    try {
+      List<String> result = (jsonDecode(json) as List<dynamic>).cast<String>();
+
+      //return result
+      return result;
+    } catch (e) {
+      //on error
+      return ["Ein Fehler ist aufgetreten"];
+    }
   }
 }
 
