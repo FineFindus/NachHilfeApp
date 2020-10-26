@@ -17,14 +17,12 @@ class OfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //parse date
-    var date = DateTime.fromMillisecondsSinceEpoch(
-        offer.endDate + Duration(hours: 2).inMilliseconds);
-    var formattedDate = DateFormat("dd.MM").format(date);
+    var date = offer.endDate.add(Duration(hours: 2));
+    var formattedDate = DateFormat("dd.MM").format(offer.endDate);
 
     //is date nearer then 3 days? if yes, make the text red, to indicate its soon
-    var redText = (DateTime.now().millisecondsSinceEpoch +
-            Duration(days: 3).inMilliseconds) >=
-        offer.endDate;
+    var redText =
+        (DateTime.now().add(Duration(days: 3)).isAfter(offer.endDate));
 
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

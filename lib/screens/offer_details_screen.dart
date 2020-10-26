@@ -24,13 +24,11 @@ class OfferDetailsScreen extends StatelessWidget {
         ),
       );
 
-    var formattedDate = DateFormat("dd.MM")
-        .format(DateTime.fromMillisecondsSinceEpoch(offer.endDate));
+    var formattedDate = DateFormat("dd.MM").format(offer.endDate);
 
     //is date nearer then 3 days? if yes, make the text red, to indicate its soon
-    var redText = (DateTime.now().millisecondsSinceEpoch +
-            Duration(days: 3).inMilliseconds) >=
-        offer.endDate;
+    var redText =
+        (DateTime.now().add(Duration(days: 3)).isAfter(offer.endDate));
 
     return Scaffold(
       appBar: AppBar(),

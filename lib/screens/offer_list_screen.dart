@@ -29,7 +29,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
         topic: "Functions",
         year: 11,
         isAccepted: false,
-        endDate: DateTime.now().millisecondsSinceEpoch)
+        endDate: DateTime.now())
   ];
 
   @override
@@ -38,16 +38,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
 
     //test if user is logged in, else push the login screen
     _isLoggedIn();
-    var dt = new DateTime.now();
-    var str = json.encode(dt, toEncodable: myEncode);
-    print(str);
-  }
-
-  dynamic myEncode(dynamic item) {
-    if (item is DateTime) {
-      return item.toIso8601String();
-    }
-    return item;
+    print(offers[0].toJson());
   }
 
   @override

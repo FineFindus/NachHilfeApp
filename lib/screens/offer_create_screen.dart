@@ -288,7 +288,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
         topic:
             "${choosenTopics.toString().replaceAll("[", "").replaceAll("]", "")}",
         isAccepted: false,
-        endDate: pickedDate.millisecondsSinceEpoch);
+        endDate: pickedDate);
 
     return offer;
   }

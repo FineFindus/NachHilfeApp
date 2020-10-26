@@ -11,20 +11,20 @@ class Offer {
   final String userMail;
   final String topic;
   final int year;
-  final int endDate;
+  final DateTime endDate;
   final bool isAccepted;
   final String acceptingUserMail;
 
   ///The Offer model
   Offer({
     this.id,
-    this.acceptingUserMail,
     @required this.subject,
     @required this.userMail,
     @required this.topic,
     @required this.year,
     @required this.endDate,
     this.isAccepted = false,
+    this.acceptingUserMail,
   });
 
   Map<String, dynamic> toMap() {
@@ -34,8 +34,9 @@ class Offer {
       'userMail': userMail,
       'topic': topic,
       'year': year,
-      'endDate': endDate,
+      'endDate': endDate?.millisecondsSinceEpoch,
       'isAccepted': isAccepted,
+      'acceptingUserMail': acceptingUserMail,
     };
   }
 
@@ -48,8 +49,9 @@ class Offer {
       userMail: map['userMail'],
       topic: map['topic'],
       year: map['year'],
-      endDate: map['endDate'],
+      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
       isAccepted: map['isAccepted'],
+      acceptingUserMail: map['acceptingUserMail'],
     );
   }
 
@@ -60,7 +62,7 @@ class Offer {
   ///Override toString, so the data of the offer is returned istead of intance
   @override
   String toString() {
-    return 'Offer(id: $id, subject: $subject, userMail: $userMail, topic: $topic, year: $year, endDate: $endDate, isAccepted: $isAccepted)';
+    return 'Offer(id: $id, subject: $subject, userMail: $userMail, topic: $topic, year: $year, endDate: $endDate, isAccepted: $isAccepted, acceptingUserMail: $acceptingUserMail)';
   }
 
   Offer copyWith({
@@ -69,8 +71,9 @@ class Offer {
     String userMail,
     String topic,
     int year,
-    int endDate,
+    DateTime endDate,
     bool isAccepted,
+    String acceptingUserMail,
   }) {
     return Offer(
       id: id ?? this.id,
@@ -80,6 +83,7 @@ class Offer {
       year: year ?? this.year,
       endDate: endDate ?? this.endDate,
       isAccepted: isAccepted ?? this.isAccepted,
+      acceptingUserMail: acceptingUserMail ?? this.acceptingUserMail,
     );
   }
 
@@ -94,7 +98,8 @@ class Offer {
         o.topic == topic &&
         o.year == year &&
         o.endDate == endDate &&
-        o.isAccepted == isAccepted;
+        o.isAccepted == isAccepted &&
+        o.acceptingUserMail == acceptingUserMail;
   }
 
   @override
@@ -105,6 +110,7 @@ class Offer {
         topic.hashCode ^
         year.hashCode ^
         endDate.hashCode ^
-        isAccepted.hashCode;
+        isAccepted.hashCode ^
+        acceptingUserMail.hashCode;
   }
 }
