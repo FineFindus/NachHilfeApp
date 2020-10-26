@@ -1,5 +1,6 @@
 import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/api/subjectValue.dart';
+import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
@@ -19,7 +20,7 @@ class OfferDetailsScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text("Fehler"),
+          child: Text(S.of(context).offer_create_error),
         ),
       );
 
@@ -40,17 +41,18 @@ class OfferDetailsScreen extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               children: [
                 ListTile(
-                    title: Text("Jahrgang:"), trailing: Text("${offer.year}")),
+                    title: Text(S.of(context).offer_details_label_year),
+                    trailing: Text("${offer.year}")),
                 ListTile(
-                    title: Text("Fach:"),
+                    title: Text(S.of(context).offer_details_label_subject),
                     trailing:
                         Text(getTranlatedSubject(context, offer.subject))),
                 ListTile(
-                  title: Text("Themen:"),
+                  title: Text(S.of(context).offer_details_label_topics),
                   trailing: Text(offer.topic),
                 ),
                 ListTile(
-                  title: Text("Enddatum:"),
+                  title: Text(S.of(context).offer_details_label_endDate),
                   trailing: Text(
                     formattedDate,
                     style: redText
@@ -69,7 +71,7 @@ class OfferDetailsScreen extends StatelessWidget {
                     primaryColor: CupertinoColors.activeBlue),
                 child: CupertinoButton.filled(
                     child: Text(
-                      "Annehmen",
+                      S.of(context).offer_details_button_label_accept,
                       style: const TextStyle(color: Colors.white),
                     ),
                     onPressed: () async {

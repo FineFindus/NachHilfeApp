@@ -1,3 +1,4 @@
+import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           controller: mailTextController,
                           maxLines: null,
                           keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             labelText:
                                 S.of(context).onboarding_textfield_label_name,
@@ -73,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             var regex = RegExp(
                                 r"^[a-zA-Z]+\.+[a-zA-Z]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?igs-buchholz\.de$");
                             //check if word contains numbers
-                            if (!regex.hasMatch(value))
+                            if (!regex.hasMatch(value.toLowerCase()))
                               return S
                                   .of(context)
                                   .onborading_textfield_error_name_numbers;
@@ -130,5 +131,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await storage.write(key: "user_email", value: mail);
 
     //TODO: register mail and firebase push message token to server
+    ApiClient.registerUserWithToken(mail, "TODO: token");
   }
 }

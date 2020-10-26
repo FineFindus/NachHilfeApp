@@ -9,6 +9,8 @@ import 'intl/messages_all.dart';
 // **************************************************************************
 
 // ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
+// ignore_for_file: avoid_redundant_argument_values
 
 class S {
   S();
@@ -53,10 +55,10 @@ class S {
     );
   }
 
-  /// `Please input your name and how to contact you (e.g. email.address).`
+  /// `Please input your email address to contact you.`
   String get onboaring_title {
     return Intl.message(
-      'Please input your name and how to contact you (e.g. email.address).',
+      'Please input your email address to contact you.',
       name: 'onboaring_title',
       desc: '',
       args: [],
@@ -73,20 +75,10 @@ class S {
     );
   }
 
-  /// `How to contact you`
-  String get onboarding_textfield_label_contact {
-    return Intl.message(
-      'How to contact you',
-      name: 'onboarding_textfield_label_contact',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please enter your name`
+  /// `Please enter a valid email address`
   String get onborading_textfield_error_name_empty {
     return Intl.message(
-      'Please enter your name',
+      'Please enter a valid email address',
       name: 'onborading_textfield_error_name_empty',
       desc: '',
       args: [],
@@ -98,16 +90,6 @@ class S {
     return Intl.message(
       'The name can only consist of alphabetic letters',
       name: 'onborading_textfield_error_name_numbers',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Please enter how to contact you`
-  String get onborading_textfield_error_contact_empty {
-    return Intl.message(
-      'Please enter how to contact you',
-      name: 'onborading_textfield_error_contact_empty',
       desc: '',
       args: [],
     );
@@ -183,6 +165,36 @@ class S {
     );
   }
 
+  /// `Year: {year}`
+  String offer_create_listtile_label_year(Object year) {
+    return Intl.message(
+      'Year: $year',
+      name: 'offer_create_listtile_label_year',
+      desc: '',
+      args: [year],
+    );
+  }
+
+  /// `Subject: {subject}`
+  String offer_create_listtile_label_subject(Object subject) {
+    return Intl.message(
+      'Subject: $subject',
+      name: 'offer_create_listtile_label_subject',
+      desc: '',
+      args: [subject],
+    );
+  }
+
+  /// `Basic knowledge`
+  String get topic_basic {
+    return Intl.message(
+      'Basic knowledge',
+      name: 'topic_basic',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `End date`
   String get offer_create_end_date {
     return Intl.message(
@@ -228,6 +240,76 @@ class S {
     return Intl.message(
       'Choose a class',
       name: 'offer_create_dialog_class_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occured`
+  String get offer_create_error {
+    return Intl.message(
+      'An error occured',
+      name: 'offer_create_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get offer_create_textfield_label_other {
+    return Intl.message(
+      'Other',
+      name: 'offer_create_textfield_label_other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Year:`
+  String get offer_details_label_year {
+    return Intl.message(
+      'Year:',
+      name: 'offer_details_label_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subject:`
+  String get offer_details_label_subject {
+    return Intl.message(
+      'Subject:',
+      name: 'offer_details_label_subject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Topics:`
+  String get offer_details_label_topics {
+    return Intl.message(
+      'Topics:',
+      name: 'offer_details_label_topics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enddate`
+  String get offer_details_label_endDate {
+    return Intl.message(
+      'Enddate',
+      name: 'offer_details_label_endDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accept`
+  String get offer_details_button_label_accept {
+    return Intl.message(
+      'Accept',
+      name: 'offer_details_button_label_accept',
       desc: '',
       args: [],
     );

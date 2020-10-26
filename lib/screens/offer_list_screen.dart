@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/model/offer.dart';
@@ -36,6 +38,16 @@ class _OfferListScreenState extends State<OfferListScreen> {
 
     //test if user is logged in, else push the login screen
     _isLoggedIn();
+    var dt = new DateTime.now();
+    var str = json.encode(dt, toEncodable: myEncode);
+    print(str);
+  }
+
+  dynamic myEncode(dynamic item) {
+    if (item is DateTime) {
+      return item.toIso8601String();
+    }
+    return item;
   }
 
   @override

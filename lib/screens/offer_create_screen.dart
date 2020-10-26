@@ -132,7 +132,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
           children: <Widget>[
             ListTile(
               leading: Icon(Mdi.teach),
-              title: Text("Klasse: $_year"),
+              title:
+                  Text(S.of(context).offer_create_listtile_label_year(_year)),
               onTap: () => showDialog(
                   context: context,
                   builder: (context) => _ChooseYearDialog(
@@ -146,7 +147,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             ),
             ListTile(
               leading: Icon(Icons.class_),
-              title: Text("Fach: ${getTranlatedSubject(context, _subject)}"),
+              title: Text(S.of(context).offer_create_listtile_label_subject(
+                  getTranlatedSubject(context, _subject))),
               onTap: () => showDialog(
                   context: context,
                   builder: (context) => _ChooseSubjectDialog(
@@ -236,9 +238,9 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       var result = await createTopicsList(context, _year, _subject);
       //add base knowledge option
       //TODO replace with localized strings from S.of(context)
-      result.insert(0, "Basiswissen");
+      result.insert(0, S.of(context).topic_basic);
       //add other option at the end
-      result.add("Anderes");
+      result.add(S.of(context).offer_create_textfield_label_other);
       //refresh
       setState(() {
         stringValues = result;
