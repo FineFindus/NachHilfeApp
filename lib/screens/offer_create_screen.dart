@@ -235,6 +235,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     try {
       var result = await createTopicsList(context, _year, _subject);
       //add base knowledge option
+      //TODO replace with localized strings from S.of(context)
       result.insert(0, "Basiswissen");
       //add other option at the end
       result.add("Anderes");
@@ -252,7 +253,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   Future<Offer> createOffer() async {
     //get name and conact
     var storage = FlutterSecureStorage();
-    var name = await storage.read(key: "user_email");
+    var mail = await storage.read(key: "user_email");
 
     //get topics
     var choosenTopics = [];
@@ -281,7 +282,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     Offer offer = Offer(
         year: _year,
         subject: _subject,
-        name: name,
+        userMail: mail,
         topic:
             "${choosenTopics.toString().replaceAll("[", "").replaceAll("]", "")}",
         isAccepted: false,
@@ -300,8 +301,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       //return result
       return result;
     } catch (e) {
-      //on error
-      return ["Ein Fehler ist aufgetreten"];
+      //on error return nothing
+      return [];
     }
   }
 }

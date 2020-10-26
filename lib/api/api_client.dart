@@ -61,4 +61,12 @@ class ApiClient {
           "An error occured", StackTrace.fromString(e.toString()));
     }
   }
+
+  static Future<void> updateOffer(Offer offer) async {
+    //check if id is null
+    if (offer.id == null || offer.id <= 0)
+      return Future.error("Id must not be null/larger than 0");
+    //TODO put update
+    String apiURL = "$url/${offer.id}";
+  }
 }

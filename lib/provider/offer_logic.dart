@@ -3,6 +3,20 @@ import 'package:NachHilfeApp/model/offer.dart';
 import 'package:flutter/material.dart';
 
 class OfferLogic extends ChangeNotifier {
+//internal used offer
+  Offer _offer;
+
+  ///Returns the currently selected offer.
+  ///Migth be null when no offer is selected.
+  Offer get offer => _offer;
+
+  ///Set the selected offer.
+  set setOffer(Offer offer) {
+    _offer = offer;
+    //update ui
+    notifyListeners();
+  }
+
 //internal list of offer
   List<Offer> _offers = [];
 

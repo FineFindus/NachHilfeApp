@@ -128,5 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     //store email address
     var storage = FlutterSecureStorage();
     await storage.write(key: "user_email", value: mail);
+
+    //TODO: register mail and firebase push message token to server
   }
 }

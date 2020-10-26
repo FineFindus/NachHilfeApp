@@ -23,7 +23,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
     Offer(
         id: 1,
         subject: Subject.math,
-        name: "Jonathan@igs-buchholz.de",
+        userMail: "Jonathan@igs-buchholz.de",
         topic: "Functions",
         year: 11,
         isAccepted: false,

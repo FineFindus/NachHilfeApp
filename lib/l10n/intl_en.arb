@@ -15,11 +15,14 @@
   "offer_create_title": "Create new Search",
   "offer_create_class_and_year": "Class and year",
   "offer_create_topic": "Topic",
+  "topic_basic": "Basiswissen",
   "offer_create_end_date": "End date",
   "offer_create_preview": "Preview",
   "offer_create_preview_text": "Here is a small preview of your search. Do you want to create this search?",
   "offer_create_dialog_subject_title": "Choose a subject",
   "offer_create_dialog_class_title": "Choose a class",
+  "offer_create_error": "Ein Fehler ist aufgetreten",
+  "offer_create_textfield_label_other": "Anderes",
   "subject_math": "math",
   "subject_german": "german",
   "subject_english": "english",
@@ -39,8 +42,6 @@
       "topic_4": "Länge/Zeit",
       "topic_5": "Flächen",
       "topic_7": "Geld/Gewicht"
-
     }
-
   }
 }
