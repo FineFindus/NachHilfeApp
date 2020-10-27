@@ -1,17 +1,20 @@
-import 'package:NachHilfeApp/api/subjectValue.dart';
-import 'package:NachHilfeApp/model/offer.dart';
-import 'package:NachHilfeApp/provider/offer_logic.dart';
-import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'package:NachHilfeApp/api/subjectValue.dart';
+import 'package:NachHilfeApp/model/offer.dart';
+import 'package:NachHilfeApp/provider/offer_logic.dart';
+import 'package:NachHilfeApp/screens/screens.dart';
+
 class OfferCard extends StatelessWidget {
   final Offer offer;
+  final Function onTap;
 
   const OfferCard({
     Key key,
     @required this.offer,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -29,13 +32,7 @@ class OfferCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListTile(
-            onTap: () {
-              //set selected offer
-              Provider.of<OfferLogic>(context, listen: false).setOffer = offer;
-              //push to details screen
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => OfferDetailsScreen()));
-            },
+            onTap: onTap,
             title: Text(
                 "${getTranlatedSubject(context, offer.subject)}  ${offer.year}"),
             subtitle: Text(offer.topic),

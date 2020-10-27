@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/model/offer.dart';
+import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
@@ -11,6 +12,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 class OfferListScreen extends StatefulWidget {
   @override
@@ -72,42 +74,57 @@ class _OfferListScreenState extends State<OfferListScreen> {
         body: Center(
           child: RefreshIndicator(
             onRefresh: () async {
-              setState(() {});
-              await Future.delayed(Duration(seconds: 2));
+              //wait for better visual indication that the app is refreshing.
+              //otherwise if the data doesnt change the user might be confused and think it didnt refresh
+              await Future.delayed(Duration(seconds: 1));
+              //reload offers
+              await Provider.of<OfferLogic>(context, listen: false)
+                  .refreshOffers();
             },
             child: FutureBuilder<List<dynamic>>(
-              future: ApiClient.getOffers(),
+              future: Provider.of<OfferLogic>(context).offers,
               builder: (context, snapshot) {
                 //check if connection is done
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
                     return ListView.builder(
                       itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) =>
-                          OfferCard(offer: snapshot.data[index]),
+                      itemBuilder: (context, index) => OfferCard(
+                        offer: snapshot.data[index],
+                        onTap: () {
+                          //set selected offer
+                          Provider.of<OfferLogic>(context, listen: false)
+                              .setOffer = snapshot.data[index];
+                          //push to details screen
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => OfferDetailsScreen()));
+                        },
+                      ),
                     );
                   } else if (snapshot.hasError) {
                     print(snapshot.error);
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.error, size: 60, color: Colors.red),
+                        Icon(Icons.error, size: 150, color: Colors.red),
                         const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child:
-                              Text(S.of(context).offer_list_connection_error),
-                        ),
-                        const SizedBox(height: 10),
-                        FloatingActionButton(
-                          tooltip:
-                              S.of(context).offer_list_connection_error_retry,
-                          mini: true,
-                          onPressed: () {
-                            setState(() {});
-                          },
+                        Container(
+                            width: 300,
+                            child: Text(
+                              S.of(context).offer_list_connection_error,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 17),
+                            )),
+                        const SizedBox(height: 20),
+                        CupertinoButton.filled(
                           child: Icon(Icons.refresh),
+                          onPressed: () =>
+                              Provider.of<OfferLogic>(context, listen: false)
+                                  .refreshOffers(),
                         ),
+
+                        //tooltip:
+                        //  S.of(context).offer_list_connection_error_retry,
                       ],
                     );
                   }

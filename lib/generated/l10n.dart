@@ -165,6 +165,16 @@ class S {
     );
   }
 
+  /// `Atleast one topics mst be selected`
+  String get offer_create_topic_error {
+    return Intl.message(
+      'Atleast one topics mst be selected',
+      name: 'offer_create_topic_error',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Year: {year}`
   String offer_create_listtile_label_year(Object year) {
     return Intl.message(

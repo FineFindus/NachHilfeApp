@@ -97,13 +97,17 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             FlatButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              onPressed: onStepContinue,
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               textTheme: ButtonTextTheme.normal,
               child: Text(_currentStep != _mySteps().length - 1
                   ? MaterialLocalizations.of(context).continueButtonLabel
                   : S.of(context).create),
+              //check if user is allowed to create offer by checking if atleast one topic is selected
+              onPressed: _currentStep == _mySteps().length - 1 &&
+                      values.where((element) => element).isEmpty
+                  ? null
+                  : onStepContinue,
             ),
             Container(
               margin: const EdgeInsetsDirectional.only(start: 8.0),
@@ -165,8 +169,11 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       ),
       Step(
         isActive: _currentStep >= 1,
-        state: _currentStep == 1 ? StepState.editing : StepState.indexed,
+        state: _getStepStateTopics(),
         title: Text(S.of(context).offer_create_topic),
+        subtitle: values.where((element) => element).isEmpty
+            ? Text(S.of(context).offer_create_topic_error)
+            : null,
         content: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
@@ -296,16 +303,26 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   ///Loads a list with bad wods from assets and returns a string list
   Future<List<String>> _loadBadWords() async {
     var json = await rootBundle.loadString("assets/bad_word.json");
-    //decode the file and get the year and subject
+    //decode the file as a list of strings
     try {
       List<String> result = (jsonDecode(json) as List<dynamic>).cast<String>();
-
       //return result
       return result;
     } catch (e) {
-      //on error return nothing
+      //on error return an empty list
       return [];
     }
+  }
+
+  ///Returns a stepsate for the topics step.
+  ///Returns a StepState.error if no elemnts are selected
+  StepState _getStepStateTopics() {
+    if (values.where((element) => element).isEmpty) {
+      return StepState.error;
+    } else if (_currentStep == 1) {
+      return StepState.editing;
+    }
+    return StepState.indexed;
   }
 }
 

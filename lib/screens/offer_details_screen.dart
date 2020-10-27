@@ -78,6 +78,7 @@ class OfferDetailsScreen extends StatelessWidget {
                       var mail = await storage.read(key: "user_email");
                       if (mail != null) {
                         //TODO: update offer at server
+                        //send post to server
                         ApiClient.updateOffer(offer);
                       } else {
                         //push back to login screen

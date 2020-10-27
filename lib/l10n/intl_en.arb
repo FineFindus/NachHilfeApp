@@ -13,6 +13,7 @@
   "offer_create_title": "Create new Search",
   "offer_create_class_and_year": "Class and year",
   "offer_create_topic": "Topic",
+  "offer_create_topic_error": "Atleast one topics mst be selected",
   "offer_create_listtile_label_year": "Year: {year}",
   "offer_create_listtile_label_subject": "Subject: {subject}",
   "topic_basic": "Basic knowledge",

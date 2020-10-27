@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_create_textfield_label_other" : MessageLookupByLibrary.simpleMessage("Anderes"),
     "offer_create_title" : MessageLookupByLibrary.simpleMessage("Neue Suche erstellen"),
     "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Thema"),
+    "offer_create_topic_error" : MessageLookupByLibrary.simpleMessage("Es muss mndestens ein Thema ausgewählt sein"),
     "offer_details_button_label_accept" : MessageLookupByLibrary.simpleMessage("Annehmen"),
     "offer_details_label_endDate" : MessageLookupByLibrary.simpleMessage("Enddatum"),
     "offer_details_label_subject" : MessageLookupByLibrary.simpleMessage("Fach:"),
