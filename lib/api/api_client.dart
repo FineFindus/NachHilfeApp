@@ -3,12 +3,16 @@ import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 
 class ApiClient {
+  ///API url from the server to post and get offers
   static final String url =
       "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/db";
 
+  //TODO: update url
+  ///The API url for the user
+  ///Used to register the user at the server and used in offer post request.
   static final String apiUserURL = "TODO: insert url";
 
-  ///TODO change to real url should be something/ api/v1/offers
+  //TODO change to real url should be something/ api/v1/offers
 
   ///Creates a GET request to the server to get the offers from the database.
   ///Throws an exception if something failed.

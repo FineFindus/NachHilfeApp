@@ -64,28 +64,25 @@ class OfferDetailsScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: CupertinoTheme(
-                data: CupertinoThemeData(
-                    primaryColor: CupertinoColors.activeBlue),
-                child: CupertinoButton.filled(
-                    child: Text(
-                      S.of(context).offer_details_button_label_accept,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () async {
-                      //check if user has a mail address
-                      var storage = FlutterSecureStorage();
-                      var mail = await storage.read(key: "user_email");
-                      if (mail != null) {
-                        //TODO: update offer at server
-                        //send post to server
-                        ApiClient.updateOffer(offer);
-                      } else {
-                        //push back to login screen
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => OnboardingScreen()));
-                      }
-                    })),
+            child: CupertinoButton.filled(
+                child: Text(
+                  S.of(context).offer_details_button_label_accept,
+                  style: const TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  //check if user has a mail address
+                  var storage = FlutterSecureStorage();
+                  var mail = await storage.read(key: "user_email");
+                  if (mail != null) {
+                    //TODO: update offer at server
+                    //send post to server
+                    ApiClient.updateOffer(offer);
+                  } else {
+                    //push back to login screen
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => OnboardingScreen()));
+                  }
+                }),
           ),
         ],
       ),

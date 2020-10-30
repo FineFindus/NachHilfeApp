@@ -97,7 +97,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             FlatButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
               textColor: Colors.white,
               textTheme: ButtonTextTheme.normal,
               child: Text(_currentStep != _mySteps().length - 1

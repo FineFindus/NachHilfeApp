@@ -305,10 +305,10 @@ class S {
     );
   }
 
-  /// `Enddate`
+  /// `Enddate:`
   String get offer_details_label_endDate {
     return Intl.message(
-      'Enddate',
+      'Enddate:',
       name: 'offer_details_label_endDate',
       desc: '',
       args: [],

@@ -5,7 +5,13 @@
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
+
+         <!-- the allowBackup and fullBackUpContent
+         should be set to false, this might fix a crash related to secure storage
+         -->
     <application
+        android:allowBackup="false" 
+        android:fullBackupContent="false"
         android:name="io.flutter.app.FlutterApplication"
         android:label="NachHilfeApp"
         android:icon="@mipmap/ic_launcher">

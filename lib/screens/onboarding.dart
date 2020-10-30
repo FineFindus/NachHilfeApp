@@ -86,31 +86,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
-                        title: CupertinoTheme(
-                            data: CupertinoThemeData(
-                                primaryColor: CupertinoColors.activeBlue),
-                            child: CupertinoButton.filled(
-                                child: Text(
-                                  S.of(context).ok,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                onPressed: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    if (mailTextController.text
-                                        .trim()
-                                        .isNotEmpty) {
-                                      await storeMailAddress(
-                                          mailTextController.text.trim());
+                          title: CupertinoButton.filled(
+                              child: Text(
+                                S.of(context).ok,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  if (mailTextController.text
+                                      .trim()
+                                      .isNotEmpty) {
+                                    await storeMailAddress(
+                                        mailTextController.text.trim());
 
-                                      //push and replace with new screen
-                                      Navigator.of(context)
-                                          .pushReplacement(MaterialPageRoute(
-                                        builder: (context) => OfferListScreen(),
-                                      ));
-                                    }
+                                    //push and replace with new screen
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (context) => OfferListScreen(),
+                                    ));
                                   }
-                                })),
-                      ),
+                                }
+                              })),
                     ),
                   ],
                 ),
