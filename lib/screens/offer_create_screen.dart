@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/utils/topic_list.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,15 +72,19 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             this._currentStep = step;
           });
         },
-        onStepContinue: () {
-          setState(() {
-            if (this._currentStep < this._mySteps().length - 1) {
+        onStepContinue: () async {
+          if (this._currentStep < this._mySteps().length - 1) {
+            setState(() {
               this._currentStep = this._currentStep + 1;
-            } else {
-              //Logic to check if everything is completed
-              print('Completed, check fields.');
+            });
+          } else {
+            //user has completed all steps
+            Offer offer = await createOffer();
+            if (offer != null) {
+              //post offer to server
+              await ApiClient.postOffer(offer);
             }
-          });
+          }
         },
         onStepCancel: () {
           setState(() {
@@ -295,7 +300,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
         topic:
             "${choosenTopics.toString().replaceAll("[", "").replaceAll("]", "")}",
         isAccepted: false,
-        endDate: pickedDate);
+        endDate:
+            pickedDate.isAfter(DateTime.now()) ? pickedDate : DateTime.now());
 
     return offer;
   }

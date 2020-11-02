@@ -70,25 +70,36 @@
         ]
     },
     "8": {
-        "Subject.math":[
+        "Subject.math": [
             "Lineare Funktionen",
             "Prozent- und Zinsrechung",
             "Gleichungen",
             "Stochastik",
             "Flächen und Körper",
             "Terme und Binome"
-        ],"Subject.english": [
+        ],
+        "Subject.english": [
             "Zoom in und Gateway to NY",
             "Teens in the midwest",
             "In the Northeast",
             "California Dreams"
+        ],
+        "Subject.german": [
+            "Bewerbung und Lebenslauf",
+            "Erörterung und Jugend debattiert",
+            "Ganzschrift: Tschick",
+            "Rechtschreibung und Grammatik",
+            "Drama"
         ]
     },
     "9": {},
     "10": {},
     "11": {
         "Subject.math": [
-            "Beschreibende Statistik"
+            "Abhängigkeit und Änderung",
+            "Beschreibende Statistik",
+            "Alte und neue Funktionenklassen",
+            "Binomialverteilung"
         ]
     },
     "12": {},

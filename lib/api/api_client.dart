@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -5,7 +7,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 class ApiClient {
   ///API url from the server to post and get offers
   static final String url =
-      "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/db";
+      "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
 
   //TODO: update url
   ///The API url for the user
@@ -39,6 +41,9 @@ class ApiClient {
         //request was successful
         List<Offer> responseData = [];
 
+        /*
+        //! use if data comes as list example:
+        //! {"offers": [{data}]} 
         //map data to list
         Map<String, dynamic> map = response.data;
         List<dynamic> data = map["offers"];
@@ -46,10 +51,16 @@ class ApiClient {
         //add data to list
         for (var i = 0; i < data.length; i++) {
           responseData.add(Offer.fromMap(data[i]));
-        }
-
-        //responseData..shuffle();
+        } 
+        
         //return data
+        return responseData; */
+
+        //add data to list
+        for (var i = 0; i < response.data.length; i++) {
+          responseData.add(Offer.fromMap(response.data[i]));
+        }
+        //return the list
         return responseData;
       } else if (response.statusCode == 404) {
         //user could not reach server
@@ -68,14 +79,53 @@ class ApiClient {
     }
   }
 
+  static Future<void> postOffer(Offer offer) async {
+    assert(offer != null && offer.userMail != null);
+
+    // post to server
+
+    //response
+    Response response;
+    //create dio for http request
+    Dio dio = new Dio();
+    //set options like timeout, etc.
+    dio.options.connectTimeout = 30000; //30s
+    dio.options.receiveTimeout = 30000; //10s
+
+    try {
+      //post data
+      response = await dio.post(url, data: offer.toJson());
+
+      print(response);
+
+      //check the status code
+      if (response.statusCode == 200 && response.data != null) {
+        //offer was accepted and is returned with a id
+        //TODO
+
+      } else if (response.statusCode == 404) {
+        //the user is offline or the id could not be found and a 404 was returned
+        return Future.error(
+            "The user is offline or the id could not be found and a 404 was returned",
+            StackTrace.fromString("This is its trace"));
+      }
+    } on DioError catch (e) {
+      //catch errors
+      print(e);
+      return Future.error(
+          "An error occured: $e", StackTrace.fromString(e.toString()));
+    }
+  }
+
   ///PUT operation to update a already existing offer on the server.
   ///The id cannot be null and must be larger than 0.
   static Future<void> updateOffer(Offer offer) async {
-    print(offer);
     //check if id is null
     if (offer.id == null || offer.id <= 0)
       return Future.error("Id must not be null/larger than 0");
-    //TODO put update
+    //put update
+
+    //url for the specific offer per id. The id parameter can only be a number
     String apiURL = "$url/${offer.id}";
 
     Response response;
@@ -92,8 +142,8 @@ class ApiClient {
       //check the status code
       if (response.statusCode == 200 && response.data != null) {
         //TODO
-
-      } else if (response.statusCode == 404) {
+        print(response);
+      } else {
         //the user is offline or the id could not be found and a 404 was returned
         return Future.error(
             "The user is offline or the id could not be found and a 404 was returned",
