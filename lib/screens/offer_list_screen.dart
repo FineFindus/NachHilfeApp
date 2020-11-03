@@ -1,12 +1,7 @@
-import 'dart:convert';
-
-import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/generated/l10n.dart';
-import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
-import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';

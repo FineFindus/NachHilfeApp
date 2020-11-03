@@ -127,7 +127,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
                   : S.of(context).create),
               //check if user is allowed to create offer by checking if atleast one topic is selected
               onPressed: _currentStep == _mySteps().length - 1 &&
-                      values.where((element) => element).isEmpty
+                      ((values.where((element) => element).isEmpty ||
+                          values.last && otherController.text.trim().isEmpty))
                   ? null
                   : onStepContinue,
             ),
@@ -193,7 +194,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
         isActive: _currentStep >= 1,
         state: _getStepStateTopics(),
         title: Text(S.of(context).offer_create_topic),
-        subtitle: values.where((element) => element).isEmpty
+        subtitle: (values.last && otherController.text.trim().isEmpty) ||
+                values.where((element) => element).isEmpty
             ? Text(S.of(context).offer_create_topic_error)
             : null,
         content: ListView.builder(
@@ -266,7 +268,6 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     try {
       var result = await createTopicsList(context, _year, _subject);
       //add base knowledge option
-      //TODO replace with localized strings from S.of(context)
       result.insert(0, S.of(context).topic_basic);
       //add other option at the end
       result.add(S.of(context).offer_create_textfield_label_other);
@@ -340,7 +341,9 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   ///Returns a stepsate for the topics step.
   ///Returns a StepState.error if no elemnts are selected
   StepState _getStepStateTopics() {
-    if (values.where((element) => element).isEmpty) {
+    if (values.last && otherController.text.trim().isEmpty) {
+      return StepState.error;
+    } else if (values.where((element) => element).isEmpty) {
       return StepState.error;
     } else if (_currentStep == 1) {
       return StepState.editing;

@@ -13,7 +13,7 @@
   "offer_create_title": "Neue Suche erstellen",
   "offer_create_class_and_year": "Klasse und Fach",
   "offer_create_topic": "Thema",
-  "offer_create_topic_error": "Es muss mndestens ein Thema ausgewählt sein",
+  "offer_create_topic_error": "Es muss mindestens ein Thema ausgewählt sein",
   "offer_create_listtile_label_year": "Klasse: {year}",
   "offer_create_listtile_label_subject": "Fach: {subject}",
   "topic_basic": "Basiswissen",

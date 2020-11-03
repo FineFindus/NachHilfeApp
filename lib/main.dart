@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //create provider for statemanagment
         ChangeNotifierProvider(create: (_) => new OfferLogic()),
       ],
       child: Directionality(

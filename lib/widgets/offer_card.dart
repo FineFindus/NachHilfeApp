@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import 'package:NachHilfeApp/api/subjectValue.dart';
 import 'package:NachHilfeApp/model/offer.dart';
-import 'package:NachHilfeApp/provider/offer_logic.dart';
-import 'package:NachHilfeApp/screens/screens.dart';
 
 class OfferCard extends StatelessWidget {
   final Offer offer;
@@ -21,11 +18,10 @@ class OfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     //parse date
     var date = offer.endDate.add(Duration(hours: 2));
-    var formattedDate = DateFormat("dd.MM").format(offer.endDate);
+    var formattedDate = DateFormat("dd.MM").format(date);
 
     //is date nearer then 3 days? if yes, make the text red, to indicate its soon
-    var redText =
-        (DateTime.now().add(Duration(days: 3)).isAfter(offer.endDate));
+    var redText = (DateTime.now().add(Duration(days: 3)).isAfter(date));
 
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
