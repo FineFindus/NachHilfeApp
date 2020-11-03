@@ -194,7 +194,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
         isActive: _currentStep >= 1,
         state: _getStepStateTopics(),
         title: Text(S.of(context).offer_create_topic),
-        subtitle: (values.last && otherController.text.trim().isEmpty) ||
+        subtitle: ((values.isNotEmpty ? values.last : false) &&
+                    otherController.text.trim().isEmpty) ||
                 values.where((element) => element).isEmpty
             ? Text(S.of(context).offer_create_topic_error)
             : null,
@@ -341,9 +342,9 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   ///Returns a stepsate for the topics step.
   ///Returns a StepState.error if no elemnts are selected
   StepState _getStepStateTopics() {
-    if (values.last && otherController.text.trim().isEmpty) {
+    if (!values.contains(true)) {
       return StepState.error;
-    } else if (values.where((element) => element).isEmpty) {
+    } else if (values.last && otherController.text.trim().isEmpty) {
       return StepState.error;
     } else if (_currentStep == 1) {
       return StepState.editing;
