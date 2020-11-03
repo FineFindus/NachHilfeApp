@@ -15,20 +15,21 @@ class OfferDetailsScreen extends StatefulWidget {
   _OfferDetailsScreenState createState() => _OfferDetailsScreenState();
 }
 
-class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
+class _OfferDetailsScreenState extends State<OfferDetailsScreen>
+    with SingleTickerProviderStateMixin {
   //if a resquest was send and is now loading
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     //get selected offer from Provider
-    final Offer offer = Provider.of<OfferLogic>(context).offer;
+    Offer offer = Provider.of<OfferLogic>(context).offer;
 
-    if (offer == null || offer.isAccepted ?? false)
+    if (offer == null)
       return Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text(S.of(context).offer_create_error),
+          child: Text(offer.toString()),
         ),
       );
 
@@ -67,6 +68,15 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                         : null,
                   ),
                 ),
+                ListTile(
+                  title: Text(S.of(context).offer_details_label_accepted),
+                  trailing: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: Icon(offer.isAccepted ? Icons.check : Icons.clear,
+                        color: offer.isAccepted ? Colors.green : Colors.red,
+                        key: Key(offer.isAccepted.toString())),
+                  ),
+                ),
               ],
             ),
           ),
@@ -75,12 +85,14 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
             child: SizedBox(
               width: double.infinity,
-              height: 70.0,
-              child: AnimatedContainer(
-                duration: const Duration(seconds: 2),
+              //height: 70.0,
+              child: AnimatedSize(
+                vsync: this,
+                duration: const Duration(milliseconds: 500),
+                //height: _isLoading ? 70.0 : null,
                 child: CupertinoButton.filled(
                     child: AnimatedSwitcher(
-                      duration: const Duration(seconds: 2),
+                      duration: const Duration(milliseconds: 500),
                       child: _isLoading
                           ? CircularProgressIndicator(
                               valueColor:
@@ -101,36 +113,49 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
                               ],
                             ),
                     ),
-                    onPressed: () async {
-                      //check if user has a mail address
-                      var storage = FlutterSecureStorage();
-                      var mail = await storage.read(key: "user_email");
-                      if (mail != null) {
-                        //update offer at server
-
-                        //set loading
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        //send post to server
-                        await ApiClient.updateOffer(offer);
-                        await Future.delayed(Duration(seconds: 20));
-
-                        //cancel loading
-                        setState(() {
-                          _isLoading = false;
-                        });
-                      } else {
-                        //push back to login screen
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => OnboardingScreen()));
-                      }
-                    }),
+                    onPressed:
+                        offer.isAccepted ? null : () => _acceptOffer(offer)),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  ///Updates the offer in the backend
+  Future<void> _acceptOffer(Offer offer) async {
+    //only update while not loading
+    if (!_isLoading) {
+      //check if user has a mail address
+      var storage = FlutterSecureStorage();
+      var mail = await storage.read(key: "user_email");
+      if (mail != null) {
+        //update offer data
+        Offer updatedOffer = offer.copyWith(
+          acceptingUserMail: mail,
+          isAccepted: true,
+        );
+
+        //set loading
+        setState(() {
+          _isLoading = true;
+        });
+        //send post to server
+        await ApiClient.updateOffer(updatedOffer);
+        //await Future.delayed(Duration(seconds: 2));
+        Provider.of<OfferLogic>(context, listen: false).setOffer = updatedOffer;
+        Provider.of<OfferLogic>(context, listen: false).removeOffer(offer);
+
+        //cancel loading
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        //push back to login screen
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => OnboardingScreen()));
+      }
+    }
   }
 }

@@ -20,27 +20,12 @@ class OfferListScreen extends StatefulWidget {
 }
 
 class _OfferListScreenState extends State<OfferListScreen> {
-  //get offers
-  var offers =
-      // Provider.of<OfferLogic>(context).offers;
-      [
-    Offer(
-        id: 1,
-        subject: Subject.math,
-        userMail: "Jonathan@igs-buchholz.de",
-        topic: "Functions",
-        year: 11,
-        isAccepted: false,
-        endDate: DateTime.now())
-  ];
-
   @override
   void initState() {
     super.initState();
 
     //test if user is logged in, else push the login screen
     _isLoggedIn();
-    print(offers[0].toJson());
   }
 
   @override
@@ -84,52 +69,59 @@ class _OfferListScreenState extends State<OfferListScreen> {
             child: FutureBuilder<List<dynamic>>(
               future: Provider.of<OfferLogic>(context).offers,
               builder: (context, snapshot) {
-                //check if connection is done
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) => OfferCard(
-                        offer: snapshot.data[index],
-                        onTap: () {
-                          //set selected offer
-                          Provider.of<OfferLogic>(context, listen: false)
-                              .setOffer = snapshot.data[index];
-                          //push to details screen
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => OfferDetailsScreen()));
-                        },
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    print(snapshot.error);
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.error, size: 150, color: Colors.red),
-                        const SizedBox(height: 10),
-                        Container(
-                            width: 300,
-                            child: Text(
-                              S.of(context).offer_list_connection_error,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 17),
-                            )),
-                        const SizedBox(height: 20),
-                        CupertinoButton.filled(
-                          child: Icon(Icons.refresh),
-                          onPressed: () =>
-                              Provider.of<OfferLogic>(context, listen: false)
-                                  .refreshOffers(),
-                        ),
+                return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child:
+                        //check if connection is done
+                        (() {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) => OfferCard(
+                              offer: snapshot.data[index],
+                              onTap: () {
+                                //set selected offer
+                                Provider.of<OfferLogic>(context, listen: false)
+                                    .setOffer = snapshot.data[index];
+                                //push to details screen
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        OfferDetailsScreen()));
+                              },
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.error, size: 150, color: Colors.red),
+                              const SizedBox(height: 10),
+                              Container(
+                                  width: 300,
+                                  child: Text(
+                                    S.of(context).offer_list_connection_error,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 17),
+                                  )),
+                              const SizedBox(height: 20),
+                              CupertinoButton.filled(
+                                child: Icon(Icons.refresh),
+                                onPressed: () => Provider.of<OfferLogic>(
+                                        context,
+                                        listen: false)
+                                    .refreshOffers(),
+                              ),
 
-                        //tooltip:
-                        //  S.of(context).offer_list_connection_error_retry,
-                      ],
-                    );
-                  }
-                }
-                return CircularProgressIndicator();
+                              //tooltip:
+                              //  S.of(context).offer_list_connection_error_retry,
+                            ],
+                          );
+                        }
+                      }
+                      return CircularProgressIndicator();
+                    }()));
               },
             ),
           ),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -12,7 +10,7 @@ class ApiClient {
   //TODO: update url
   ///The API url for the user
   ///Used to register the user at the server and used in offer post request.
-  static final String apiUserURL = "TODO: insert url";
+  static final String apiUserURL = "https://google.com";
 
   //TODO change to real url should be something/ api/v1/offers
 

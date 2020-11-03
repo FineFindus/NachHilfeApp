@@ -33,6 +33,15 @@ class OfferLogic extends ChangeNotifier {
     return await ApiClient.getOffers();
   }
 
+  ///Removes a offer from the internal list of offers without refreshing them
+  ///from the server.
+  void removeOffer(Offer offer) {
+    if (_offers != null) {
+      _offers.remove(offer);
+      notifyListeners();
+    }
+  }
+
   ///Refresh the offer list by loading
   Future<void> refreshOffers() async {
     //load new offers from server via apiclient

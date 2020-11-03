@@ -81,8 +81,25 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             //user has completed all steps
             Offer offer = await createOffer();
             if (offer != null) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+              );
               //post offer to server
               await ApiClient.postOffer(offer);
+              //close dialog
+              Navigator.of(context).pop();
+              //then close screen
+              Navigator.of(context).pop();
             }
           }
         },

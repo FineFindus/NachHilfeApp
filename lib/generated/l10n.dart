@@ -315,6 +315,16 @@ class S {
     );
   }
 
+  /// `Accepted:`
+  String get offer_details_label_accepted {
+    return Intl.message(
+      'Accepted:',
+      name: 'offer_details_label_accepted',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Accept`
   String get offer_details_button_label_accept {
     return Intl.message(
