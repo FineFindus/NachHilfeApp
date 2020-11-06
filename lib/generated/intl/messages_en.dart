@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Topic"),
     "offer_create_topic_error" : MessageLookupByLibrary.simpleMessage("Atleast one topics mst be selected"),
     "offer_details_button_label_accept" : MessageLookupByLibrary.simpleMessage("Accept"),
+    "offer_details_info_accepting" : MessageLookupByLibrary.simpleMessage("On accepting the date is binding"),
     "offer_details_label_accepted" : MessageLookupByLibrary.simpleMessage("Accepted:"),
     "offer_details_label_endDate" : MessageLookupByLibrary.simpleMessage("Enddate:"),
     "offer_details_label_subject" : MessageLookupByLibrary.simpleMessage("Subject:"),

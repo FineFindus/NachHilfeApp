@@ -49,6 +49,9 @@ dependencies:
   mdi: ^3.0.0
   #profanity filter
   profanity_filter: ^1.0.4
+  #url launcher for sending mails
+  url_launcher: ^5.7.10
+
 
 
 

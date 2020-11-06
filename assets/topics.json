@@ -100,6 +100,19 @@
             "Beschreibende Statistik",
             "Alte und neue Funktionenklassen",
             "Binomialverteilung"
+        ],
+        "Subject.english": [
+            "England now and then",
+            "think globally act locally",
+            "digital age",
+            "reading a novel"
+        ],
+        "Subject.german": [
+            "Kommunikationstheorien",
+            "traditioneller Roman",
+            "Redeanalyse",
+            "Drama",
+            "Filmische Analyse"
         ]
     },
     "12": {},

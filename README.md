@@ -31,3 +31,9 @@ A offer should consist of the following informations:
 * contact (only accesseble after accepting)
 * name
 * place?
+
+
+## TODO
+Stuff thats todod in the future
+* price
+*group accepted
