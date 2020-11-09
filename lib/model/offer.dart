@@ -34,7 +34,7 @@ class Offer {
       'userMail': userMail,
       'topic': topic,
       'year': year,
-      'endDate': endDate?.millisecondsSinceEpoch,
+      'endDate': endDate?.toIso8601String(),
       'isAccepted': isAccepted,
       'acceptingUserMail': acceptingUserMail,
     };
@@ -49,7 +49,7 @@ class Offer {
       userMail: map['userMail'],
       topic: map['topic'],
       year: map['year'],
-      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
+      endDate: DateTime.parse(map['endDate']),
       isAccepted: map['isAccepted'],
       acceptingUserMail: map['acceptingUserMail'],
     );

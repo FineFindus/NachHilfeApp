@@ -7,7 +7,7 @@
   "onborading_textfield_error_name_numbers": "Bitte trage eine richtige Email-Adresse ein",
   "onborading_textfield_error_name_empty": "Bitte trage eine richtige Email-Adresse ein",
   "offer_list_appbar_title": "Suchen",
-  "offer_list_connection_error": "Ein Fehler ist aufgetreten, bitte versichere dich das du eine Internetverbindung hast und versuche es erneut.",
+  "offer_list_connection_error": "Ein Fehler ist aufgetreten, bitte versichere dich das du eine Internetverbindung hast und versuche es erneut. Derzeit funktioniert die App nur wenn du mit dem Schulnetzwerk verbunden bist",
   "offer_list_connection_error_retry": "Erneut versuchen",
   "offer_list_fab_create": "Erstellen",
   "offer_create_title": "Neue Suche erstellen",

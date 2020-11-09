@@ -44,8 +44,8 @@ class OfferLogic extends ChangeNotifier {
 
   ///Refresh the offer list by loading
   Future<void> refreshOffers() async {
-    //load new offers from server via apiclient
-    _offers = await ApiClient.getOffers();
+    //load new offers from server via apiClient
+    _offers = await ApiClient.getOffers(withCache: false);
     //update ui
     notifyListeners();
   }

@@ -55,7 +55,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
           child: RefreshIndicator(
             onRefresh: () async {
               //wait for better visual indication that the app is refreshing.
-              //otherwise if the data doesnt change the user might be confused and think it didnt refresh
+              //otherwise if the data doesn't change the user might be confused and think it didn't refresh
               await Future.delayed(Duration(seconds: 1));
               //reload offers
               await Provider.of<OfferLogic>(context, listen: false)

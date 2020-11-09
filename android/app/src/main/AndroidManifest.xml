@@ -10,6 +10,7 @@
          should be set to false, this might fix a crash related to secure storage
          -->
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="false" 
         android:fullBackupContent="false"
         android:name="io.flutter.app.FlutterApplication"

@@ -46,7 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_details_label_topics" : MessageLookupByLibrary.simpleMessage("Themen:"),
     "offer_details_label_year" : MessageLookupByLibrary.simpleMessage("Jahr:"),
     "offer_list_appbar_title" : MessageLookupByLibrary.simpleMessage("Suchen"),
-    "offer_list_connection_error" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten, bitte versichere dich das du eine Internetverbindung hast und versuche es erneut."),
+    "offer_list_connection_error" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten, bitte versichere dich das du eine Internetverbindung hast und versuche es erneut. Derzeit funktioniert die App nur wenn du mit dem Schulnetzwerk verbunden bist"),
     "offer_list_connection_error_retry" : MessageLookupByLibrary.simpleMessage("Erneut versuchen"),
     "offer_list_fab_create" : MessageLookupByLibrary.simpleMessage("Erstellen"),
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),

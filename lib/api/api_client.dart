@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:NachHilfeApp/model/offer.dart';
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 
 class ApiClient {
   ///API url from the server to post and get offers
-  static final String url =
-      "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
+  static final String url = "http://10.0.2.2:8888/api/v1/offers";
+  // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
 
   //TODO: update url
   ///The API url for the user
@@ -16,7 +19,10 @@ class ApiClient {
 
   ///Creates a GET request to the server to get the offers from the database.
   ///Throws an exception if something failed.
-  static Future<List<dynamic>> getOffers() async {
+  static Future<List<dynamic>> getOffers(
+      {bool withCache = true, bool isAccepted = false}) async {
+    String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
+
     Response response;
     //create dio for http request
     Dio dio = new Dio();
@@ -25,19 +31,35 @@ class ApiClient {
     dio.options.receiveTimeout = 30000; //10s
 
     //create cache
-    dio.interceptors
-        .add(DioCacheManager(CacheConfig(baseUrl: url)).interceptor);
+    if (withCache)
+      dio.interceptors
+          .add(DioCacheManager(CacheConfig(baseUrl: urlWithQuery)).interceptor);
+
+    //allow http traffic for debug on localhost
+    // if (kDebugMode)
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+        return true;
+      };
+    };
 
     //get response from server with cache
     try {
       //get data
-      response =
-          await dio.get(url, options: buildCacheOptions(Duration(hours: 8)));
+      if (withCache)
+        response = await dio.get(urlWithQuery,
+            options: buildCacheOptions(Duration(hours: 8)));
+      else
+        response = await dio.get(urlWithQuery);
 
       //check the status code
       if (response.statusCode == 200 && response.data != null) {
         //request was successful
         List<Offer> responseData = [];
+
+        print(response.data.toString());
 
         /*
         //! use if data comes as list example:
@@ -73,7 +95,7 @@ class ApiClient {
       if (e.type == DioErrorType.CONNECT_TIMEOUT) print("Test");
       print(e);
       return Future.error(
-          "An error occured", StackTrace.fromString(e.toString()));
+          "An error occurred", StackTrace.fromString(e.toString()));
     }
   }
 
@@ -99,8 +121,6 @@ class ApiClient {
       //check the status code
       if (response.statusCode == 200 && response.data != null) {
         //offer was accepted and is returned with a id
-        //TODO
-
       } else if (response.statusCode == 404) {
         //the user is offline or the id could not be found and a 404 was returned
         return Future.error(
@@ -111,7 +131,7 @@ class ApiClient {
       //catch errors
       print(e);
       return Future.error(
-          "An error occured: $e", StackTrace.fromString(e.toString()));
+          "An error occurred: $e", StackTrace.fromString(e.toString()));
     }
   }
 
@@ -139,8 +159,7 @@ class ApiClient {
 
       //check the status code
       if (response.statusCode == 200 && response.data != null) {
-        //TODO
-        print(response);
+        //maybe do something with the response?
       } else {
         //the user is offline or the id could not be found and a 404 was returned
         return Future.error(
@@ -151,13 +170,13 @@ class ApiClient {
       //catch errors
       print(e);
       return Future.error(
-          "An error occured", StackTrace.fromString(e.toString()));
+          "An error occurred", StackTrace.fromString(e.toString()));
     }
   }
 
   ///POST the userMail and fcmToken to the server to create a user.
   ///This might be used for OAuth with the server.
-  ///The fcmToken will be used to send push notfication to the device.
+  ///The fcmToken will be used to send push notification to the device.
   static Future<void> registerUserWithToken(
       String userMail, String fcmToken) async {
     Response response;
@@ -173,13 +192,13 @@ class ApiClient {
 
       //check the status code
       if (response.statusCode == 200 && response.data != null) {
-        //TODO: im currently unsure what the response lokks like, maybee a user id?
-        //TODO: possible a returned OAuth 2.0 key, to indetify in further get request?
+        //TODO: im currently unsure what the response looks like, maybe a user id?
+        //TODO: possible a returned OAuth 2.0 key, to identify in further get request?
 
       } else if (response.statusCode == 404) {
         //check if the user is offline
         return Future.error(
-            "A StatusCode 404 was returned, this indicates that the user migth be offline",
+            "A StatusCode 404 was returned, this indicates that the user might be offline",
             StackTrace.fromString("This is its trace"));
       }
     } catch (e) {}

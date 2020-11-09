@@ -394,6 +394,7 @@ class _ChooseSubjectDialogState extends State<_ChooseSubjectDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       title: Text(S.of(context).offer_create_dialog_subject_title),
       content: Container(
+          width: double.maxFinite,
           padding: const EdgeInsets.all(10.0),
           child: ListView.builder(
             itemCount: subjects.length,
