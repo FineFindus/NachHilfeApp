@@ -335,6 +335,16 @@ class S {
     );
   }
 
+  /// `On accepting the date is binding`
+  String get offer_details_info_accepting {
+    return Intl.message(
+      'On accepting the date is binding',
+      name: 'offer_details_info_accepting',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `math`
   String get subject_math {
     return Intl.message(

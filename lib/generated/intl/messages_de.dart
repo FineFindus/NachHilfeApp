@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Thema"),
     "offer_create_topic_error" : MessageLookupByLibrary.simpleMessage("Es muss mindestens ein Thema ausgewählt sein"),
     "offer_details_button_label_accept" : MessageLookupByLibrary.simpleMessage("Annehmen"),
+    "offer_details_info_accepting" : MessageLookupByLibrary.simpleMessage("Das Annehmen ist verbindlich"),
     "offer_details_label_accepted" : MessageLookupByLibrary.simpleMessage("Angenommen:"),
     "offer_details_label_endDate" : MessageLookupByLibrary.simpleMessage("Enddatum:"),
     "offer_details_label_subject" : MessageLookupByLibrary.simpleMessage("Fach:"),

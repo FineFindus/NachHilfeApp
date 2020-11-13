@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OfferDetailsScreen extends StatefulWidget {
   @override
@@ -77,9 +78,33 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                         key: Key(offer.isAccepted.toString())),
                   ),
                 ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: offer.isAccepted
+                      ? ListTile(
+                          onTap: () async {
+                            const url = 'https://flutter.dev';
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                          title:
+                              Text(S.of(context).offer_details_label_accepted),
+                          trailing: Text(offer.userMail,
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.blue)),
+                        )
+                      : const SizedBox.shrink(),
+                ),
               ],
             ),
           ),
+          ListTile(
+              title: Center(
+                  child: Text(S.of(context).offer_details_info_accepting))),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
