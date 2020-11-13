@@ -2,6 +2,7 @@ import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
+import 'package:NachHilfeApp/screens/settings_screen.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,8 +32,11 @@ class _OfferListScreenState extends State<OfferListScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.exit_to_app),
-              onPressed: logOut,
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SettingsScreen()));
+              },
             )
           ],
         ),
@@ -134,14 +138,5 @@ class _OfferListScreenState extends State<OfferListScreen> {
         builder: (context) => OnboardingScreen(),
       ));
     }
-  }
-
-  ///LogOut function,
-  ///Deletes the keyCahin and pushes the login screen
-  logOut() async {
-    var storage = FlutterSecureStorage();
-    await storage.deleteAll();
-    //show login screen
-    _isLoggedIn();
   }
 }
