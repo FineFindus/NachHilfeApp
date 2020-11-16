@@ -335,13 +335,13 @@ class S {
     );
   }
 
-  /// `On accepting the date is binding`
-  String get offer_details_info_accepting {
+  /// `On accepting the date is binding. Please write immediately an email to {email}.`
+  String offer_details_info_accepting(Object email) {
     return Intl.message(
-      'On accepting the date is binding',
+      'On accepting the date is binding. Please write immediately an email to $email.',
       name: 'offer_details_info_accepting',
       desc: '',
-      args: [],
+      args: [email],
     );
   }
 

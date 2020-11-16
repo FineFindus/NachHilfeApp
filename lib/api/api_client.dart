@@ -7,8 +7,9 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 
 class ApiClient {
   ///API url from the server to post and get offers
-  static final String url = "http://10.0.2.2:8888/api/v1/offers";
-  // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
+  static final String url =
+      //"http://10.0.2.2:8888/api/v1/offers";
+      "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
 
   //ip address
   //10.10.8.218

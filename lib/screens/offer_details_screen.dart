@@ -83,7 +83,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                   child: offer.isAccepted
                       ? ListTile(
                           onTap: () async {
-                            const url = 'https://flutter.dev';
+                            final url =
+                                "mailto:${offer.userMail}?subject=Nachhilfe";
                             if (await canLaunch(url)) {
                               await launch(url);
                             } else {
@@ -104,7 +105,9 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           ),
           ListTile(
               title: Center(
-                  child: Text(S.of(context).offer_details_info_accepting))),
+                  child: Text(S
+                      .of(context)
+                      .offer_details_info_accepting(offer.userMail)))),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),

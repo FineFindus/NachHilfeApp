@@ -30,7 +30,7 @@
   "offer_details_label_endDate": "Enddatum:",
   "offer_details_label_accepted": "Angenommen:",
   "offer_details_button_label_accept": "Annehmen",
-  "offer_details_info_accepting": "Das Annehmen ist verbindlich",
+  "offer_details_info_accepting": "Das Annehmen ist verbindlich. Bitte schreibe nach dem annehmen direkt eine Email an {email}",
   "subject_math": "Mathe",
   "subject_german": "Deutsch",
   "subject_english": "Englisch",

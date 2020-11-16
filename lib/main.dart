@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
                 primaryColor: Color(0xff00AC36),
               ),
               accentColor: Color(0xff00AC36),
-              //primaryColor: Color.fromARGB(255, 0, 122, 255),
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),

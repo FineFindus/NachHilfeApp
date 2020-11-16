@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(year) => "Klasse: ${year}";
 
+  static m2(email) => "Das Annehmen ist verbindlich. Bitte schreibe nach dem annehmen direkt eine Email an ${email}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "create" : MessageLookupByLibrary.simpleMessage("Erstellen"),
@@ -40,7 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Thema"),
     "offer_create_topic_error" : MessageLookupByLibrary.simpleMessage("Es muss mindestens ein Thema ausgewählt sein"),
     "offer_details_button_label_accept" : MessageLookupByLibrary.simpleMessage("Annehmen"),
-    "offer_details_info_accepting" : MessageLookupByLibrary.simpleMessage("Das Annehmen ist verbindlich"),
+    "offer_details_info_accepting" : m2,
     "offer_details_label_accepted" : MessageLookupByLibrary.simpleMessage("Angenommen:"),
     "offer_details_label_endDate" : MessageLookupByLibrary.simpleMessage("Enddatum:"),
     "offer_details_label_subject" : MessageLookupByLibrary.simpleMessage("Fach:"),
