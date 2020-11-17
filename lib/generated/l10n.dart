@@ -325,6 +325,16 @@ class S {
     );
   }
 
+  /// `Email:`
+  String get offer_details_label_mailAddress {
+    return Intl.message(
+      'Email:',
+      name: 'offer_details_label_mailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Accept`
   String get offer_details_button_label_accept {
     return Intl.message(
@@ -342,6 +352,26 @@ class S {
       name: 'offer_details_info_accepting',
       desc: '',
       args: [email],
+    );
+  }
+
+  /// `the user`
+  String get offer_details_info_accepting_user {
+    return Intl.message(
+      'the user',
+      name: 'offer_details_info_accepting_user',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hello {recipentName}, i accepted you coaching search for {subject}. When do we meet?`
+  String mail_helper_text_body(Object recipentName, Object subject) {
+    return Intl.message(
+      'Hello $recipentName, i accepted you coaching search for $subject. When do we meet?',
+      name: 'mail_helper_text_body',
+      desc: '',
+      args: [recipentName, subject],
     );
   }
 

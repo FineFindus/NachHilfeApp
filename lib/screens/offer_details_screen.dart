@@ -84,15 +84,15 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                       ? ListTile(
                           onTap: () async {
                             final url =
-                                "mailto:${offer.userMail}?subject=Nachhilfe";
+                                "mailto:${offer.userMail}?subject=Nachhilfe&body=${S.of(context).mail_helper_text_body(offer.userMail, getTranlatedSubject(context, offer.subject))}";
                             if (await canLaunch(url)) {
                               await launch(url);
                             } else {
                               throw 'Could not launch $url';
                             }
                           },
-                          title:
-                              Text(S.of(context).offer_details_label_accepted),
+                          title: Text(
+                              S.of(context).offer_details_label_mailAddress),
                           trailing: Text(offer.userMail,
                               style: TextStyle(
                                   decoration: TextDecoration.underline,
@@ -105,9 +105,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           ),
           ListTile(
               title: Center(
-                  child: Text(S
-                      .of(context)
-                      .offer_details_info_accepting(offer.userMail)))),
+                  child: Text(S.of(context).offer_details_info_accepting(
+                      offer.isAccepted
+                          ? offer.userMail
+                          : S.of(context).offer_details_info_accepting_user)))),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),

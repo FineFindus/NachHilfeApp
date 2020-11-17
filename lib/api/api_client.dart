@@ -97,7 +97,6 @@ class ApiClient {
             StackTrace.fromString("This is its trace"));
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.CONNECT_TIMEOUT) print("Test");
       print(e);
       return Future.error(
           "An error occurred", StackTrace.fromString(e.toString()));

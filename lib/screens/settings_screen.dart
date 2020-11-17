@@ -2,6 +2,7 @@ import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mdi/mdi.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -9,6 +10,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  //settings witch value
+  //TODO remove later and replace with crrect value from settings
+  bool switchDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +25,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(children: [
             ListTile(
               leading: Icon(Icons.account_circle),
-              title: Text("Account"),
-            ),
-            ListTile(
-              leading: Icon(Icons.email),
               title: Text("Jonathan.benzler@igs-buchholz.de"),
             ),
+            Divider(),
             ListTile(
               leading: Icon(Icons.logout),
               title: Text("Logout"),
@@ -34,25 +35,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ]),
         ),
-        SwitchListTile.adaptive(value: true, onChanged: null)
+        SwitchListTile.adaptive(
+          secondary: Icon(Icons.brightness_4),
+          title: Text("Darkmode"),
+          value: switchDarkMode,
+          onChanged: (value) => setState(() {
+            switchDarkMode = value;
+          }),
+        ),
+        ListTile(
+            leading: Icon(Mdi.teach),
+            title: Text("Default year:"),
+            trailing: Text("11")),
       ]),
     );
-  }
-
-  ///Checks if the user is logged in by chekcing the keychain.
-  ///If the returned value is null the login screen is pushed.
-  Future<void> _isLoggedIn() async {
-    var storage = FlutterSecureStorage();
-    var mail = await storage.read(key: "user_email");
-    if (mail == null) {
-      //push new screen
-      Navigator.pushAndRemoveUntil(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => OnboardingScreen(),
-          ),
-          (r) => false);
-    }
   }
 
   ///LogOut function,
@@ -61,6 +57,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var storage = FlutterSecureStorage();
     await storage.deleteAll();
     //show login screen
-    _isLoggedIn();
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => OnboardingScreen(),
+        ),
+        (r) => false);
   }
 }

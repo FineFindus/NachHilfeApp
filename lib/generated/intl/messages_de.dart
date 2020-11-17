@@ -19,22 +19,25 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de';
 
-  static m0(subject) => "Fach: ${subject}";
+  static m0(recipentName, subject) => "Hallo ${recipentName}, ich habe deine Nachhilfe Suche zu dem Fach ${subject} angenommen. Wann können wir uns treffen?";
 
-  static m1(year) => "Klasse: ${year}";
+  static m1(subject) => "Fach: ${subject}";
 
-  static m2(email) => "Das Annehmen ist verbindlich. Bitte schreibe nach dem annehmen direkt eine Email an ${email}";
+  static m2(year) => "Klasse: ${year}";
+
+  static m3(email) => "Das Annehmen ist verbindlich. Bitte schreibe nach dem Annehmen direkt eine Email an ${email}.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "create" : MessageLookupByLibrary.simpleMessage("Erstellen"),
+    "mail_helper_text_body" : m0,
     "offer_create_class_and_year" : MessageLookupByLibrary.simpleMessage("Klasse und Fach"),
     "offer_create_dialog_class_title" : MessageLookupByLibrary.simpleMessage("Wähle eine Klasse"),
     "offer_create_dialog_subject_title" : MessageLookupByLibrary.simpleMessage("Wähle ein Fach"),
     "offer_create_end_date" : MessageLookupByLibrary.simpleMessage("Ablaufdatum"),
     "offer_create_error" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten"),
-    "offer_create_listtile_label_subject" : m0,
-    "offer_create_listtile_label_year" : m1,
+    "offer_create_listtile_label_subject" : m1,
+    "offer_create_listtile_label_year" : m2,
     "offer_create_preview" : MessageLookupByLibrary.simpleMessage("Preview"),
     "offer_create_preview_text" : MessageLookupByLibrary.simpleMessage("Hier ist eine Vorschau wie diese Suche aussieht, Möchtest du die Suche so erstellen?"),
     "offer_create_textfield_label_other" : MessageLookupByLibrary.simpleMessage("Anderes"),
@@ -42,9 +45,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Thema"),
     "offer_create_topic_error" : MessageLookupByLibrary.simpleMessage("Es muss mindestens ein Thema ausgewählt sein"),
     "offer_details_button_label_accept" : MessageLookupByLibrary.simpleMessage("Annehmen"),
-    "offer_details_info_accepting" : m2,
+    "offer_details_info_accepting" : m3,
+    "offer_details_info_accepting_user" : MessageLookupByLibrary.simpleMessage("den Nutzer"),
     "offer_details_label_accepted" : MessageLookupByLibrary.simpleMessage("Angenommen:"),
     "offer_details_label_endDate" : MessageLookupByLibrary.simpleMessage("Enddatum:"),
+    "offer_details_label_mailAddress" : MessageLookupByLibrary.simpleMessage("Email:"),
     "offer_details_label_subject" : MessageLookupByLibrary.simpleMessage("Fach:"),
     "offer_details_label_topics" : MessageLookupByLibrary.simpleMessage("Themen:"),
     "offer_details_label_year" : MessageLookupByLibrary.simpleMessage("Jahr:"),
