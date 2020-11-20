@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mdi/mdi.dart';
 
+import 'offer_create_screen.dart';
+
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -13,6 +15,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //settings witch value
   //TODO remove later and replace with crrect value from settings
   bool switchDarkMode = false;
+
+  //settings witch value
+  //TODO remove later and replace with crrect value from settings
+  int classYear = 5;
+
+  //secure storage for mail address
+  var secureStorage = FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +33,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(children: [
         Card(
           child: Column(children: [
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text("Jonathan.benzler@igs-buchholz.de"),
+            FutureBuilder(
+              future: secureStorage.read(key: "user_email"),
+              builder: (context, snapshot) => ListTile(
+                leading: Icon(Icons.account_circle),
+                title: snapshot.hasData
+                    ? Text(snapshot.data)
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [CircularProgressIndicator()]),
+              ),
             ),
             Divider(),
             ListTile(
@@ -36,7 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ]),
         ),
         SwitchListTile.adaptive(
-          secondary: Icon(Icons.brightness_4),
+          secondary: Icon(Mdi.themeLightDark),
           title: Text("Darkmode"),
           value: switchDarkMode,
           onChanged: (value) => setState(() {
@@ -44,9 +61,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
           }),
         ),
         ListTile(
-            leading: Icon(Mdi.teach),
-            title: Text("Default year:"),
-            trailing: Text("11")),
+          leading: Icon(Mdi.teach),
+          title: Text("Default year:"),
+          trailing: Text("${classYear ?? 5}"),
+          onTap: () => showDialog(
+              context: context,
+              builder: (context) => ChooseYearDialog(
+                    startPosition: classYear,
+                    onValueChanged: (value) {
+                      setState(() {
+                        classYear = value;
+                      });
+                    },
+                  )),
+        ),
+        ListTile(
+          leading: Icon(Mdi.tooltipPlus),
+          title: Text("Default subject:"),
+          trailing: Text("${classYear ?? 5}"),
+          onTap: () => showDialog(
+              context: context,
+              builder: (context) => ChooseYearDialog(
+                    startPosition: classYear,
+                    onValueChanged: (value) {
+                      setState(() {
+                        classYear = value;
+                      });
+                    },
+                  )),
+        ),
       ]),
     );
   }
@@ -54,8 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ///LogOut function,
   ///Deletes the usermailAddress in the keyChain and pushes the login screen
   logOut() async {
-    var storage = FlutterSecureStorage();
-    await storage.deleteAll();
+    await secureStorage.deleteAll();
     //show login screen
     Navigator.pushAndRemoveUntil(
         context,

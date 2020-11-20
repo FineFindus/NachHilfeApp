@@ -163,7 +163,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
                   Text(S.of(context).offer_create_listtile_label_year(_year)),
               onTap: () => showDialog(
                   context: context,
-                  builder: (context) => _ChooseYearDialog(
+                  builder: (context) => ChooseYearDialog(
                         startPosition: _year,
                         onValueChanged: (value) {
                           setState(() {
@@ -423,11 +423,11 @@ class _ChooseSubjectDialogState extends State<_ChooseSubjectDialog> {
 }
 
 ///Shows a dialog with all subject values sorted alphabetically
-class _ChooseYearDialog extends StatefulWidget {
+class ChooseYearDialog extends StatefulWidget {
   final int startPosition;
   final Function(int) onValueChanged;
 
-  const _ChooseYearDialog({
+  const ChooseYearDialog({
     Key key,
     this.startPosition,
     @required this.onValueChanged,
@@ -438,7 +438,7 @@ class _ChooseYearDialog extends StatefulWidget {
 }
 
 ///Creates a dialog where the user chooses the year he is in
-class _ChooseYearDialogState extends State<_ChooseYearDialog> {
+class _ChooseYearDialogState extends State<ChooseYearDialog> {
   //current choosen subject
   int year = 5;
 
