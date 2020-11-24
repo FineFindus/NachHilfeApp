@@ -34,6 +34,6 @@ A offer should consist of the following informations:
 
 
 ## TODO
-Stuff thats todod in the future
+Stuff thats todo in the future
 * price
-*group accepted
+* group accepted
