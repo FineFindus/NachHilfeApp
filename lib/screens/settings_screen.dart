@@ -1,7 +1,11 @@
+import 'package:NachHilfeApp/api/subjectValue.dart';
+import 'package:NachHilfeApp/global/globals.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
+import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:mdi/mdi.dart';
 
 import 'offer_create_screen.dart';
@@ -12,13 +16,17 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  //settings witch value
-  //TODO remove later and replace with crrect value from settings
-  bool switchDarkMode = false;
+  //dark mode, get default value form hive
+  bool switchDarkMode =
+      Hive.box(settingsBox).get('darkMode', defaultValue: false);
 
-  //settings witch value
-  //TODO remove later and replace with crrect value from settings
-  int classYear = 5;
+  //default class year, get default from hve
+  int classYear =
+      Hive.box(settingsBox).get('defaultClassYear', defaultValue: 5);
+
+  //default class year, get default from hve
+  Subject subject = getSubjectFromString(Hive.box(settingsBox)
+      .get('defaultSubject', defaultValue: Subject.math.toString()));
 
   //secure storage for mail address
   var secureStorage = FlutterSecureStorage();
@@ -58,6 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           value: switchDarkMode,
           onChanged: (value) => setState(() {
             switchDarkMode = value;
+            Hive.box(settingsBox).put("darkMode", value);
           }),
         ),
         ListTile(
@@ -71,25 +80,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onValueChanged: (value) {
                       setState(() {
                         classYear = value;
+                        Hive.box(settingsBox).put("defaultClassYear", value);
                       });
                     },
                   )),
         ),
         ListTile(
-          leading: Icon(Mdi.tooltipPlus),
-          title: Text("Default subject:"),
-          trailing: Text("${classYear ?? 5}"),
-          onTap: () => showDialog(
-              context: context,
-              builder: (context) => ChooseYearDialog(
-                    startPosition: classYear,
-                    onValueChanged: (value) {
-                      setState(() {
-                        classYear = value;
-                      });
-                    },
-                  )),
-        ),
+            leading: Icon(Mdi.tooltipPlus),
+            title: Text("Default subject:"),
+            trailing: Text(
+                "${getTranlatedSubject(context, subject ?? Subject.math)}"),
+            onTap: () => showDialog(
+                context: context,
+                builder: (context) => ChooseSubjectDialog(
+                      startPosition: subject,
+                      onSubjectChanged: (value) {
+                        setState(() {
+                          subject = value;
+                          Hive.box(settingsBox)
+                              .put("defaultSubject", value.toString());
+                        });
+                      },
+                    ))),
       ]),
     );
   }

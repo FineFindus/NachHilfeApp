@@ -51,7 +51,9 @@ dependencies:
   profanity_filter: ^1.0.4
   #url launcher for sending mails
   url_launcher: ^5.7.10
-
+  #added hive for storing settings data and acceessing it faaaast
+  hive: ^1.4.4+1
+  hive_flutter: ^0.3.1
 
 
 
@@ -60,6 +62,10 @@ dev_dependencies:
     sdk: flutter
 
   intl_translation: 0.17.10+1
+  #hive builder
+  # hive_generator: ^0.8.2
+  # build_runner: ^1.10.6
+
 
 
 # For information on the generic Dart part of this file, see the
