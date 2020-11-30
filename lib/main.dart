@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/offer_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +16,26 @@ import 'global/globals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //open hive here to avoid async code
+  //TODO add decrypted settings
+  //check for encrytion key
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  var containsEncryptionKey =
+      await secureStorage.containsKey(key: 'settingsKey');
+  if (!containsEncryptionKey) {
+    //generate encryption key and save it in secure storage
+    var key = Hive.generateSecureKey();
+    await secureStorage.write(key: 'settingsKey', value: base64UrlEncode(key));
+  }
+
+  var encryptionKey =
+      base64Url.decode(await secureStorage.read(key: 'settingsKey'));
+
+  //open hive here to avoid async code with encryption key
   await Hive.initFlutter();
-  await Hive.openBox(settingsBox);
+  await Hive.openBox(
+    settingsBox,
+    // encryptionCipher: HiveAesCipher(encryptionKey));
+  );
   //launch app
   runApp(MyApp());
 }
@@ -55,7 +75,13 @@ class MyApp extends StatelessWidget {
                   primarySwatch: Colors.blue,
                   visualDensity: VisualDensity.adaptivePlatformDensity,
                 ),
-                darkTheme: ThemeData.dark(),
+                darkTheme: ThemeData.dark().copyWith(
+                  cupertinoOverrideTheme: CupertinoThemeData(
+                    primaryColor: Color(0xff00AC36),
+                  ),
+                  accentColor: Color(0xff00AC36),
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
                 localizationsDelegates: [
                   S.delegate,
                   GlobalMaterialLocalizations.delegate,

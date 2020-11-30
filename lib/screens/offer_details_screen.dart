@@ -26,6 +26,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     //get selected offer from Provider
     Offer offer = Provider.of<OfferLogic>(context).offer;
 
+    print(offer);
+
     if (offer == null)
       return Scaffold(
         appBar: AppBar(),
@@ -41,7 +43,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
         (DateTime.now().add(Duration(days: 3)).isAfter(offer.endDate));
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+            "${getTranlatedSubject(context, offer.subject)}, ${offer.year}"),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -57,7 +62,16 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                         Text(getTranlatedSubject(context, offer.subject))),
                 ListTile(
                   title: Text(S.of(context).offer_details_label_topics),
-                  trailing: Text(offer.topic),
+                  trailing: SizedBox(
+                    width: 200,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        offer.topic,
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
                 ),
                 ListTile(
                   title: Text(S.of(context).offer_details_label_endDate),

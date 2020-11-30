@@ -44,7 +44,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
         floatingActionButton: OpenContainer(
           closedElevation: 0.0,
           closedShape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(25.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(500)),
           ),
           closedBuilder: (context, action) => FloatingActionButton(
             tooltip: S.of(context).offer_list_fab_create,
