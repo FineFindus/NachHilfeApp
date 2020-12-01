@@ -62,12 +62,13 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                         Text(getTranlatedSubject(context, offer.subject))),
                 ListTile(
                   title: Text(S.of(context).offer_details_label_topics),
-                  trailing: SizedBox(
+                  trailing: Container(
                     width: 200,
+                    alignment: Alignment.centerRight,
                     child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: Text(
                         offer.topic,
-                        maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

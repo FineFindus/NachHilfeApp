@@ -32,10 +32,9 @@ void main() async {
 
   //open hive here to avoid async code with encryption key
   await Hive.initFlutter();
-  await Hive.openBox(
-    settingsBox,
-    // encryptionCipher: HiveAesCipher(encryptionKey));
-  );
+  await Hive.openBox(settingsBox,
+      encryptionCipher: HiveAesCipher(encryptionKey));
+  // );
   //launch app
   runApp(MyApp());
 }

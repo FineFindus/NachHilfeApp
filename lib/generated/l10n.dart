@@ -375,6 +375,56 @@ class S {
     );
   }
 
+  /// `Settings`
+  String get settings_screen_title {
+    return Intl.message(
+      'Settings',
+      name: 'settings_screen_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get settings_screen_button_label_logout {
+    return Intl.message(
+      'Logout',
+      name: 'settings_screen_button_label_logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Darkmode`
+  String get settings_screen_switch_label_darkmode {
+    return Intl.message(
+      'Darkmode',
+      name: 'settings_screen_switch_label_darkmode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default Year`
+  String get settings_screen_listtile_label_default_year {
+    return Intl.message(
+      'Default Year',
+      name: 'settings_screen_listtile_label_default_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default Subject`
+  String get settings_screen_listtile_label_default_subject {
+    return Intl.message(
+      'Default Subject',
+      name: 'settings_screen_listtile_label_default_subject',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `math`
   String get subject_math {
     return Intl.message(

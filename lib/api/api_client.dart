@@ -192,7 +192,8 @@ class ApiClient {
 
     try {
       //post data to server
-      response = await dio.post(apiUserURL);
+      //TODO register user
+      // response = await dio.post(apiUserURL);
 
       //check the status code
       if (response.statusCode == 200 && response.data != null) {

@@ -1,9 +1,11 @@
 import 'package:NachHilfeApp/api/subjectValue.dart';
+import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/global/globals.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:mdi/mdi.dart';
@@ -17,8 +19,9 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   //dark mode, get default value form hive
-  bool switchDarkMode =
-      Hive.box(settingsBox).get('darkMode', defaultValue: false);
+  bool switchDarkMode = Hive.box(settingsBox).get('darkMode',
+      defaultValue: SchedulerBinding.instance.window.platformBrightness ==
+          Brightness.dark);
 
   //default class year, get default from hve
   int classYear =
@@ -35,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(S.of(context).settings_screen_title),
         centerTitle: true,
       ),
       body: ListView(children: [
@@ -55,14 +58,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Divider(),
             ListTile(
               leading: Icon(Icons.logout),
-              title: Text("Logout"),
+              title: Text(S.of(context).settings_screen_button_label_logout),
               onTap: () => logOut(),
             ),
           ]),
         ),
         SwitchListTile.adaptive(
           secondary: Icon(Mdi.themeLightDark),
-          title: Text("Darkmode"),
+          title: Text(S.of(context).settings_screen_switch_label_darkmode),
           value: switchDarkMode,
           onChanged: (value) => setState(() {
             switchDarkMode = value;
@@ -71,7 +74,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         ListTile(
           leading: Icon(Mdi.teach),
-          title: Text("Default year:"),
+          title:
+              Text(S.of(context).settings_screen_listtile_label_default_year),
           trailing: Text("${classYear ?? 5}"),
           onTap: () => showDialog(
               context: context,
@@ -86,8 +90,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )),
         ),
         ListTile(
-            leading: Icon(Mdi.tooltipPlus),
-            title: Text("Default subject:"),
+            leading: Icon(Icons.class_),
+            title: Text(
+                S.of(context).settings_screen_listtile_label_default_subject),
             trailing: Text(
                 "${getTranlatedSubject(context, subject ?? Subject.math)}"),
             onTap: () => showDialog(
