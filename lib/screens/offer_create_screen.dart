@@ -474,8 +474,10 @@ class _ChooseYearDialogState extends State<ChooseYearDialog> {
       title: Text(S.of(context).offer_create_dialog_class_title),
       content: Container(
           padding: const EdgeInsets.all(10.0),
+          width: double.maxFinite,
           child: ListView.builder(
             itemCount: years.length,
+            shrinkWrap: true,
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => RadioListTile(
                 title: Text("${years[index]}"),

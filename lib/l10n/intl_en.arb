@@ -2,6 +2,7 @@
   "@@locale": "en",
   "ok": "OK",
   "create": "Create",
+  "error_occurred_report_bug": "An error occured. We are very sorry for this inconvienience. You can report the bug at {bug_report_address}.",
   "onboaring_title": "Please input your email address to contact you.",
   "onboarding_textfield_label_name": "Mail",
   "onborading_textfield_error_name_empty": "Please enter a valid email address",

@@ -18,7 +18,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.7.0 <3.0.0'
+
+#overrides dependencies for intl, since flutter_localizations breaks
+dependency_overrides:
+  intl: ^0.17.0-nullsafety.2
 
 dependencies:
   flutter:
@@ -55,8 +59,6 @@ dependencies:
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,13 +68,10 @@ dev_dependencies:
   # hive_generator: ^0.8.2
   # build_runner: ^1.10.6
 
-
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

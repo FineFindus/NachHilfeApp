@@ -7,7 +7,7 @@ class OfferLogic extends ChangeNotifier {
   Offer _offer;
 
   ///Returns the currently selected offer.
-  ///Migth be null when no offer is selected.
+  ///Might be null when no offer is selected.
   Offer get offer => _offer;
 
   ///Set the selected offer.

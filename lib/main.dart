@@ -17,7 +17,7 @@ import 'global/globals.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //TODO add decrypted settings
-  //check for encrytion key
+  //check for encryption key
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   var containsEncryptionKey =
       await secureStorage.containsKey(key: 'settingsKey');
@@ -89,6 +89,38 @@ class MyApp extends StatelessWidget {
                 ],
                 supportedLocales: S.delegate.supportedLocales,
                 home: OfferListScreen(),
+                builder: (BuildContext context, Widget widget) {
+                  //error widget when an error occurs
+                  ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+                    return Scaffold(
+                      appBar: AppBar(),
+                      body: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(38.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.error,
+                                size: 80,
+                                color: Colors.red.shade700,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                S.of(context).error_occurred_report_bug(
+                                    "[INSERT BUG REPORT]"),
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  };
+                  return widget;
+                },
               );
             },
           ),

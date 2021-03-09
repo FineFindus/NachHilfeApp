@@ -31,24 +31,30 @@ class _OfferListScreenState extends State<OfferListScreen> {
           title: Text(S.of(context).offer_list_appbar_title),
           centerTitle: true,
           actions: [
-            IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SettingsScreen()));
-              },
-            )
+            OpenContainer(
+              closedShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40)),
+              closedElevation: 0.0,
+              closedColor: Colors.transparent,
+              closedBuilder: (context, action) => IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  action();
+                  // Navigator.of(context).push(
+                  // MaterialPageRoute(builder: (context) => SettingsScreen()));
+                },
+              ),
+              openBuilder: (context, action) => SettingsScreen(),
+            ),
           ],
         ),
         //fab to create screen
         floatingActionButton: OpenContainer(
-          closedElevation: 0.0,
-          closedShape: const RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(500)),
-          ),
+          closedElevation: 10,
+          closedColor: Colors.transparent,
           closedBuilder: (context, action) => FloatingActionButton(
             tooltip: S.of(context).offer_list_fab_create,
-            elevation: 0.0,
+            elevation: 20,
             onPressed: action,
             child: const Icon(Icons.add),
           ),
@@ -75,21 +81,45 @@ class _OfferListScreenState extends State<OfferListScreen> {
                         (() {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
+                          // return ListView.builder(
+                          //   itemCount: snapshot.data.length,
+                          //   itemBuilder: (context, index) => OfferCard(
+                          //     offer: snapshot.data[index],
+                          //     onTap: () {
+                          //       //set selected offer
+                          //       Provider.of<OfferLogic>(context, listen: false)
+                          //           .setOffer = snapshot.data[index];
+                          //       //push to details screen
+                          //       Navigator.of(context).push(MaterialPageRoute(
+                          //           builder: (context) =>
+                          //               OfferDetailsScreen()));
+                          //     },
+                          //   ),
+                          // );
                           return ListView.builder(
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (context, index) => OfferCard(
-                              offer: snapshot.data[index],
-                              onTap: () {
-                                //set selected offer
-                                Provider.of<OfferLogic>(context, listen: false)
-                                    .setOffer = snapshot.data[index];
-                                //push to details screen
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        OfferDetailsScreen()));
-                              },
-                            ),
-                          );
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) => OpenContainer(
+                                    closedColor: Colors.transparent,
+                                    closedElevation: 0,
+                                    closedBuilder: (context, action) =>
+                                        OfferCard(
+                                      offer: snapshot.data[index],
+                                      onTap: () {
+                                        //set selected offer
+                                        Provider.of<OfferLogic>(context,
+                                                listen: false)
+                                            .setOffer = snapshot.data[index];
+                                        //push to details screen
+                                        // Navigator.of(context).push(
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             OfferDetailsScreen()));
+                                        action();
+                                      },
+                                    ),
+                                    openBuilder: (context, action) =>
+                                        OfferDetailsScreen(),
+                                  ));
                         } else if (snapshot.hasError) {
                           print(snapshot.error);
                           return Column(
@@ -107,10 +137,10 @@ class _OfferListScreenState extends State<OfferListScreen> {
                               const SizedBox(height: 20),
                               CupertinoButton.filled(
                                 child: Icon(Icons.refresh),
-                                onPressed: () => Provider.of<OfferLogic>(
-                                        context,
-                                        listen: false)
-                                    .refreshOffers(),
+                                onPressed: () async =>
+                                    await Provider.of<OfferLogic>(context,
+                                            listen: false)
+                                        .refreshOffers(),
                               ),
 
                               //tooltip:

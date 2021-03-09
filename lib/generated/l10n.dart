@@ -55,6 +55,16 @@ class S {
     );
   }
 
+  /// `An error occured. We are very sorry for this inconvienience. You can report the bug at {bug_report_address}.`
+  String error_occurred_report_bug(Object bug_report_address) {
+    return Intl.message(
+      'An error occured. We are very sorry for this inconvienience. You can report the bug at $bug_report_address.',
+      name: 'error_occurred_report_bug',
+      desc: '',
+      args: [bug_report_address],
+    );
+  }
+
   /// `Please input your email address to contact you.`
   String get onboaring_title {
     return Intl.message(
