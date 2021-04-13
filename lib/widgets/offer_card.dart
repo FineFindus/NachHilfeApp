@@ -22,6 +22,7 @@ class OfferCard extends StatelessWidget {
 
     //is date nearer then 3 days? if yes, make the text red, to indicate its soon
     var redText = (DateTime.now().add(Duration(days: 3)).isAfter(date));
+    print(offer.subject);
 
     return Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -30,8 +31,9 @@ class OfferCard extends StatelessWidget {
           child: ListTile(
             onTap: onTap,
             title: Text(
-                "${getTranlatedSubject(context, offer.subject)}  ${offer.year}"),
-            subtitle: Text(offer.topic),
+                "${getTranlatedSubject(context, offer.subject)},  ${offer.year}"),
+            subtitle: Text(
+                "${offer.topic.toString().replaceAll("[", "").replaceAll("]", "")}"),
             trailing: Text(
               formattedDate,
               style: redText

@@ -55,6 +55,16 @@ class S {
     );
   }
 
+  /// `An error occured. We are very sorry for this inconvienience. You can report the bug at {bug_report_address}.`
+  String error_occurred_report_bug(Object bug_report_address) {
+    return Intl.message(
+      'An error occured. We are very sorry for this inconvienience. You can report the bug at $bug_report_address.',
+      name: 'error_occurred_report_bug',
+      desc: '',
+      args: [bug_report_address],
+    );
+  }
+
   /// `Please input your email address to contact you.`
   String get onboaring_title {
     return Intl.message(
@@ -372,6 +382,56 @@ class S {
       name: 'mail_helper_text_body',
       desc: '',
       args: [recipentName, subject],
+    );
+  }
+
+  /// `Settings`
+  String get settings_screen_title {
+    return Intl.message(
+      'Settings',
+      name: 'settings_screen_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get settings_screen_button_label_logout {
+    return Intl.message(
+      'Logout',
+      name: 'settings_screen_button_label_logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Darkmode`
+  String get settings_screen_switch_label_darkmode {
+    return Intl.message(
+      'Darkmode',
+      name: 'settings_screen_switch_label_darkmode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default Year`
+  String get settings_screen_listtile_label_default_year {
+    return Intl.message(
+      'Default Year',
+      name: 'settings_screen_listtile_label_default_year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default Subject`
+  String get settings_screen_listtile_label_default_subject {
+    return Intl.message(
+      'Default Subject',
+      name: 'settings_screen_listtile_label_default_subject',
+      desc: '',
+      args: [],
     );
   }
 

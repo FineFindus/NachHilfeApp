@@ -4,12 +4,16 @@ import 'package:NachHilfeApp/model/offer.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   ///API url from the server to post and get offers
   static final String url =
-      //"http://10.0.2.2:8888/api/v1/offers";
-      "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
+      // "http://10.10.8.218:8888/api/v1/offers";
+      //test link
+      "http://10.0.2.2:3000/offer";
+  // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
 
   //ip address
   //10.10.8.218
@@ -18,7 +22,7 @@ class ApiClient {
   //TODO: update url
   ///The API url for the user
   ///Used to register the user at the server and used in offer post request.
-  static final String apiUserURL = "https://google.com";
+  static final String apiUserURL = "http://10.0.2.2:3000/user";
 
   //TODO change to real url should be something/ api/v1/offers
 
@@ -26,7 +30,9 @@ class ApiClient {
   ///Throws an exception if something failed.
   static Future<List<dynamic>> getOffers(
       {bool withCache = true, bool isAccepted = false}) async {
-    String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
+    // String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
+    //TODO add query
+    String urlWithQuery = "$url";
 
     Response response;
     //create dio for http request
@@ -34,6 +40,12 @@ class ApiClient {
     //set options like timeout, etc.
     dio.options.connectTimeout = 30000; //30s
     dio.options.receiveTimeout = 30000; //10s
+
+    //add auth header
+    //get accessToken
+    final String accessToken =
+        await FlutterSecureStorage().read(key: "accessToken");
+    dio.options.headers["authorization"] = "Bearer $accessToken";
 
     //create cache
     if (withCache)
@@ -64,26 +76,14 @@ class ApiClient {
         //request was successful
         List<Offer> responseData = [];
 
-        print(response.data.toString());
-
-        /*
-        //! use if data comes as list example:
-        //! {"offers": [{data}]} 
         //map data to list
-        Map<String, dynamic> map = response.data;
-        List<dynamic> data = map["offers"];
+        List<dynamic> data = response.data["offers"];
 
         //add data to list
         for (var i = 0; i < data.length; i++) {
-          responseData.add(Offer.fromMap(data[i]));
-        } 
-        
-        //return data
-        return responseData; */
-
-        //add data to list
-        for (var i = 0; i < response.data.length; i++) {
-          responseData.add(Offer.fromMap(response.data[i]));
+          final Offer offer = Offer.fromMap(data[i]);
+          // only add offers that are not accepted
+          if (!offer.isAccepted) responseData.add(offer);
         }
         //return the list
         return responseData;
@@ -115,6 +115,11 @@ class ApiClient {
     //set options like timeout, etc.
     dio.options.connectTimeout = 30000; //30s
     dio.options.receiveTimeout = 30000; //10s
+    //add auth header
+    //get accessToken
+    final String accessToken =
+        await FlutterSecureStorage().read(key: "accessToken");
+    dio.options.headers["authorization"] = "Bearer $accessToken";
 
     try {
       //post data
@@ -143,7 +148,7 @@ class ApiClient {
   ///The id cannot be null and must be larger than 0.
   static Future<void> updateOffer(Offer offer) async {
     //check if id is null
-    if (offer.id == null || offer.id <= 0)
+    if (offer.id == null)
       return Future.error("Id must not be null/larger than 0");
     //put update
 
@@ -156,13 +161,18 @@ class ApiClient {
     //set options like timeout, etc.
     dio.options.connectTimeout = 30000; //30s
     dio.options.receiveTimeout = 30000; //10s
+    //get accessToken
+    final String accessToken =
+        await FlutterSecureStorage().read(key: "accessToken");
+    //add auth header
+    dio.options.headers["authorization"] = "Bearer $accessToken";
 
     try {
       //put data
       response = await dio.put(apiURL, data: offer.toJson());
 
       //check the status code
-      if (response.statusCode == 200 && response.data != null) {
+      if (response.statusCode == 201 && response.data != null) {
         //maybe do something with the response?
       } else {
         //the user is offline or the id could not be found and a 404 was returned
@@ -183,6 +193,7 @@ class ApiClient {
   ///The fcmToken will be used to send push notification to the device.
   static Future<void> registerUserWithToken(
       String userMail, String fcmToken) async {
+    assert(userMail != null);
     Response response;
     //create dio for http request
     Dio dio = new Dio();
@@ -192,13 +203,58 @@ class ApiClient {
 
     try {
       //post data to server
-      response = await dio.post(apiUserURL);
+      //TODO register user
+      response = await dio.post("$apiUserURL/signup", data: {
+        "email": userMail,
+        fcmToken != null && fcmToken.isNotEmpty ? "pushMessageToken" : fcmToken:
+            null
+      });
+
+      //check the status code
+      if (response.statusCode == 201 && response.data != null) {
+        //get user id
+        final userId = response.data["user"]["_id"];
+        //save id to secure storage
+        final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+        await secureStorage.write(key: "user_id", value: userId.toString());
+        await login(userId, 100000);
+      } else if (response.statusCode == 404) {
+        //check if the user is offline
+        return Future.error(
+            "A StatusCode 404 was returned, this indicates that the user might be offline",
+            StackTrace.fromString("This is its trace"));
+      }
+    } catch (e) {}
+  }
+
+  static Future<void> login(String id, int emailCode) async {
+    assert(id != null && emailCode != null);
+    Response response;
+    //create dio for http request
+    Dio dio = new Dio();
+    //set options like timeout, etc.
+    dio.options.connectTimeout = 30000; //30s
+    dio.options.receiveTimeout = 30000; //30s
+
+    try {
+      //post data to server
+      //TODO register user
+      response = await dio.post("$apiUserURL/login/$id", data: {
+        "emailCode": emailCode,
+      });
 
       //check the status code
       if (response.statusCode == 200 && response.data != null) {
-        //TODO: im currently unsure what the response looks like, maybe a user id?
-        //TODO: possible a returned OAuth 2.0 key, to identify in further get request?
+        //get tokens
+        final accessToken = response.data["accessToken"];
+        final refreshToken = response.data["refreshToken"];
 
+        //save save tokens
+        final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+        await secureStorage.write(
+            key: "accessToken", value: accessToken.toString());
+        await secureStorage.write(
+            key: "refreshToken", value: refreshToken.toString());
       } else if (response.statusCode == 404) {
         //check if the user is offline
         return Future.error(

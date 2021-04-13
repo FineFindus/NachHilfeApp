@@ -19,25 +19,28 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de';
 
-  static m0(recipentName, subject) => "Hallo ${recipentName}, ich habe deine Nachhilfe Suche zu dem Fach ${subject} angenommen. Wann können wir uns treffen?";
+  static m0(bug_report_address) => "Es ist leider ein Fehler aufgetreten. Du kannst den Fehler an ${bug_report_address} melden.";
 
-  static m1(subject) => "Fach: ${subject}";
+  static m1(recipentName, subject) => "Hallo ${recipentName}, ich habe deine Nachhilfe Suche zu dem Fach ${subject} angenommen. Wann können wir uns treffen?";
 
-  static m2(year) => "Klasse: ${year}";
+  static m2(subject) => "Fach: ${subject}";
 
-  static m3(email) => "Das Annehmen ist verbindlich. Bitte schreibe nach dem Annehmen direkt eine Email an ${email}.";
+  static m3(year) => "Klasse: ${year}";
+
+  static m4(email) => "Das Annehmen ist verbindlich. Bitte schreibe nach dem Annehmen direkt eine Email an ${email}.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "create" : MessageLookupByLibrary.simpleMessage("Erstellen"),
-    "mail_helper_text_body" : m0,
+    "error_occurred_report_bug" : m0,
+    "mail_helper_text_body" : m1,
     "offer_create_class_and_year" : MessageLookupByLibrary.simpleMessage("Klasse und Fach"),
     "offer_create_dialog_class_title" : MessageLookupByLibrary.simpleMessage("Wähle eine Klasse"),
     "offer_create_dialog_subject_title" : MessageLookupByLibrary.simpleMessage("Wähle ein Fach"),
     "offer_create_end_date" : MessageLookupByLibrary.simpleMessage("Ablaufdatum"),
     "offer_create_error" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten"),
-    "offer_create_listtile_label_subject" : m1,
-    "offer_create_listtile_label_year" : m2,
+    "offer_create_listtile_label_subject" : m2,
+    "offer_create_listtile_label_year" : m3,
     "offer_create_preview" : MessageLookupByLibrary.simpleMessage("Preview"),
     "offer_create_preview_text" : MessageLookupByLibrary.simpleMessage("Hier ist eine Vorschau wie diese Suche aussieht, Möchtest du die Suche so erstellen?"),
     "offer_create_textfield_label_other" : MessageLookupByLibrary.simpleMessage("Anderes"),
@@ -45,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_create_topic" : MessageLookupByLibrary.simpleMessage("Thema"),
     "offer_create_topic_error" : MessageLookupByLibrary.simpleMessage("Es muss mindestens ein Thema ausgewählt sein"),
     "offer_details_button_label_accept" : MessageLookupByLibrary.simpleMessage("Annehmen"),
-    "offer_details_info_accepting" : m3,
+    "offer_details_info_accepting" : m4,
     "offer_details_info_accepting_user" : MessageLookupByLibrary.simpleMessage("den Nutzer"),
     "offer_details_label_accepted" : MessageLookupByLibrary.simpleMessage("Angenommen:"),
     "offer_details_label_endDate" : MessageLookupByLibrary.simpleMessage("Enddatum:"),
@@ -54,7 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "offer_details_label_topics" : MessageLookupByLibrary.simpleMessage("Themen:"),
     "offer_details_label_year" : MessageLookupByLibrary.simpleMessage("Jahr:"),
     "offer_list_appbar_title" : MessageLookupByLibrary.simpleMessage("Suchen"),
-    "offer_list_connection_error" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten, bitte versichere dich das du eine Internetverbindung hast und versuche es erneut. Derzeit funktioniert die App nur wenn du mit dem Schulnetzwerk verbunden bist"),
+    "offer_list_connection_error" : MessageLookupByLibrary.simpleMessage("Ein Fehler ist aufgetreten, bitte versichere das du eine Internetverbindung hast und versuche es erneut. Derzeit funktioniert die App nur wenn du mit dem Schulnetzwerk verbunden bist."),
     "offer_list_connection_error_retry" : MessageLookupByLibrary.simpleMessage("Erneut versuchen"),
     "offer_list_fab_create" : MessageLookupByLibrary.simpleMessage("Erstellen"),
     "ok" : MessageLookupByLibrary.simpleMessage("OK"),
@@ -62,6 +65,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboaring_title" : MessageLookupByLibrary.simpleMessage("Bitte trage deine Email-Adresse ein, damit man dich darüber kontaktieren kann"),
     "onborading_textfield_error_name_empty" : MessageLookupByLibrary.simpleMessage("Bitte trage eine richtige Email-Adresse ein"),
     "onborading_textfield_error_name_numbers" : MessageLookupByLibrary.simpleMessage("Bitte trage eine richtige Email-Adresse ein"),
+    "settings_screen_button_label_logout" : MessageLookupByLibrary.simpleMessage("Logout"),
+    "settings_screen_listtile_label_default_subject" : MessageLookupByLibrary.simpleMessage("Standard Fach"),
+    "settings_screen_listtile_label_default_year" : MessageLookupByLibrary.simpleMessage("Standard Jahr"),
+    "settings_screen_switch_label_darkmode" : MessageLookupByLibrary.simpleMessage("Darkmode"),
+    "settings_screen_title" : MessageLookupByLibrary.simpleMessage("Einstellungen"),
     "subject_art" : MessageLookupByLibrary.simpleMessage("Kunst"),
     "subject_biologie" : MessageLookupByLibrary.simpleMessage("Biologie"),
     "subject_chemistry" : MessageLookupByLibrary.simpleMessage("Chemie"),

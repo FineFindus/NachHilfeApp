@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:NachHilfeApp/api/api_client.dart';
+import 'package:NachHilfeApp/global/globals.dart';
 import 'package:NachHilfeApp/utils/topic_list.dart';
 import 'package:NachHilfeApp/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:mdi/mdi.dart';
 
@@ -27,11 +29,12 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   //current step
   int _currentStep = 0;
 
-  //choosen subject
-  Subject _subject = Subject.math;
+  //choosen subject, get default value from hive
+  Subject _subject = getSubjectFromString(Hive.box(settingsBox)
+      .get('defaultSubject', defaultValue: Subject.math.toString()));
 
-  //choosen year/class
-  int _year = 5;
+  //choosen year/class, get default from hive
+  int _year = Hive.box(settingsBox).get('defaultClassYear', defaultValue: 5);
 
   //picked date by datepicker
   DateTime pickedDate = DateTime.now().add(Duration(days: 4));
@@ -178,7 +181,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
                   getTranlatedSubject(context, _subject))),
               onTap: () => showDialog(
                   context: context,
-                  builder: (context) => _ChooseSubjectDialog(
+                  builder: (context) => ChooseSubjectDialog(
                         startPosition: _subject,
                         onSubjectChanged: (value) {
                           setState(() {
@@ -286,10 +289,10 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   Future<Offer> createOffer() async {
     //get name and conact
     var storage = FlutterSecureStorage();
-    var mail = await storage.read(key: "user_email");
+    var id = await storage.read(key: "user_id");
 
     //get topics
-    var choosenTopics = [];
+    List<String> choosenTopics = [];
 
     for (var i = 0; i < stringValues.length; i++) {
       if (values[i]) {
@@ -315,9 +318,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     Offer offer = Offer(
         year: _year,
         subject: _subject,
-        userMail: mail,
-        topic:
-            "${choosenTopics.toString().replaceAll("[", "").replaceAll("]", "")}",
+        userMail: id,
+        topic: choosenTopics,
         isAccepted: false,
         endDate:
             pickedDate.isAfter(DateTime.now()) ? pickedDate : DateTime.now());
@@ -354,21 +356,21 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
 }
 
 ///Shows a dialog with all subject values sorted alphabetically
-class _ChooseSubjectDialog extends StatefulWidget {
+class ChooseSubjectDialog extends StatefulWidget {
   final Subject startPosition;
   final Function(Subject) onSubjectChanged;
 
-  const _ChooseSubjectDialog({
+  const ChooseSubjectDialog({
     Key key,
     this.startPosition,
     @required this.onSubjectChanged,
   }) : super(key: key);
 
   @override
-  State createState() => new _ChooseSubjectDialogState();
+  State createState() => new ChooseSubjectDialogState();
 }
 
-class _ChooseSubjectDialogState extends State<_ChooseSubjectDialog> {
+class ChooseSubjectDialogState extends State<ChooseSubjectDialog> {
   //current choosen subject
   Subject subject = Subject.art;
 
@@ -471,8 +473,10 @@ class _ChooseYearDialogState extends State<ChooseYearDialog> {
       title: Text(S.of(context).offer_create_dialog_class_title),
       content: Container(
           padding: const EdgeInsets.all(10.0),
+          width: double.maxFinite,
           child: ListView.builder(
             itemCount: years.length,
+            shrinkWrap: true,
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => RadioListTile(
                 title: Text("${years[index]}"),

@@ -6,10 +6,10 @@ import 'package:NachHilfeApp/api/subjectValue.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 
 class Offer {
-  final int id;
+  final String id;
   final Subject subject;
   final String userMail;
-  final String topic;
+  final List<String> topic;
   final int year;
   final DateTime endDate;
   final bool isAccepted;
@@ -44,13 +44,13 @@ class Offer {
     if (map == null) return null;
 
     return Offer(
-      id: map['id'],
+      id: map['_id'],
       subject: (getSubjectFromString(map['subject'])),
       userMail: map['userMail'],
-      topic: map['topic'],
+      topic: map['topic'].whereType<String>().toList(),
       year: map['year'],
-      //endDate: DateTime.parse(map['endDate']),
-      endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
+      endDate: DateTime.parse(map['endDate']),
+      // endDate: DateTime.fromMillisecondsSinceEpoch(map['endDate']),
       isAccepted: map['isAccepted'],
       acceptingUserMail: map['acceptingUserMail'],
     );
@@ -60,7 +60,7 @@ class Offer {
 
   factory Offer.fromJson(String source) => Offer.fromMap(json.decode(source));
 
-  ///Override toString, so the data of the offer is returned istead of intance
+  ///Override toString, so the data of the offer is returned instead of instance
   @override
   String toString() {
     return 'Offer(id: $id, subject: $subject, userMail: $userMail, topic: $topic, year: $year, endDate: $endDate, isAccepted: $isAccepted, acceptingUserMail: $acceptingUserMail)';

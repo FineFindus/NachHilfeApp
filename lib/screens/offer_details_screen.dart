@@ -26,11 +26,34 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     //get selected offer from Provider
     Offer offer = Provider.of<OfferLogic>(context).offer;
 
+    print(offer);
+
     if (offer == null)
       return Scaffold(
         appBar: AppBar(),
         body: Center(
-          child: Text(offer.toString()),
+          child: Padding(
+            padding: const EdgeInsets.all(38.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.error,
+                  size: 80,
+                  color: Colors.red.shade700,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  S
+                      .of(context)
+                      .error_occurred_report_bug("[INSERT BUG REPORT]"),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
         ),
       );
 
@@ -41,7 +64,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
         (DateTime.now().add(Duration(days: 3)).isAfter(offer.endDate));
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+            "${getTranlatedSubject(context, offer.subject)}, ${offer.year}"),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -57,7 +83,18 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                         Text(getTranlatedSubject(context, offer.subject))),
                 ListTile(
                   title: Text(S.of(context).offer_details_label_topics),
-                  trailing: Text(offer.topic),
+                  trailing: Container(
+                    width: 200,
+                    alignment: Alignment.centerRight,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        "${offer.topic.toString().replaceAll("[", "").replaceAll("]", "")}",
+                        // offer.topic,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
                 ),
                 ListTile(
                   title: Text(S.of(context).offer_details_label_endDate),
@@ -170,11 +207,11 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
         setState(() {
           _isLoading = true;
         });
-        //send post to server
-        await ApiClient.updateOffer(updatedOffer);
         //await Future.delayed(Duration(seconds: 2));
         Provider.of<OfferLogic>(context, listen: false).setOffer = updatedOffer;
         Provider.of<OfferLogic>(context, listen: false).removeOffer(offer);
+        //send post to server
+        await ApiClient.updateOffer(updatedOffer);
 
         //cancel loading
         setState(() {
