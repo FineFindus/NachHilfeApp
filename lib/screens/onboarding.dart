@@ -127,6 +127,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await storage.write(key: "user_email", value: mail);
 
     //TODO: register mail and firebase push message token to server
-    ApiClient.registerUserWithToken(mail, "TODO: token");
+    ApiClient.registerUserWithToken(mail, "");
   }
 }

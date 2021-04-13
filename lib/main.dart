@@ -34,6 +34,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox(settingsBox,
       encryptionCipher: HiveAesCipher(encryptionKey));
+
   // );
   //launch app
   runApp(MyApp());
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        //create provider for statemanagment
+        //create provider for stateManagement
         ChangeNotifierProvider(create: (_) => new OfferLogic()),
       ],
       child: Directionality(

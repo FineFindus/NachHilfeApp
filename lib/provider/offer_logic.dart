@@ -6,6 +6,9 @@ class OfferLogic extends ChangeNotifier {
 //internal used offer
   Offer _offer;
 
+  ///Returns the length of the available offers
+  int get length => _offers?.length ?? 0;
+
   ///Returns the currently selected offer.
   ///Might be null when no offer is selected.
   Offer get offer => _offer;
@@ -27,7 +30,9 @@ class OfferLogic extends ChangeNotifier {
   ///It loads them from a server via REST api.
   Future<List<Offer>> get offers async {
     //return offers if not null
-    if (_offers != null) return _offers;
+    if (_offers != null) {
+      return _offers;
+    }
 
     //else load the offers from he server
     return await ApiClient.getOffers();

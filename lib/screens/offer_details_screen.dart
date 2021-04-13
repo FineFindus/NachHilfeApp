@@ -89,7 +89,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Text(
-                        offer.topic,
+                        "${offer.topic.toString().replaceAll("[", "").replaceAll("]", "")}",
+                        // offer.topic,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -206,11 +207,11 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
         setState(() {
           _isLoading = true;
         });
-        //send post to server
-        await ApiClient.updateOffer(updatedOffer);
         //await Future.delayed(Duration(seconds: 2));
         Provider.of<OfferLogic>(context, listen: false).setOffer = updatedOffer;
         Provider.of<OfferLogic>(context, listen: false).removeOffer(offer);
+        //send post to server
+        await ApiClient.updateOffer(updatedOffer);
 
         //cancel loading
         setState(() {

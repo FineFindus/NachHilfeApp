@@ -289,10 +289,10 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   Future<Offer> createOffer() async {
     //get name and conact
     var storage = FlutterSecureStorage();
-    var mail = await storage.read(key: "user_email");
+    var id = await storage.read(key: "user_id");
 
     //get topics
-    var choosenTopics = [];
+    List<String> choosenTopics = [];
 
     for (var i = 0; i < stringValues.length; i++) {
       if (values[i]) {
@@ -318,9 +318,8 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     Offer offer = Offer(
         year: _year,
         subject: _subject,
-        userMail: mail,
-        topic:
-            "${choosenTopics.toString().replaceAll("[", "").replaceAll("]", "")}",
+        userMail: id,
+        topic: choosenTopics,
         isAccepted: false,
         endDate:
             pickedDate.isAfter(DateTime.now()) ? pickedDate : DateTime.now());
