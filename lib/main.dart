@@ -16,7 +16,6 @@ import 'global/globals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //TODO add decrypted settings
   //check for encryption key
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
   var containsEncryptionKey =

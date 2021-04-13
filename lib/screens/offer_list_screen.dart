@@ -40,8 +40,6 @@ class _OfferListScreenState extends State<OfferListScreen> {
                 icon: Icon(Icons.settings),
                 onPressed: () {
                   action();
-                  // Navigator.of(context).push(
-                  // MaterialPageRoute(builder: (context) => SettingsScreen()));
                 },
               ),
               openBuilder: (context, action) => SettingsScreen(),

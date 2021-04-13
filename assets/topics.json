@@ -92,8 +92,55 @@
             "Drama"
         ]
     },
-    "9": {},
-    "10": {},
+    "9": {
+        "Subject.math": [
+            "Lineare Funktionen",
+            "LGS",
+            "Satz des Pythagoras",
+            "Ähnlickeit (AP)",
+            "Kreis und Zylinder"
+        ],
+        "Subject.english": [
+            "Exploring Australia",
+            "Colerful Caribbean",
+            "Around South Africa",
+            "Hong kong",
+            "Extensive Reading"
+        ],
+        "Subject.german": [
+            "Bewerbungstraining",
+            "Kurzgeschichten",
+            "Argumentieren",
+            "RS",
+            "Dram (Wilgelm Tell)",
+            "Lyrik",
+            "Sprache im Wandel"
+        ]
+    },
+    "10": {
+        "Subject.math": [
+            "Quadratische Funktionen",
+            "Körper",
+            "Trigonometrie (AP)",
+            "lineare Funktionen",
+            "Stochastik",
+            "Potenfunktionen",
+            "Sinusfunktion"
+        ],
+        "Subject.english": [
+            "Human Rights",
+            "Canada",
+            "India and Human Rights",
+            "New Zealand",
+            "Stargirl"
+        ],
+        "Subject.german": [
+            "Kurzprosa",
+            "Qualityland",
+            "Erörtern",
+            "Lyrik"
+        ]
+    },
     "11": {
         "Subject.math": [
             "Abhängigkeit und Änderung",
@@ -115,6 +162,43 @@
             "Filmische Analyse"
         ]
     },
-    "12": {},
-    "13": {}
+    "12": {
+        "Subject.math": [
+            "Analytische Geometrie",
+            "Differential Rechnung I",
+            "Integralrechnung",
+            "e-Funktion",
+            "Wachstumsmodel",
+            "LGS",
+            "Analytische Geometrie",
+            "Stochastik"
+        ],
+        "Subject.english": [
+            "The Ethics of Science",
+            "The Rainbow Nation: South Africa"
+        ],
+        "Subject.german": [
+            "Rahmenthema 1",
+            "Rahmenthema 2",
+            "Rahmenthema 3",
+            "Rahmenthema 4"
+        ]
+    },
+    "13": {
+        "Subject.math": [
+            "Daten und Zufall",
+            "beurteilende Statistik",
+            "Normalverteilung"
+        ],
+        "Subject.english": [
+            "Ethnic and Cultural",
+            "The Englisches",
+            "The Pursuit of Power"
+        ],
+        "Subject.german": [
+            "Rahmenthema 5",
+            "Rahmenthema 6",
+            "Rahmenthema 7"
+        ]
+    }
 }
