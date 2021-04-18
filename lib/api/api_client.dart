@@ -97,9 +97,18 @@ class ApiClient {
             StackTrace.fromString("This is its trace"));
       }
     } on DioError catch (e) {
-      print(e);
+      if (e.type == DioErrorType.RESPONSE)
+      // && e.message.trim() ==
+      //         "DioError [DioErrorType.RESPONSE]: Http status error [401]"
+      //             .trim())
+      {
+        await refreshToken();
+        print("asjkdhjjjjj");
+        // return await getOffers();
+      }
+      print("Error: $e");
       return Future.error(
-          "An error occurred", StackTrace.fromString(e.toString()));
+          "An error occurred: $e", StackTrace.fromString(e.toString()));
     }
   }
 
@@ -244,6 +253,51 @@ class ApiClient {
       });
 
       //check the status code
+      if (response.statusCode == 200 && response.data != null) {
+        //get tokens
+        final accessToken = response.data["accessToken"];
+        final refreshToken = response.data["refreshToken"];
+
+        //save save tokens
+        final FlutterSecureStorage secureStorage = FlutterSecureStorage();
+        await secureStorage.write(
+            key: "accessToken", value: accessToken.toString());
+        await secureStorage.write(
+            key: "refreshToken", value: refreshToken.toString());
+      } else if (response.statusCode == 404) {
+        //check if the user is offline
+        return Future.error(
+            "A StatusCode 404 was returned, this indicates that the user might be offline",
+            StackTrace.fromString("This is its trace"));
+      }
+    } catch (e) {}
+  }
+
+  static Future<void> refreshToken() async {
+    print("asjkdhjjjjjasdkjhhhhhhhhhh");
+
+    Response response;
+    //create dio for http request
+    Dio dio = new Dio();
+    //set options like timeout, etc.
+    dio.options.connectTimeout = 30000; //30s
+    dio.options.receiveTimeout = 30000; //30s
+
+    //get user id
+    final String userId = await FlutterSecureStorage().read(key: "user_id");
+
+    //get refreshToken
+    final String refreshToken =
+        await FlutterSecureStorage().read(key: "refreshToken");
+    dio.options.headers["authorization"] = "Bearer $refreshToken";
+
+    try {
+      //post data to server
+      //TODO register user
+      response = await dio.get("$apiUserURL/refreshToken/$userId");
+
+      //check the status code
+      print(response.data);
       if (response.statusCode == 200 && response.data != null) {
         //get tokens
         final accessToken = response.data["accessToken"];

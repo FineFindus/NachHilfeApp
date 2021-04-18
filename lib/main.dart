@@ -34,7 +34,8 @@ void main() async {
   await Hive.openBox(settingsBox,
       encryptionCipher: HiveAesCipher(encryptionKey));
 
-  // );
+  print(await secureStorage.read(key: "refreshKey"));
+
   //launch app
   runApp(MyApp());
 }
