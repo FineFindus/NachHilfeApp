@@ -1,5 +1,7 @@
 import 'package:NachHilfeApp/api/api_client.dart';
 import 'package:NachHilfeApp/generated/l10n.dart';
+import 'package:NachHilfeApp/provider/offer_logic.dart';
+import 'package:provider/provider.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +101,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     await storeMailAddress(
                                         mailTextController.text.trim());
 
+                                    //set user to logged in
+                                    Provider.of<OfferLogic>(context,
+                                            listen: false)
+                                        .isLoggedIn = true;
                                     //push and replace with new screen
                                     Navigator.of(context)
                                         .pushReplacement(MaterialPageRoute(

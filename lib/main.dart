@@ -18,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //check for encryption key
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  await secureStorage.deleteAll();
   var containsEncryptionKey =
       await secureStorage.containsKey(key: 'settingsKey');
   if (!containsEncryptionKey) {
@@ -46,11 +47,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        //create provider for stateManagement
-        ChangeNotifierProvider(create: (_) => new OfferLogic()),
-      ],
+    return ChangeNotifierProvider(
+      //create provider for stateManagement
+      create: (_) => new OfferLogic(),
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Banner(

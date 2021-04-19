@@ -4,7 +4,6 @@ import 'package:NachHilfeApp/model/offer.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
@@ -12,17 +11,17 @@ class ApiClient {
   static final String url =
       // "http://10.10.8.218:8888/api/v1/offers";
       //test link
-      "http://10.0.2.2:3000/offer";
-  // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
+//      "http://10.0.2.2:3000/offer";
+      "http://10.10.2.140:3000/offer";
 
-  //ip address
-  //10.10.8.218
-  //network name : ITCDisciteSrv
+  // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
 
   //TODO: update url
   ///The API url for the user
   ///Used to register the user at the server and used in offer post request.
-  static final String apiUserURL = "http://10.0.2.2:3000/user";
+  static final String apiUserURL =
+//  "http://10.0.2.2:3000/user";
+      "http://10.10.2.140:3000/user";
 
   //TODO change to real url should be something/ api/v1/offers
 
@@ -274,8 +273,6 @@ class ApiClient {
   }
 
   static Future<void> refreshToken() async {
-    print("asjkdhjjjjjasdkjhhhhhhhhhh");
-
     Response response;
     //create dio for http request
     Dio dio = new Dio();
@@ -315,6 +312,10 @@ class ApiClient {
             "A StatusCode 404 was returned, this indicates that the user might be offline",
             StackTrace.fromString("This is its trace"));
       }
-    } catch (e) {}
+    } catch (e) {
+      print("error when loading refresh tokens");
+      //show login screen
+      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Onboarding());
+    }
   }
 }

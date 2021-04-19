@@ -148,6 +148,8 @@ class _OfferListScreenState extends State<OfferListScreen> {
       Navigator.of(context).pushReplacement(CupertinoPageRoute(
         builder: (context) => OnboardingScreen(),
       ));
+    } else {
+      Provider.of<OfferLogic>(context, listen: false).isLoggedIn = true;
     }
   }
 }

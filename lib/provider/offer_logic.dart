@@ -3,8 +3,11 @@ import 'package:NachHilfeApp/model/offer.dart';
 import 'package:flutter/material.dart';
 
 class OfferLogic extends ChangeNotifier {
-//internal used offer
+  //internal used offer
   Offer _offer;
+
+  //If the user is logged in
+  bool _userLoggedIn = false;
 
   ///Returns the length of the available offers
   int get length => _offers?.length ?? 0;
@@ -12,6 +15,9 @@ class OfferLogic extends ChangeNotifier {
   ///Returns the currently selected offer.
   ///Might be null when no offer is selected.
   Offer get offer => _offer;
+
+  ///Returns if the user is logged in.
+  bool get isLoggedIn => _userLoggedIn;
 
   ///Set the selected offer.
   set setOffer(Offer offer) {
@@ -23,12 +29,23 @@ class OfferLogic extends ChangeNotifier {
     notifyListeners();
   }
 
+  ///Set if the user is logged in.
+  set isLoggedIn(bool loggedIn) {
+    _userLoggedIn = loggedIn;
+    //send update
+    notifyListeners();
+  }
+
   //internal list of offer
   List<Offer> _offers;
 
   ///Returns the list of available offers.
   ///It loads them from a server via REST api.
+  ///Returns an empty list if the user is not logged in.
   Future<List<Offer>> get offers async {
+    //dont get offers if the user is not yet logged in.
+    if (!_userLoggedIn) return [];
+
     //return offers if not null
     if (_offers != null) {
       return _offers;
