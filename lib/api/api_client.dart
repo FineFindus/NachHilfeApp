@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:NachHilfeApp/model/offer.dart';
+import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
@@ -28,7 +31,9 @@ class ApiClient {
   ///Creates a GET request to the server to get the offers from the database.
   ///Throws an exception if something failed.
   static Future<List<dynamic>> getOffers(
-      {bool withCache = true, bool isAccepted = false}) async {
+      {BuildContext context,
+      bool withCache = true,
+      bool isAccepted = false}) async {
     // String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
     //TODO add query
     String urlWithQuery = "$url";
@@ -45,6 +50,7 @@ class ApiClient {
     final String accessToken =
         await FlutterSecureStorage().read(key: "accessToken");
     dio.options.headers["authorization"] = "Bearer $accessToken";
+    print("token:$accessToken");
 
     //create cache
     if (withCache)
@@ -101,7 +107,7 @@ class ApiClient {
       //         "DioError [DioErrorType.RESPONSE]: Http status error [401]"
       //             .trim())
       {
-        await refreshToken();
+        await refreshToken(context);
         print("asjkdhjjjjj");
         // return await getOffers();
       }
@@ -272,7 +278,7 @@ class ApiClient {
     } catch (e) {}
   }
 
-  static Future<void> refreshToken() async {
+  static Future<void> refreshToken(BuildContext context) async {
     Response response;
     //create dio for http request
     Dio dio = new Dio();
@@ -315,7 +321,8 @@ class ApiClient {
     } catch (e) {
       print("error when loading refresh tokens");
       //show login screen
-      //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Onboarding());
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => OnboardingScreen()));
     }
   }
 }

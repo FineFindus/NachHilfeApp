@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       //create provider for stateManagement
-      create: (_) => new OfferLogic(),
+      create: (context) => new OfferLogic(context),
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Banner(

@@ -3,6 +3,10 @@ import 'package:NachHilfeApp/model/offer.dart';
 import 'package:flutter/material.dart';
 
 class OfferLogic extends ChangeNotifier {
+  BuildContext _context;
+  OfferLogic(BuildContext context) {
+    _context = context;
+  }
   //internal used offer
   Offer _offer;
 
@@ -52,7 +56,7 @@ class OfferLogic extends ChangeNotifier {
     }
 
     //else load the offers from he server
-    return await ApiClient.getOffers();
+    return await ApiClient.getOffers(context: _context);
   }
 
   ///Removes a offer from the internal list of offers without refreshing them
@@ -67,7 +71,9 @@ class OfferLogic extends ChangeNotifier {
   ///Refresh the offer list by loading
   Future<void> refreshOffers() async {
     //load new offers from server via apiClient
-    _offers = await ApiClient.getOffers(withCache: false);
+    _offers = await ApiClient.getOffers(
+      withCache: false,
+    );
     //update ui
     notifyListeners();
   }
