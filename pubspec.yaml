@@ -58,6 +58,7 @@ dependencies:
   #added hive for storing settings data and acceessing it faaaast
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
+  pin_code_fields: ^7.0.0
 
 dev_dependencies:
   flutter_test:

@@ -66,10 +66,10 @@ class S {
   }
 
   /// `Please input your email address to contact you.`
-  String get onboaring_title {
+  String get onboarding_title {
     return Intl.message(
       'Please input your email address to contact you.',
-      name: 'onboaring_title',
+      name: 'onboarding_title',
       desc: '',
       args: [],
     );
@@ -100,6 +100,26 @@ class S {
     return Intl.message(
       'The name can only consist of alphabetic letters',
       name: 'onborading_textfield_error_name_numbers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a verfication code`
+  String get onboarding_verification_title {
+    return Intl.message(
+      'Please enter a verfication code',
+      name: 'onboarding_verification_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter the correct code`
+  String get onboarding_verification_error {
+    return Intl.message(
+      'Please enter the correct code',
+      name: 'onboarding_verification_error',
       desc: '',
       args: [],
     );

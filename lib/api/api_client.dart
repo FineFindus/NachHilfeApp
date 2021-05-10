@@ -14,17 +14,16 @@ class ApiClient {
   static final String url =
       // "http://10.10.8.218:8888/api/v1/offers";
       //test link
-//      "http://10.0.2.2:3000/offer";
-      "http://10.10.2.140:3000/offer";
+      "http://10.0.2.2:3000/offer";
+  // "http://10.10.2.140:3000/offer";
 
   // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
 
   //TODO: update url
   ///The API url for the user
   ///Used to register the user at the server and used in offer post request.
-  static final String apiUserURL =
-//  "http://10.0.2.2:3000/user";
-      "http://10.10.2.140:3000/user";
+  static final String apiUserURL = "http://10.0.2.2:3000/user";
+  // "http://10.10.2.140:3000/user";
 
   //TODO change to real url should be something/ api/v1/offers
 
@@ -231,7 +230,7 @@ class ApiClient {
         //save id to secure storage
         final FlutterSecureStorage secureStorage = FlutterSecureStorage();
         await secureStorage.write(key: "user_id", value: userId.toString());
-        await login(userId, 100000);
+        // await login(userId, 100000);
       } else if (response.statusCode == 404) {
         //check if the user is offline
         return Future.error(
