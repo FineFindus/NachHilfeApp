@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,21 +8,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
   ///API url from the server to post and get offers
-  static final String url =
-      // "http://10.10.8.218:8888/api/v1/offers";
-      //test link
-      "http://10.0.2.2:3000/offer";
-  // "http://10.10.2.140:3000/offer";
+  static final String baseUrl = "https://discite-server.herokuapp.com";
 
-  // "https://my-json-server.typicode.com/finefindus/nachhilfeapp-json-demo/offers";
+  static final String apiOfferUrl = "$baseUrl/offer";
 
-  //TODO: update url
   ///The API url for the user
   ///Used to register the user at the server and used in offer post request.
-  static final String apiUserURL = "http://10.0.2.2:3000/user";
-  // "http://10.10.2.140:3000/user";
-
-  //TODO change to real url should be something/ api/v1/offers
+  static final String apiUserURL = "$baseUrl/user";
 
   ///Creates a GET request to the server to get the offers from the database.
   ///Throws an exception if something failed.
@@ -35,7 +24,7 @@ class ApiClient {
       bool isAccepted = false}) async {
     // String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
     //TODO add query
-    String urlWithQuery = "$url";
+    String urlWithQuery = "$apiOfferUrl";
 
     Response response;
     //create dio for http request
@@ -55,16 +44,6 @@ class ApiClient {
     if (withCache)
       dio.interceptors
           .add(DioCacheManager(CacheConfig(baseUrl: urlWithQuery)).interceptor);
-
-    //allow http traffic for debug on localhost
-    // if (kDebugMode)
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-        (client) {
-      client.badCertificateCallback =
-          (X509Certificate cert, String host, int port) {
-        return true;
-      };
-    };
 
     //get response from server with cache
     try {
@@ -136,7 +115,7 @@ class ApiClient {
 
     try {
       //post data
-      response = await dio.post(url, data: offer.toJson());
+      response = await dio.post(apiOfferUrl, data: offer.toJson());
 
       print(response);
 
@@ -166,7 +145,7 @@ class ApiClient {
     //put update
 
     //url for the specific offer per id. The id parameter can only be a number
-    String apiURL = "$url/${offer.id}";
+    String apiURL = "$apiOfferUrl/${offer.id}";
 
     Response response;
     //create dio for http request

@@ -64,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboarding_textfield_label_name" : MessageLookupByLibrary.simpleMessage("Email"),
     "onboarding_title" : MessageLookupByLibrary.simpleMessage("Bitte trage deine Email-Adresse ein, damit man dich darüber kontaktieren kann"),
     "onboarding_verification_error" : MessageLookupByLibrary.simpleMessage("Bitte trage die richtigen Zahlen ein"),
-    "onboarding_verification_title" : MessageLookupByLibrary.simpleMessage("Bitte trage einen Verfikationscode ein"),
+    "onboarding_verification_title" : MessageLookupByLibrary.simpleMessage("Bitte trage einen Verfikationscode ein, welcher dir per Email zugesand wurde."),
     "onborading_textfield_error_name_empty" : MessageLookupByLibrary.simpleMessage("Bitte trage eine richtige Email-Adresse ein"),
     "onborading_textfield_error_name_numbers" : MessageLookupByLibrary.simpleMessage("Bitte trage eine richtige Email-Adresse ein"),
     "settings_screen_button_label_logout" : MessageLookupByLibrary.simpleMessage("Logout"),

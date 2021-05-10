@@ -23,6 +23,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   //form key
   final _formKey = GlobalKey<FormState>();
 
+  //when the request has been send, show a loading indicator
+  bool isLoading = false;
+
   @override
   void dispose() {
     //dispose text controller
@@ -34,7 +37,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        // color: Colors.blueGrey,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -93,25 +95,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
                           title: CupertinoButton.filled(
-                              child: Text(
-                                S.of(context).ok,
-                                style: const TextStyle(color: Colors.white),
+                              child: AnimatedSwitcher(
+                                duration: const Duration(seconds: 500),
+                                child: isLoading
+                                    ? CircularProgressIndicator.adaptive()
+                                    : Text(
+                                        S.of(context).ok,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
                               ),
-                              onPressed: () async {
-                                if (_formKey.currentState.validate()) {
-                                  if (mailTextController.text
-                                      .trim()
-                                      .isNotEmpty) {
-                                    await storeMailAddress(
-                                        mailTextController.text.trim());
+                              onPressed: isLoading
+                                  ? null
+                                  : () async {
+                                      if (_formKey.currentState.validate()) {
+                                        if (mailTextController.text
+                                            .trim()
+                                            .isNotEmpty) {
+                                          setState(() {
+                                            //show loading
+                                            isLoading = true;
+                                          });
+                                          await storeMailAddress(
+                                              mailTextController.text.trim());
 
-                                    //set user to logged in
-                                    Provider.of<OfferLogic>(context,
-                                            listen: false)
-                                        .isLoggedIn = true;
-                                  }
-                                }
-                              })),
+                                          //set user to logged in
+                                          Provider.of<OfferLogic>(context,
+                                                  listen: false)
+                                              .isLoggedIn = true;
+                                        }
+                                      }
+                                    })),
                     ),
                   ],
                 ),
@@ -208,12 +222,14 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
                       blinkWhenObscuring: true,
                       animationType: AnimationType.fade,
                       pinTheme: PinTheme(
+                        activeColor: Colors.grey.shade100,
+                        selectedFillColor: Colors.grey.shade100,
+                        inactiveFillColor: Colors.grey.shade300,
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 50,
                         fieldWidth: 40,
-                        activeFillColor:
-                            hasError ? Colors.blue.shade100 : Colors.white,
+                        activeFillColor: hasError ? Colors.red : Colors.white,
                       ),
                       cursorColor: Colors.black,
                       animationDuration: Duration(milliseconds: 300),

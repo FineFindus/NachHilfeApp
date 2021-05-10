@@ -7,7 +7,7 @@
   "onboarding_textfield_label_name": "Email",
   "onborading_textfield_error_name_numbers": "Bitte trage eine richtige Email-Adresse ein",
   "onborading_textfield_error_name_empty": "Bitte trage eine richtige Email-Adresse ein",
-  "onboarding_verification_title": "Bitte trage einen Verfikationscode ein",
+  "onboarding_verification_title": "Bitte trage einen Verfikationscode ein, welcher dir per Email zugesand wurde.",
   "onboarding_verification_error": "Bitte trage die richtigen Zahlen ein",
   "offer_list_appbar_title": "Suchen",
   "offer_list_connection_error": "Ein Fehler ist aufgetreten, bitte versichere das du eine Internetverbindung hast und versuche es erneut. Derzeit funktioniert die App nur wenn du mit dem Schulnetzwerk verbunden bist.",

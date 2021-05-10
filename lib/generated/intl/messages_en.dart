@@ -64,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboarding_textfield_label_name" : MessageLookupByLibrary.simpleMessage("Mail"),
     "onboarding_title" : MessageLookupByLibrary.simpleMessage("Please input your email address to contact you."),
     "onboarding_verification_error" : MessageLookupByLibrary.simpleMessage("Please enter the correct code"),
-    "onboarding_verification_title" : MessageLookupByLibrary.simpleMessage("Please enter a verfication code"),
+    "onboarding_verification_title" : MessageLookupByLibrary.simpleMessage("Please enter a verfication code, which has been send to by an email"),
     "onborading_textfield_error_name_empty" : MessageLookupByLibrary.simpleMessage("Please enter a valid email address"),
     "onborading_textfield_error_name_numbers" : MessageLookupByLibrary.simpleMessage("The name can only consist of alphabetic letters"),
     "settings_screen_button_label_logout" : MessageLookupByLibrary.simpleMessage("Logout"),

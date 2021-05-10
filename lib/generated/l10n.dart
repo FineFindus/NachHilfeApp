@@ -105,10 +105,10 @@ class S {
     );
   }
 
-  /// `Please enter a verfication code`
+  /// `Please enter a verfication code, which has been send to by an email`
   String get onboarding_verification_title {
     return Intl.message(
-      'Please enter a verfication code',
+      'Please enter a verfication code, which has been send to by an email',
       name: 'onboarding_verification_title',
       desc: '',
       args: [],
