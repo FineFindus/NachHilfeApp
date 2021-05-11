@@ -18,15 +18,13 @@ class OfferDetailsScreen extends StatefulWidget {
 
 class _OfferDetailsScreenState extends State<OfferDetailsScreen>
     with SingleTickerProviderStateMixin {
-  //if a resquest was send and is now loading
+  //if a request was send and is now loading
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     //get selected offer from Provider
     Offer offer = Provider.of<OfferLogic>(context).offer;
-
-    print(offer);
 
     if (offer == null)
       return Scaffold(
@@ -151,11 +149,9 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
             child: SizedBox(
               width: double.infinity,
-              //height: 70.0,
               child: AnimatedSize(
                 vsync: this,
                 duration: const Duration(milliseconds: 500),
-                //height: _isLoading ? 70.0 : null,
                 child: CupertinoButton.filled(
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),
