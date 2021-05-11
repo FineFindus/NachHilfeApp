@@ -82,7 +82,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
                           return ListView.builder(
                               itemCount: snapshot.data.length,
                               // itemCount:
-                              //     Provider.of<OfferLogic>(context).length,
+                              // Provider.of<OfferLogic>(context).length,
                               itemBuilder: (context, index) => OpenContainer(
                                     closedColor: Colors.transparent,
                                     closedElevation: 0,

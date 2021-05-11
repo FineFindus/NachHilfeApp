@@ -70,28 +70,15 @@ class ApiClient {
         }
         //return the list
         return responseData;
-      } else if (response.statusCode == 404) {
-        //user could not reach server
-        return Future.error("The user is offline, a 404 error was returned",
-            StackTrace.fromString("This is its trace"));
-      } else {
-        //user was not reached
-        return Future.error("The Server could not be reached",
-            StackTrace.fromString("This is its trace"));
-      }
+      } else
+        return Future.error(response.statusCode);
     } on DioError catch (e) {
-      if (e.type == DioErrorType.RESPONSE)
-      // && e.message.trim() ==
-      //         "DioError [DioErrorType.RESPONSE]: Http status error [401]"
-      //             .trim())
-      {
+      if (e.response.statusCode == 401) {
+        //the accessToken is invalid, try to refresh and get new token
         await refreshToken(context);
-        print("asjkdhjjjjj");
-        // return await getOffers();
-      }
-      print("Error: $e");
-      return Future.error(
-          "An error occurred: $e", StackTrace.fromString(e.toString()));
+        return await getOffers();
+      } else
+        return Future.error(e.response.statusCode);
     }
   }
 
@@ -130,9 +117,8 @@ class ApiClient {
       }
     } on DioError catch (e) {
       //catch errors
-      print(e);
       return Future.error(
-          "An error occurred: $e", StackTrace.fromString(e.toString()));
+          e.response.statusCode, StackTrace.fromString(e.toString()));
     }
   }
 
@@ -176,7 +162,7 @@ class ApiClient {
       //catch errors
       print(e);
       return Future.error(
-          "An error occurred", StackTrace.fromString(e.toString()));
+          e.response.statusCode, StackTrace.fromString(e.toString()));
     }
   }
 
@@ -210,6 +196,11 @@ class ApiClient {
         final FlutterSecureStorage secureStorage = FlutterSecureStorage();
         await secureStorage.write(key: "user_id", value: userId.toString());
         // await login(userId, 100000);
+      } else if (response.statusCode == 409) {
+        //user already exist, send sign in
+        return Future.error(
+          409,
+        );
       } else if (response.statusCode == 404) {
         //check if the user is offline
         return Future.error(

@@ -146,7 +146,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await storage.write(key: "user_email", value: mail);
 
     //send data to server
-    await ApiClient.registerUserWithToken(mail, "");
+    await ApiClient.registerUserWithToken(mail, "")
+        .onError((error, stackTrace) {
+      if (error is int)
+        switch (error) {
+          case 409:
+            //the user already exist, so he should be signed in
+            break;
+          default:
+        }
+    });
 
     //show pin code field
     Navigator.of(context).pushReplacement(MaterialPageRoute(

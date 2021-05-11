@@ -18,7 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //check for encryption key
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-  await secureStorage.deleteAll();
+  // await secureStorage.deleteAll();
+  // await secureStorage.delete(key: "accessToken");
   var containsEncryptionKey =
       await secureStorage.containsKey(key: 'settingsKey');
   if (!containsEncryptionKey) {
