@@ -61,10 +61,11 @@ dependencies:
   pin_code_fields: ^7.0.0
 
 dev_dependencies:
+  # test: ^1.17.4
   flutter_test:
     sdk: flutter
   #test: ^1.16.8
-  flutter_launcher_icons: ^0.8.1
+  #flutter_launcher_icons: ^0.8.1
 
   #hive builder
   # hive_generator: ^0.8.2

@@ -12,6 +12,10 @@ import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  final bool login;
+
+  const OnboardingScreen({Key key, this.login = true}) : super(key: key);
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -141,36 +145,38 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   /// and the keystore for android.
   /// This can only be used with android api 18 and above.
   Future<void> storeMailAddress(String mail) async {
-    //store email address
-    var storage = FlutterSecureStorage();
-    await storage.write(key: "user_email", value: mail);
+    if (widget.login) {
+      //store email address
+      var storage = FlutterSecureStorage();
+      await storage.write(key: "user_email", value: mail);
 
-    //send data to server
-    await ApiClient.registerUserWithToken(mail, "")
-        .onError((error, stackTrace) {
-      if (error is int)
-        switch (error) {
-          case 409:
-            //the user already exist, so he should be signed in
-            break;
-          default:
-        }
-    });
+      //send data to server
+      await ApiClient.registerUserWithToken(mail, "")
+          .onError((error, stackTrace) {
+        if (error is int)
+          switch (error) {
+            case 409:
+              //the user already exist, so he should be signed in
+              break;
+            default:
+          }
+      });
+    }
 
     //show pin code field
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => EmailPinScreen(
-        email: mail,
-      ),
+          // email: mail,
+          ),
     ));
   }
 }
 
 class EmailPinScreen extends StatefulWidget {
-  final String email;
+  // final String email;
   const EmailPinScreen({
     Key key,
-    @required this.email,
+    // @required this.email,
   }) : super(key: key);
   @override
   _EmailPinScreenState createState() => _EmailPinScreenState();
@@ -200,6 +206,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Card(
           elevation: 20,
@@ -221,6 +228,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
                         vertical: 8.0, horizontal: 30),
                     child: PinCodeTextField(
                       appContext: context,
+                      textStyle: TextStyle(color: Colors.blue),
                       pastedTextStyle: TextStyle(
                         color: Colors.green.shade600,
                         fontWeight: FontWeight.bold,

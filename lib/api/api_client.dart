@@ -5,6 +5,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../main.dart';
 
 class ApiClient {
   ///API url from the server to post and get offers
@@ -19,10 +20,8 @@ class ApiClient {
   ///Creates a GET request to the server to get the offers from the database.
   ///Throws an exception if something failed.
   static Future<List<dynamic>> getOffers(
-      {BuildContext context,
-      bool withCache = true,
-      bool isAccepted = false}) async {
-    // String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
+      {bool withCache = true, bool isAccepted = false}) async {
+    //String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
     //TODO add query
     String urlWithQuery = "$apiOfferUrl";
 
@@ -75,7 +74,8 @@ class ApiClient {
     } on DioError catch (e) {
       if (e.response.statusCode == 401) {
         //the accessToken is invalid, try to refresh and get new token
-        await refreshToken(context);
+        await refreshToken().onError(
+            (error, stackTrace) => Future.error(e.response.statusCode));
         return await getOffers();
       } else
         return Future.error(e.response.statusCode);
@@ -247,7 +247,7 @@ class ApiClient {
     } catch (e) {}
   }
 
-  static Future<void> refreshToken(BuildContext context) async {
+  static Future<void> refreshToken() async {
     Response response;
     //create dio for http request
     Dio dio = new Dio();
@@ -289,9 +289,12 @@ class ApiClient {
       }
     } catch (e) {
       print("error when loading refresh tokens");
+      //getemail code
+
       //show login screen
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => OnboardingScreen()));
+      navigatorKey.currentState
+          .push(MaterialPageRoute(builder: (context) => EmailPinScreen()));
+      return Future.error("Login failed");
     }
   }
 }

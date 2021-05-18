@@ -36,11 +36,13 @@ void main() async {
   await Hive.openBox(settingsBox,
       encryptionCipher: HiveAesCipher(encryptionKey));
 
-  print(await secureStorage.read(key: "refreshKey"));
+  print(await secureStorage.read(key: "user_id"));
 
   //launch app
   runApp(MyApp());
 }
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   //get default system brightness
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       //create provider for stateManagement
-      create: (context) => new OfferLogic(context),
+      create: (context) => new OfferLogic(),
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Banner(
@@ -64,6 +66,7 @@ class MyApp extends StatelessWidget {
               var darkMode = box.get('darkMode',
                   defaultValue: brightness == Brightness.dark);
               return MaterialApp(
+                navigatorKey: navigatorKey,
                 title: 'Nachhilfe',
                 themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
                 //setting a custom theme with colors from igs logo
