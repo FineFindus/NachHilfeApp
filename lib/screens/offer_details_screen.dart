@@ -140,10 +140,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           ),
           ListTile(
               title: Center(
-                  child: Text(S.of(context)!.offer_details_info_accepting(
-                      offer.isAccepted!
-                          ? offer.userMail
-                          : S.of(context)!.offer_details_info_accepting_user)))),
+                  child: Text(S.of(context)!.offer_details_info_accepting(offer
+                          .isAccepted!
+                      ? offer.userMail
+                      : S.of(context)!.offer_details_info_accepting_user)))),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),

@@ -1,5 +1,6 @@
 import 'package:NachHilfeApp/generated/l10n.dart';
 import 'package:NachHilfeApp/global/keys.dart';
+import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
@@ -71,7 +72,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
               await Provider.of<OfferLogic>(context, listen: false)
                   .refreshOffers();
             },
-            child: FutureBuilder<List<dynamic>?>(
+            child: FutureBuilder<List<Offer>>(
               future: Provider.of<OfferLogic>(context).offers,
               builder: (context, snapshot) {
                 return AnimatedSwitcher(
@@ -82,10 +83,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           return ListView.builder(
-                              itemCount: snapshot.data!
-                                  .where((element) =>
-                                      element.endDate.isAfter(DateTime.now()))
-                                  .length,
+                              itemCount: snapshot.data!.length,
                               // itemCount:
                               // Provider.of<OfferLogic>(context).length,
                               itemBuilder: (context, index) => OpenContainer(
@@ -93,10 +91,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
                                     closedElevation: 0,
                                     closedBuilder: (context, action) =>
                                         OfferCard(
-                                      offer: snapshot.data!
-                                          .where((element) => element.endDate
-                                              .isAfter(DateTime.now()))
-                                          .toList()[index],
+                                      offer: snapshot.data![index],
                                       onTap: () {
                                         //set selected offer
                                         Provider.of<OfferLogic>(context,
@@ -110,7 +105,6 @@ class _OfferListScreenState extends State<OfferListScreen> {
                                         OfferDetailsScreen(),
                                   ));
                         } else if (snapshot.hasError) {
-                          print(snapshot.error);
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
