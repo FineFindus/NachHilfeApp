@@ -1,8 +1,8 @@
 import 'package:NachHilfeApp/model/offer.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:dio_http_cache/dio_http_cache.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../main.dart';
@@ -40,16 +40,18 @@ class ApiClient {
     print("token:$accessToken");
 
     //create cache
-    if (withCache)
-      dio.interceptors
-          .add(DioCacheManager(CacheConfig(baseUrl: urlWithQuery)).interceptor);
+    //if (withCache)
+    //  dio.interceptors
+    //      .add(DioCacheManager(CacheConfig(baseUrl: urlWithQuery)).interceptor);
 
     //get response from server with cache
     try {
       //get data
       if (withCache)
-        response = await dio.get(urlWithQuery,
-            options: buildCacheOptions(Duration(hours: 8)));
+        response = await dio.get(
+          urlWithQuery,
+          //options: buildCacheOptions(Duration(hours: 8))
+        );
       else
         response = await dio.get(urlWithQuery);
 

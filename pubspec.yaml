@@ -39,7 +39,7 @@ dependencies:
   #dio for better http request
   dio: ^3.0.10
   #cache manager
-  dio_http_cache: ^0.2.9
+  #dio_http_cache: ^0.2.9
   #parse unix timestamp
   intl: ^0.17.0
   #animations
@@ -61,11 +61,10 @@ dependencies:
   pin_code_fields: ^7.0.0
 
 dev_dependencies:
-  # test: ^1.17.4
   flutter_test:
     sdk: flutter
-  #test: ^1.16.8
-  #flutter_launcher_icons: ^0.8.1
+  integration_test:
+    sdk: flutter
 
   #hive builder
   # hive_generator: ^0.8.2
