@@ -19,7 +19,7 @@ class ApiClient {
 
   ///Creates a GET request to the server to get the offers from the database.
   ///Throws an exception if something failed.
-  static Future<List<dynamic>> getOffers(
+  static Future<List<Offer>> getOffers(
       {bool withCache = true, bool isAccepted = false}) async {
     //String urlWithQuery = "$url?accepted=${isAccepted.toString()}";
     //TODO add query
@@ -34,7 +34,7 @@ class ApiClient {
 
     //add auth header
     //get accessToken
-    final String accessToken =
+    final String? accessToken =
         await FlutterSecureStorage().read(key: "accessToken");
     dio.options.headers["authorization"] = "Bearer $accessToken";
     print("token:$accessToken");
@@ -67,20 +67,20 @@ class ApiClient {
         for (var i = 0; i < data.length; i++) {
           final Offer offer = Offer.fromMap(data[i]);
           // only add offers that are not accepted
-          if (!offer.isAccepted) responseData.add(offer);
+          if (!offer.isAccepted!) responseData.add(offer);
         }
         //return the list
         return responseData;
       } else
-        return Future.error(response.statusCode);
+        return Future.error(response.statusCode!);
     } on DioError catch (e) {
-      if (e.response.statusCode == 401) {
+      if (e.response!.statusCode == 401) {
         //the accessToken is invalid, try to refresh and get new token
-        await refreshToken().onError(
-            (error, stackTrace) => Future.error(e.response.statusCode));
+        await refreshToken().onError((dynamic error, stackTrace) =>
+            Future.error(e.response!.statusCode!));
         return await getOffers();
       } else
-        return Future.error(e.response.statusCode);
+        return Future.error(e.response!.statusCode!);
     }
   }
 
@@ -98,7 +98,7 @@ class ApiClient {
     dio.options.receiveTimeout = 30000; //10s
     //add auth header
     //get accessToken
-    final String accessToken =
+    final String? accessToken =
         await FlutterSecureStorage().read(key: "accessToken");
     dio.options.headers["authorization"] = "Bearer $accessToken";
 
@@ -120,7 +120,7 @@ class ApiClient {
     } on DioError catch (e) {
       //catch errors
       return Future.error(
-          e.response.statusCode, StackTrace.fromString(e.toString()));
+          e.response!.statusCode!, StackTrace.fromString(e.toString()));
     }
   }
 
@@ -142,7 +142,7 @@ class ApiClient {
     dio.options.connectTimeout = 30000; //30s
     dio.options.receiveTimeout = 30000; //10s
     //get accessToken
-    final String accessToken =
+    final String? accessToken =
         await FlutterSecureStorage().read(key: "accessToken");
     //add auth header
     dio.options.headers["authorization"] = "Bearer $accessToken";
@@ -164,7 +164,7 @@ class ApiClient {
       //catch errors
       print(e);
       return Future.error(
-          e.response.statusCode, StackTrace.fromString(e.toString()));
+          e.response!.statusCode!, StackTrace.fromString(e.toString()));
     }
   }
 
@@ -212,7 +212,7 @@ class ApiClient {
     } catch (e) {}
   }
 
-  static Future<void> login(String id, int emailCode) async {
+  static Future<void> login(String? id, int emailCode) async {
     assert(id != null && emailCode != null);
     Response response;
     //create dio for http request
@@ -258,10 +258,10 @@ class ApiClient {
     dio.options.receiveTimeout = 30000; //30s
 
     //get user id
-    final String userId = await FlutterSecureStorage().read(key: "user_id");
+    final String? userId = await FlutterSecureStorage().read(key: "user_id");
 
     //get refreshToken
-    final String refreshToken =
+    final String? refreshToken =
         await FlutterSecureStorage().read(key: "refreshToken");
     dio.options.headers["authorization"] = "Bearer $refreshToken";
 
@@ -294,7 +294,7 @@ class ApiClient {
       //getemail code
 
       //show login screen
-      navigatorKey.currentState
+      navigatorKey.currentState!
           .push(MaterialPageRoute(builder: (context) => EmailPinScreen()));
       return Future.error("Login failed");
     }

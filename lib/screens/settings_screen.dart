@@ -21,16 +21,16 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   //dark mode, get default value form hive
-  bool switchDarkMode = Hive.box(settingsBox).get('darkMode',
-      defaultValue: SchedulerBinding.instance.window.platformBrightness ==
+  bool? switchDarkMode = Hive.box(settingsBox).get('darkMode',
+      defaultValue: SchedulerBinding.instance!.window.platformBrightness ==
           Brightness.dark);
 
   //default class year, get default from hve
-  int classYear =
+  int? classYear =
       Hive.box(settingsBox).get('defaultClassYear', defaultValue: 5);
 
   //default class year, get default from hve
-  Subject subject = getSubjectFromString(Hive.box(settingsBox)
+  Subject? subject = getSubjectFromString(Hive.box(settingsBox)
       .get('defaultSubject', defaultValue: Subject.math.toString()));
 
   //secure storage for mail address
@@ -40,18 +40,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).settings_screen_title),
+        title: Text(S.of(context)!.settings_screen_title),
         centerTitle: true,
       ),
       body: ListView(children: [
         Card(
           child: Column(children: [
-            FutureBuilder(
+            FutureBuilder<String?>(
               future: secureStorage.read(key: "user_email"),
               builder: (context, snapshot) => ListTile(
                 leading: Icon(Icons.account_circle),
                 title: snapshot.hasData
-                    ? Text(snapshot.data)
+                    ? Text(snapshot.data!)
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [CircularProgressIndicator()]),
@@ -60,15 +60,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Divider(),
             ListTile(
               leading: Icon(Icons.logout),
-              title: Text(S.of(context).settings_screen_button_label_logout),
+              title: Text(S.of(context)!.settings_screen_button_label_logout),
               onTap: () => logOut(),
             ),
           ]),
         ),
         SwitchListTile.adaptive(
           secondary: Icon(Mdi.themeLightDark),
-          title: Text(S.of(context).settings_screen_switch_label_darkmode),
-          value: switchDarkMode,
+          title: Text(S.of(context)!.settings_screen_switch_label_darkmode),
+          value: switchDarkMode!,
           onChanged: (value) => setState(() {
             switchDarkMode = value;
             Hive.box(settingsBox).put("darkMode", value);
@@ -77,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ListTile(
           leading: Icon(Mdi.teach),
           title:
-              Text(S.of(context).settings_screen_listtile_label_default_year),
+              Text(S.of(context)!.settings_screen_listtile_label_default_year),
           trailing: Text("${classYear ?? 5}"),
           onTap: () => showDialog(
               context: context,
@@ -94,7 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ListTile(
             leading: Icon(Icons.class_),
             title: Text(
-                S.of(context).settings_screen_listtile_label_default_subject),
+                S.of(context)!.settings_screen_listtile_label_default_subject),
             trailing: Text(
                 "${getTranlatedSubject(context, subject ?? Subject.math)}"),
             onTap: () => showDialog(

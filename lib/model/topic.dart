@@ -4,16 +4,16 @@ import 'package:NachHilfeApp/api/subjectValue.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 
 class Topic {
-  final int year;
-  final Subject subject;
+  final int? year;
+  final Subject? subject;
   Topic({
     this.year,
     this.subject,
   });
 
   Topic copyWith({
-    int year,
-    Subject subject,
+    int? year,
+    Subject? subject,
   }) {
     return Topic(
       year: year ?? this.year,
@@ -29,8 +29,6 @@ class Topic {
   }
 
   factory Topic.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return Topic(
       year: map['year'],
       subject: (getSubjectFromString(map['subject'])),

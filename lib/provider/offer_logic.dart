@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class OfferLogic extends ChangeNotifier {
   //internal used offer
-  Offer _offer;
+  Offer? _offer;
 
   //If the user is logged in
   bool _userLoggedIn = false;
@@ -14,7 +14,7 @@ class OfferLogic extends ChangeNotifier {
 
   ///Returns the currently selected offer.
   ///Might be null when no offer is selected.
-  Offer get offer => _offer;
+  Offer? get offer => _offer;
 
   ///Returns if the user is logged in.
   bool get isLoggedIn => _userLoggedIn;
@@ -37,7 +37,7 @@ class OfferLogic extends ChangeNotifier {
   }
 
   //internal list of offer
-  List<Offer> _offers;
+  List<Offer>? _offers;
 
   ///Returns the list of available offers.
   ///It loads them from a server via REST api.
@@ -48,18 +48,18 @@ class OfferLogic extends ChangeNotifier {
 
     //return offers if not null
     if (_offers != null) {
-      return _offers;
+      return _offers!;
     }
 
     //else load the offers from he server
-    return await ApiClient.getOffers();
+    return await (ApiClient.getOffers());
   }
 
   ///Removes a offer from the internal list of offers without refreshing them
   ///from the server.
   void removeOffer(Offer offer) {
     if (_offers != null) {
-      _offers.remove(offer);
+      _offers!.remove(offer);
       notifyListeners();
     }
   }
@@ -67,9 +67,9 @@ class OfferLogic extends ChangeNotifier {
   ///Refresh the offer list by loading
   Future<void> refreshOffers() async {
     //load new offers from server via apiClient
-    _offers = await ApiClient.getOffers(
+    _offers = await (ApiClient.getOffers(
       withCache: false,
-    );
+    ));
     //update ui
     notifyListeners();
   }

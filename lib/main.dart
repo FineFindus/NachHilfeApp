@@ -28,8 +28,8 @@ void main() async {
     await secureStorage.write(key: 'settingsKey', value: base64UrlEncode(key));
   }
 
-  var encryptionKey =
-      base64Url.decode(await secureStorage.read(key: 'settingsKey'));
+  final encryptionKey =
+      base64Url.decode((await secureStorage.read(key: 'settingsKey'))!);
 
   //open hive here to avoid async code with encryption key
   await Hive.initFlutter();
@@ -46,7 +46,7 @@ final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   //get default system brightness
-  final brightness = SchedulerBinding.instance.window.platformBrightness;
+  final brightness = SchedulerBinding.instance!.window.platformBrightness;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           color: Colors.red.shade700,
           child: ValueListenableBuilder(
             valueListenable: Hive.box(settingsBox).listenable(),
-            builder: (context, box, widget) {
+            builder: (context, dynamic box, widget) {
               //get darkMode from box, default follows system.
               var darkMode = box.get('darkMode',
                   defaultValue: brightness == Brightness.dark);
@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
                 ],
                 supportedLocales: S.delegate.supportedLocales,
                 home: OfferListScreen(),
-                builder: (BuildContext context, Widget widget) {
+                builder: (BuildContext context, Widget? widget) {
                   //error widget when an error occurs
                   ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
                     return Scaffold(
@@ -113,7 +113,7 @@ class MyApp extends StatelessWidget {
                                 height: 20,
                               ),
                               Text(
-                                S.of(context).error_occurred_report_bug(
+                                S.of(context)!.error_occurred_report_bug(
                                     "[INSERT BUG REPORT]"),
                                 style: const TextStyle(fontSize: 20),
                               ),
@@ -123,7 +123,7 @@ class MyApp extends StatelessWidget {
                       ),
                     );
                   };
-                  return widget;
+                  return widget!;
                 },
               );
             },

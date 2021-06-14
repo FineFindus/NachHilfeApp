@@ -24,7 +24,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
   @override
   Widget build(BuildContext context) {
     //get selected offer from Provider
-    Offer offer = Provider.of<OfferLogic>(context).offer;
+    Offer? offer = Provider.of<OfferLogic>(context).offer;
 
     if (offer == null)
       return Scaffold(
@@ -45,7 +45,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                 ),
                 Text(
                   S
-                      .of(context)
+                      .of(context)!
                       .error_occurred_report_bug("[INSERT BUG REPORT]"),
                   style: const TextStyle(fontSize: 20),
                 ),
@@ -73,14 +73,14 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
               physics: BouncingScrollPhysics(),
               children: [
                 ListTile(
-                    title: Text(S.of(context).offer_details_label_year),
+                    title: Text(S.of(context)!.offer_details_label_year),
                     trailing: Text("${offer.year}")),
                 ListTile(
-                    title: Text(S.of(context).offer_details_label_subject),
+                    title: Text(S.of(context)!.offer_details_label_subject),
                     trailing:
                         Text(getTranlatedSubject(context, offer.subject))),
                 ListTile(
-                  title: Text(S.of(context).offer_details_label_topics),
+                  title: Text(S.of(context)!.offer_details_label_topics),
                   trailing: Container(
                     width: 200,
                     alignment: Alignment.centerRight,
@@ -95,7 +95,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                   ),
                 ),
                 ListTile(
-                  title: Text(S.of(context).offer_details_label_endDate),
+                  title: Text(S.of(context)!.offer_details_label_endDate),
                   trailing: Text(
                     formattedDate,
                     style: redText
@@ -105,21 +105,21 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                   ),
                 ),
                 ListTile(
-                  title: Text(S.of(context).offer_details_label_accepted),
+                  title: Text(S.of(context)!.offer_details_label_accepted),
                   trailing: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
-                    child: Icon(offer.isAccepted ? Icons.check : Icons.clear,
-                        color: offer.isAccepted ? Colors.green : Colors.red,
+                    child: Icon(offer.isAccepted! ? Icons.check : Icons.clear,
+                        color: offer.isAccepted! ? Colors.green : Colors.red,
                         key: Key(offer.isAccepted.toString())),
                   ),
                 ),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
-                  child: offer.isAccepted
+                  child: offer.isAccepted!
                       ? ListTile(
                           onTap: () async {
                             final url =
-                                "mailto:${offer.userMail}?subject=Nachhilfe&body=${S.of(context).mail_helper_text_body(offer.userMail, getTranlatedSubject(context, offer.subject))}";
+                                "mailto:${offer.userMail}?subject=Nachhilfe&body=${S.of(context)!.mail_helper_text_body(offer.userMail, getTranlatedSubject(context, offer.subject))}";
                             if (await canLaunch(url)) {
                               await launch(url);
                             } else {
@@ -127,8 +127,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                             }
                           },
                           title: Text(
-                              S.of(context).offer_details_label_mailAddress),
-                          trailing: Text(offer.userMail,
+                              S.of(context)!.offer_details_label_mailAddress),
+                          trailing: Text(offer.userMail!,
                               style: TextStyle(
                                   decoration: TextDecoration.underline,
                                   color: Colors.blue)),
@@ -140,10 +140,10 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
           ),
           ListTile(
               title: Center(
-                  child: Text(S.of(context).offer_details_info_accepting(
-                      offer.isAccepted
+                  child: Text(S.of(context)!.offer_details_info_accepting(
+                      offer.isAccepted!
                           ? offer.userMail
-                          : S.of(context).offer_details_info_accepting_user)))),
+                          : S.of(context)!.offer_details_info_accepting_user)))),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
@@ -167,7 +167,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                                 const SizedBox(width: 10),
                                 Text(
                                   S
-                                      .of(context)
+                                      .of(context)!
                                       .offer_details_button_label_accept,
                                   style: const TextStyle(
                                       color: Colors.white, fontSize: 24),
@@ -176,7 +176,7 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen>
                             ),
                     ),
                     onPressed:
-                        offer.isAccepted ? null : () => _acceptOffer(offer)),
+                        offer.isAccepted! ? null : () => _acceptOffer(offer)),
               ),
             ),
           ),

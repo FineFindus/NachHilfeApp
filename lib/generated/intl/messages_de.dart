@@ -29,7 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m4(email) => "Das Annehmen ist verbindlich. Bitte schreibe nach dem Annehmen direkt eine Email an ${email}.";
 
-  final messages = _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "create" : MessageLookupByLibrary.simpleMessage("Erstellen"),
     "error_occurred_report_bug" : m0,

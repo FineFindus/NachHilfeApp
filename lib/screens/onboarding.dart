@@ -14,7 +14,7 @@ import 'package:NachHilfeApp/screens/screens.dart';
 class OnboardingScreen extends StatefulWidget {
   final bool login;
 
-  const OnboardingScreen({Key key, this.login = true}) : super(key: key);
+  const OnboardingScreen({Key? key, this.login = true}) : super(key: key);
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -57,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ListTile(
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(S.of(context).onboarding_title),
+                        child: Text(S.of(context)!.onboarding_title),
                       ),
                     ),
                     ListTile(
@@ -71,15 +71,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             labelText:
-                                S.of(context).onboarding_textfield_label_name,
+                                S.of(context)!.onboarding_textfield_label_name,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
                           ),
                           validator: (value) {
                             //check if value is not empty
-                            if (value.isEmpty) {
+                            if (value!.isEmpty) {
                               return S
-                                  .of(context)
+                                  .of(context)!
                                   .onborading_textfield_error_name_empty;
                             }
                             //create regex
@@ -88,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             //check if word contains numbers
                             if (!regex.hasMatch(value.toLowerCase()))
                               return S
-                                  .of(context)
+                                  .of(context)!
                                   .onborading_textfield_error_name_numbers;
                             return null;
                           },
@@ -104,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 child: isLoading
                                     ? CircularProgressIndicator.adaptive()
                                     : Text(
-                                        S.of(context).ok,
+                                        S.of(context)!.ok,
                                         style: const TextStyle(
                                             color: Colors.white),
                                       ),
@@ -112,7 +112,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               onPressed: isLoading
                                   ? null
                                   : () async {
-                                      if (_formKey.currentState.validate()) {
+                                      if (_formKey.currentState!.validate()) {
                                         if (mailTextController.text
                                             .trim()
                                             .isNotEmpty) {
@@ -152,7 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
       //send data to server
       await ApiClient.registerUserWithToken(mail, "")
-          .onError((error, stackTrace) {
+          .onError((dynamic error, stackTrace) {
         if (error is int)
           switch (error) {
             case 409:
@@ -175,7 +175,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 class EmailPinScreen extends StatefulWidget {
   // final String email;
   const EmailPinScreen({
-    Key key,
+    Key? key,
     // @required this.email,
   }) : super(key: key);
   @override
@@ -184,7 +184,7 @@ class EmailPinScreen extends StatefulWidget {
 
 class _EmailPinScreenState extends State<EmailPinScreen> {
   TextEditingController textEditingController = TextEditingController();
-  StreamController<ErrorAnimationType> errorController;
+  StreamController<ErrorAnimationType>? errorController;
 
   bool hasError = false;
   String currentText = "";
@@ -198,7 +198,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
 
   @override
   void dispose() {
-    errorController.close();
+    errorController!.close();
 
     super.dispose();
   }
@@ -218,7 +218,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
               ListTile(
                 title: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(S.of(context).onboarding_verification_title),
+                  child: Text(S.of(context)!.onboarding_verification_title),
                 ),
               ),
               Form(
@@ -276,7 +276,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
-                  hasError ? S.of(context).onboarding_verification_error : "",
+                  hasError ? S.of(context)!.onboarding_verification_error : "",
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 12,
@@ -287,7 +287,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: CupertinoButton.filled(
                     child: Text(
-                      S.of(context).ok,
+                      S.of(context)!.ok,
                       style: const TextStyle(color: Colors.white),
                     ),
                     onPressed: () => verifyCode()),
@@ -300,10 +300,10 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
   }
 
   verifyCode() async {
-    formKey.currentState.validate();
+    formKey.currentState!.validate();
     // conditions for validating
     if (currentText.length != 6) {
-      errorController
+      errorController!
           .add(ErrorAnimationType.shake); // Triggering error shake animation
       setState(() {
         hasError = true;
@@ -317,7 +317,7 @@ class _EmailPinScreenState extends State<EmailPinScreen> {
       );
       // send to server for verification
       try {
-        String id = await FlutterSecureStorage().read(key: "user_id");
+        String? id = await FlutterSecureStorage().read(key: "user_id");
         await ApiClient.login(id, int.parse(currentText));
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => OfferListScreen(),

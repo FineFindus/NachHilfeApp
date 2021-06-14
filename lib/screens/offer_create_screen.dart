@@ -30,18 +30,18 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   int _currentStep = 0;
 
   //choosen subject, get default value from hive
-  Subject _subject = getSubjectFromString(Hive.box(settingsBox)
+  Subject? _subject = getSubjectFromString(Hive.box(settingsBox)
       .get('defaultSubject', defaultValue: Subject.math.toString()));
 
   //choosen year/class, get default from hive
-  int _year = Hive.box(settingsBox).get('defaultClassYear', defaultValue: 5);
+  int? _year = Hive.box(settingsBox).get('defaultClassYear', defaultValue: 5);
 
   //picked date by datepicker
   DateTime pickedDate = DateTime.now().add(Duration(days: 4));
 
   //list to choose topic
   List<dynamic> stringValues = [];
-  List<bool> values = [];
+  List<bool?> values = [];
 
   //text controller for other topic field
   TextEditingController otherController = TextEditingController();
@@ -64,7 +64,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).offer_create_title),
+        title: Text(S.of(context)!.offer_create_title),
       ),
       body: Stepper(
         physics: BouncingScrollPhysics(),
@@ -127,11 +127,11 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
               textTheme: ButtonTextTheme.normal,
               child: Text(_currentStep != _mySteps().length - 1
                   ? MaterialLocalizations.of(context).continueButtonLabel
-                  : S.of(context).create),
+                  : S.of(context)!.create),
               //check if user is allowed to create offer by checking if atleast one topic is selected
               onPressed: _currentStep == _mySteps().length - 1 &&
-                      ((values.where((element) => element).isEmpty ||
-                          values.last && otherController.text.trim().isEmpty))
+                      (values.where((element) => element!).isEmpty ||
+                          values.last! && otherController.text.trim().isEmpty)
                   ? null
                   : onStepContinue,
             ),
@@ -155,7 +155,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   List<Step> _mySteps() {
     List<Step> _steps = [
       Step(
-        title: Text(S.of(context).offer_create_class_and_year),
+        title: Text(S.of(context)!.offer_create_class_and_year),
         isActive: _currentStep >= 0,
         state: _currentStep == 0 ? StepState.editing : StepState.indexed,
         content: Column(
@@ -163,7 +163,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             ListTile(
               leading: Icon(Mdi.teach),
               title:
-                  Text(S.of(context).offer_create_listtile_label_year(_year)),
+                  Text(S.of(context)!.offer_create_listtile_label_year(_year)),
               onTap: () => showDialog(
                   context: context,
                   builder: (context) => ChooseYearDialog(
@@ -177,7 +177,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
             ),
             ListTile(
               leading: Icon(Icons.class_),
-              title: Text(S.of(context).offer_create_listtile_label_subject(
+              title: Text(S.of(context)!.offer_create_listtile_label_subject(
                   getTranlatedSubject(context, _subject))),
               onTap: () => showDialog(
                   context: context,
@@ -196,11 +196,11 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       Step(
         isActive: _currentStep >= 1,
         state: _getStepStateTopics(),
-        title: Text(S.of(context).offer_create_topic),
-        subtitle: ((values.isNotEmpty ? values.last : false) &&
+        title: Text(S.of(context)!.offer_create_topic),
+        subtitle: ((values.isNotEmpty ? values.last! : false) &&
                     otherController.text.trim().isEmpty) ||
-                values.where((element) => element).isEmpty
-            ? Text(S.of(context).offer_create_topic_error)
+                values.where((element) => element!).isEmpty
+            ? Text(S.of(context)!.offer_create_topic_error)
             : null,
         content: ListView.builder(
           physics: NeverScrollableScrollPhysics(),
@@ -224,7 +224,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       Step(
           isActive: _currentStep >= 2,
           state: _currentStep == 2 ? StepState.editing : StepState.indexed,
-          title: Text(S.of(context).offer_create_end_date),
+          title: Text(S.of(context)!.offer_create_end_date),
           content: ListTile(
             leading: Icon(Icons.date_range),
             title: Text(DateFormat("EEEE, dd.MM").format(pickedDate)),
@@ -233,11 +233,11 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
       Step(
           isActive: _currentStep >= 3,
           state: _currentStep == 3 ? StepState.editing : StepState.indexed,
-          title: Text(S.of(context).offer_create_preview),
+          title: Text(S.of(context)!.offer_create_preview),
           content: Column(
             children: [
               ListTile(
-                title: Text(S.of(context).offer_create_preview_text),
+                title: Text(S.of(context)!.offer_create_preview_text),
               ),
               FutureBuilder<Offer>(
                 future: createOffer(),
@@ -256,7 +256,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   ///Shows a date picker to pick a ending date for the offer
   ///the date is saved with setstate as pickedDate
   chooseDate() async {
-    DateTime date = await showDatePicker(
+    DateTime? date = await showDatePicker(
       context: context,
       initialDate: pickedDate,
       firstDate: DateTime.now(),
@@ -272,13 +272,13 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     try {
       var result = await createTopicsList(context, _year, _subject);
       //add base knowledge option
-      result.insert(0, S.of(context).topic_basic);
+      result.insert(0, S.of(context)!.topic_basic);
       //add other option at the end
-      result.add(S.of(context).offer_create_textfield_label_other);
+      result.add(S.of(context)!.offer_create_textfield_label_other);
       //refresh
       setState(() {
         stringValues = result;
-        values = List<bool>.generate(stringValues.length, (int index) => false);
+        values = List<bool?>.generate(stringValues.length, (int index) => false);
       });
     } catch (e) {
       print(e);
@@ -295,7 +295,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     List<String> choosenTopics = [];
 
     for (var i = 0; i < stringValues.length; i++) {
-      if (values[i]) {
+      if (values[i]!) {
         //add to choosen topics
         //if is not last element
         if (i != values.length - 1) choosenTopics.add(stringValues[i]);
@@ -305,7 +305,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
     }
 
     //check if text controller is not empty
-    if (otherController.text.trim().isNotEmpty && values.last) {
+    if (otherController.text.trim().isNotEmpty && values.last!) {
       //load bad words list to filter
       //filter for bad words
       final filter = ProfanityFilter.filterAdditionally(await _loadBadWords());
@@ -346,7 +346,7 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
   StepState _getStepStateTopics() {
     if (!values.contains(true)) {
       return StepState.error;
-    } else if (values.last && otherController.text.trim().isEmpty) {
+    } else if (values.last! && otherController.text.trim().isEmpty) {
       return StepState.error;
     } else if (_currentStep == 1) {
       return StepState.editing;
@@ -357,13 +357,13 @@ class _OfferCreateScreenState extends State<OfferCreateScreen> {
 
 ///Shows a dialog with all subject values sorted alphabetically
 class ChooseSubjectDialog extends StatefulWidget {
-  final Subject startPosition;
-  final Function(Subject) onSubjectChanged;
+  final Subject? startPosition;
+  final Function(Subject?) onSubjectChanged;
 
   const ChooseSubjectDialog({
-    Key key,
+    Key? key,
     this.startPosition,
-    @required this.onSubjectChanged,
+    required this.onSubjectChanged,
   }) : super(key: key);
 
   @override
@@ -372,7 +372,7 @@ class ChooseSubjectDialog extends StatefulWidget {
 
 class ChooseSubjectDialogState extends State<ChooseSubjectDialog> {
   //current choosen subject
-  Subject subject = Subject.art;
+  Subject? subject = Subject.art;
 
   //get subject list and make modifiable by calling .toList
   List<Subject> subjects = Subject.values.toList();
@@ -394,7 +394,7 @@ class ChooseSubjectDialogState extends State<ChooseSubjectDialog> {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text(S.of(context).offer_create_dialog_subject_title),
+      title: Text(S.of(context)!.offer_create_dialog_subject_title),
       content: Container(
           width: double.maxFinite,
           padding: const EdgeInsets.all(10.0),
@@ -405,7 +405,7 @@ class ChooseSubjectDialogState extends State<ChooseSubjectDialog> {
                 title: Text(getTranlatedSubject(context, subjects[index])),
                 value: subjects[index],
                 groupValue: subject,
-                onChanged: (value) {
+                onChanged: (dynamic value) {
                   widget.onSubjectChanged(value);
                   setState(() {
                     subject = value;
@@ -418,7 +418,7 @@ class ChooseSubjectDialogState extends State<ChooseSubjectDialog> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () => Navigator.of(context).pop(),
             color: Theme.of(context).accentColor,
-            child: Text(S.of(context).ok))
+            child: Text(S.of(context)!.ok))
       ],
     );
   }
@@ -426,13 +426,13 @@ class ChooseSubjectDialogState extends State<ChooseSubjectDialog> {
 
 ///Shows a dialog with all subject values sorted alphabetically
 class ChooseYearDialog extends StatefulWidget {
-  final int startPosition;
-  final Function(int) onValueChanged;
+  final int? startPosition;
+  final Function(int?) onValueChanged;
 
   const ChooseYearDialog({
-    Key key,
+    Key? key,
     this.startPosition,
-    @required this.onValueChanged,
+    required this.onValueChanged,
   }) : super(key: key);
 
   @override
@@ -442,7 +442,7 @@ class ChooseYearDialog extends StatefulWidget {
 ///Creates a dialog where the user chooses the year he is in
 class _ChooseYearDialogState extends State<ChooseYearDialog> {
   //current choosen subject
-  int year = 5;
+  int? year = 5;
 
   //get subject list and make modifiable by calling .toList
   List<int> years = [
@@ -470,7 +470,7 @@ class _ChooseYearDialogState extends State<ChooseYearDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text(S.of(context).offer_create_dialog_class_title),
+      title: Text(S.of(context)!.offer_create_dialog_class_title),
       content: Container(
           padding: const EdgeInsets.all(10.0),
           width: double.maxFinite,
@@ -482,7 +482,7 @@ class _ChooseYearDialogState extends State<ChooseYearDialog> {
                 title: Text("${years[index]}"),
                 value: years[index],
                 groupValue: year,
-                onChanged: (value) {
+                onChanged: (dynamic value) {
                   widget.onValueChanged(value);
                   setState(() {
                     year = value;
@@ -495,7 +495,7 @@ class _ChooseYearDialogState extends State<ChooseYearDialog> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () => Navigator.of(context).pop(),
             color: Theme.of(context).accentColor,
-            child: Text(S.of(context).ok))
+            child: Text(S.of(context)!.ok))
       ],
     );
   }

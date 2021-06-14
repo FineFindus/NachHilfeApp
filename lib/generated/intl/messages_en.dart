@@ -29,7 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m4(email) => "On accepting the date is binding. Please write immediately an email to ${email}.";
 
-  final messages = _notInlinedMessages(_notInlinedMessages);
+  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "create" : MessageLookupByLibrary.simpleMessage("Create"),
     "error_occurred_report_bug" : m0,

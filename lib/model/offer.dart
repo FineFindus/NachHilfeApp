@@ -6,23 +6,23 @@ import 'package:NachHilfeApp/api/subjectValue.dart';
 import 'package:NachHilfeApp/utils/enums.dart';
 
 class Offer {
-  final String id;
-  final Subject subject;
-  final String userMail;
-  final List<String> topic;
-  final int year;
+  final String? id;
+  final Subject? subject;
+  final String? userMail;
+  final List<String>? topic;
+  final int? year;
   final DateTime endDate;
-  final bool isAccepted;
-  final String acceptingUserMail;
+  final bool? isAccepted;
+  final String? acceptingUserMail;
 
   ///The Offer model
   Offer({
     this.id,
-    @required this.subject,
-    @required this.userMail,
-    @required this.topic,
-    @required this.year,
-    @required this.endDate,
+    required this.subject,
+    required this.userMail,
+    required this.topic,
+    required this.year,
+    required this.endDate,
     this.isAccepted = false,
     this.acceptingUserMail,
   });
@@ -34,15 +34,13 @@ class Offer {
       'userMail': userMail,
       'topic': topic,
       'year': year,
-      'endDate': endDate?.toIso8601String(),
+      'endDate': endDate.toIso8601String(),
       'isAccepted': isAccepted,
       'acceptingUserMail': acceptingUserMail,
     };
   }
 
   factory Offer.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return Offer(
       id: map['_id'],
       subject: (getSubjectFromString(map['subject'])),
@@ -67,20 +65,20 @@ class Offer {
   }
 
   Offer copyWith({
-    int id,
-    Subject subject,
-    String userMail,
-    String topic,
-    int year,
-    DateTime endDate,
-    bool isAccepted,
-    String acceptingUserMail,
+    int? id,
+    Subject? subject,
+    String? userMail,
+    String? topic,
+    int? year,
+    DateTime? endDate,
+    bool? isAccepted,
+    String? acceptingUserMail,
   }) {
     return Offer(
-      id: id ?? this.id,
+      id: id as String? ?? this.id,
       subject: subject ?? this.subject,
       userMail: userMail ?? this.userMail,
-      topic: topic ?? this.topic,
+      topic: topic as List<String>? ?? this.topic,
       year: year ?? this.year,
       endDate: endDate ?? this.endDate,
       isAccepted: isAccepted ?? this.isAccepted,

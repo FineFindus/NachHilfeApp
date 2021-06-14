@@ -15,7 +15,7 @@ import 'intl/messages_all.dart';
 class S {
   S();
   
-  static S current;
+  static late S current;
   
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
@@ -31,7 +31,7 @@ class S {
     });
   } 
 
-  static S of(BuildContext context) {
+  static S? of(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
 
@@ -206,12 +206,12 @@ class S {
   }
 
   /// `Year: {year}`
-  String offer_create_listtile_label_year(Object year) {
+  String offer_create_listtile_label_year(Object? year) {
     return Intl.message(
       'Year: $year',
       name: 'offer_create_listtile_label_year',
       desc: '',
-      args: [year],
+      args: [year!],
     );
   }
 
@@ -376,12 +376,12 @@ class S {
   }
 
   /// `On accepting the date is binding. Please write immediately an email to {email}.`
-  String offer_details_info_accepting(Object email) {
+  String offer_details_info_accepting(Object? email) {
     return Intl.message(
       'On accepting the date is binding. Please write immediately an email to $email.',
       name: 'offer_details_info_accepting',
       desc: '',
-      args: [email],
+      args: [email!],
     );
   }
 
@@ -396,12 +396,12 @@ class S {
   }
 
   /// `Hello {recipentName}, i accepted you coaching search for {subject}. When do we meet?`
-  String mail_helper_text_body(Object recipentName, Object subject) {
+  String mail_helper_text_body(Object? recipentName, Object subject) {
     return Intl.message(
       'Hello $recipentName, i accepted you coaching search for $subject. When do we meet?',
       name: 'mail_helper_text_body',
       desc: '',
-      args: [recipentName, subject],
+      args: [recipentName!, subject],
     );
   }
 

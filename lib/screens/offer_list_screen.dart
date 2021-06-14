@@ -28,7 +28,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(S.of(context).offer_list_appbar_title),
+          title: Text(S.of(context)!.offer_list_appbar_title),
           centerTitle: true,
           actions: [
             OpenContainer(
@@ -51,7 +51,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
           closedElevation: 10,
           closedColor: Colors.transparent,
           closedBuilder: (context, action) => FloatingActionButton(
-            tooltip: S.of(context).offer_list_fab_create,
+            tooltip: S.of(context)!.offer_list_fab_create,
             elevation: 20,
             onPressed: action,
             child: const Icon(Icons.add),
@@ -69,7 +69,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
               await Provider.of<OfferLogic>(context, listen: false)
                   .refreshOffers();
             },
-            child: FutureBuilder<List<dynamic>>(
+            child: FutureBuilder<List<dynamic>?>(
               future: Provider.of<OfferLogic>(context).offers,
               builder: (context, snapshot) {
                 return AnimatedSwitcher(
@@ -80,7 +80,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           return ListView.builder(
-                              itemCount: snapshot.data.length,
+                              itemCount: snapshot.data!.length,
                               // itemCount:
                               // Provider.of<OfferLogic>(context).length,
                               itemBuilder: (context, index) => OpenContainer(
@@ -88,12 +88,12 @@ class _OfferListScreenState extends State<OfferListScreen> {
                                     closedElevation: 0,
                                     closedBuilder: (context, action) =>
                                         OfferCard(
-                                      offer: snapshot.data[index],
+                                      offer: snapshot.data![index],
                                       onTap: () {
                                         //set selected offer
                                         Provider.of<OfferLogic>(context,
                                                 listen: false)
-                                            .setOffer = snapshot.data[index];
+                                            .setOffer = snapshot.data![index];
                                         //push to details screen
                                         action();
                                       },
@@ -111,7 +111,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
                               Container(
                                   width: 300,
                                   child: Text(
-                                    S.of(context).offer_list_connection_error,
+                                    S.of(context)!.offer_list_connection_error,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(fontSize: 17),
                                   )),

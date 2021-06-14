@@ -7,7 +7,7 @@ import 'enums.dart';
 
 ///Retuns a list of Strngs from a json file called topcs.json
 ///to get all topics per subject and year
-createTopicsList(BuildContext context, int year, Subject subject) async {
+createTopicsList(BuildContext context, int? year, Subject? subject) async {
   //get topics json file from assets
   var json = await rootBundle.loadString("assets/topics.json");
   //decode the file and get the year and subject
