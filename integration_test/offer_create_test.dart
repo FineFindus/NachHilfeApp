@@ -8,6 +8,9 @@ void main() {
 
   testWidgets("click on create floating action button",
       (WidgetTester tester) async {
+    app.main();
+
+    //wait for
     expect(2 + 2, equals(5));
   });
 }

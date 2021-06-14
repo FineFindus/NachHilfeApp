@@ -1,4 +1,5 @@
 import 'package:NachHilfeApp/generated/l10n.dart';
+import 'package:NachHilfeApp/global/keys.dart';
 import 'package:NachHilfeApp/provider/offer_logic.dart';
 import 'package:NachHilfeApp/screens/onboarding.dart';
 import 'package:NachHilfeApp/screens/screens.dart';
@@ -53,6 +54,7 @@ class _OfferListScreenState extends State<OfferListScreen> {
           closedBuilder: (context, action) => FloatingActionButton(
             tooltip: S.of(context)!.offer_list_fab_create,
             elevation: 20,
+            key: Key(Keys.fab_create_offer),
             onPressed: action,
             child: const Icon(Icons.add),
           ),
@@ -80,7 +82,10 @@ class _OfferListScreenState extends State<OfferListScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           return ListView.builder(
-                              itemCount: snapshot.data!.length,
+                              itemCount: snapshot.data!
+                                  .where((element) =>
+                                      element.endDate.isAfter(DateTime.now()))
+                                  .length,
                               // itemCount:
                               // Provider.of<OfferLogic>(context).length,
                               itemBuilder: (context, index) => OpenContainer(
@@ -88,7 +93,10 @@ class _OfferListScreenState extends State<OfferListScreen> {
                                     closedElevation: 0,
                                     closedBuilder: (context, action) =>
                                         OfferCard(
-                                      offer: snapshot.data![index],
+                                      offer: snapshot.data!
+                                          .where((element) => element.endDate
+                                              .isAfter(DateTime.now()))
+                                          .toList()[index],
                                       onTap: () {
                                         //set selected offer
                                         Provider.of<OfferLogic>(context,

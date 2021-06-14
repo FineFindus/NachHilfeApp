@@ -67,7 +67,8 @@ class ApiClient {
         for (var i = 0; i < data.length; i++) {
           final Offer offer = Offer.fromMap(data[i]);
           // only add offers that are not accepted
-          if (!offer.isAccepted!) responseData.add(offer);
+          if (!offer.isAccepted! && offer.endDate.isAfter(DateTime.now()))
+            responseData.add(offer);
         }
         //return the list
         return responseData;
@@ -85,7 +86,7 @@ class ApiClient {
   }
 
   static Future<void> postOffer(Offer offer) async {
-    assert(offer != null && offer.userMail != null);
+    assert(offer.userMail != null);
 
     // post to server
 
@@ -130,6 +131,8 @@ class ApiClient {
     //check if id is null
     if (offer.id == null)
       return Future.error("Id must not be null/larger than 0");
+    if (offer.endDate.isBefore(DateTime.now()))
+      return Future.error("EndDate must be after now");
     //put update
 
     //url for the specific offer per id. The id parameter can only be a number
@@ -163,6 +166,7 @@ class ApiClient {
     } on DioError catch (e) {
       //catch errors
       print(e);
+      print(e.response?.data);
       return Future.error(
           e.response!.statusCode!, StackTrace.fromString(e.toString()));
     }
