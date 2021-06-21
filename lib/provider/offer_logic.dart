@@ -51,8 +51,14 @@ class OfferLogic extends ChangeNotifier {
       return _offers!;
     }
 
+    //load offer
+    _offers = await ApiClient.getOffers();
+
     //else load the offers from he server
-    return await (ApiClient.getOffers());
+    if (_offers != null) {
+      return _offers!;
+    }
+    return [];
   }
 
   ///Removes a offer from the internal list of offers without refreshing them
@@ -60,8 +66,8 @@ class OfferLogic extends ChangeNotifier {
   void removeOffer(Offer offer) {
     if (_offers != null) {
       _offers!.remove(offer);
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   ///Refresh the offer list by loading

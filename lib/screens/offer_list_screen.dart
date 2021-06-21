@@ -83,27 +83,31 @@ class _OfferListScreenState extends State<OfferListScreen> {
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (snapshot.hasData) {
                           return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              // itemCount:
-                              // Provider.of<OfferLogic>(context).length,
-                              itemBuilder: (context, index) => OpenContainer(
-                                    closedColor: Colors.transparent,
-                                    closedElevation: 0,
-                                    closedBuilder: (context, action) =>
-                                        OfferCard(
-                                      offer: snapshot.data![index],
-                                      onTap: () {
-                                        //set selected offer
-                                        Provider.of<OfferLogic>(context,
-                                                listen: false)
-                                            .setOffer = snapshot.data![index];
-                                        //push to details screen
-                                        action();
-                                      },
-                                    ),
-                                    openBuilder: (context, action) =>
-                                        OfferDetailsScreen(),
-                                  ));
+                            itemCount: snapshot.data!.length,
+                            // itemCount:
+                            // Provider.of<OfferLogic>(context).length,
+                            itemBuilder: (context, index) =>
+                                //OpenContainer(
+                                //    closedColor: Colors.transparent,
+                                //  closedElevation: 0,
+                                // closedBuilder: (context, action) =>
+                                OfferCard(
+                              offer: snapshot.data![index],
+                              onTap: () {
+                                //set selected offer
+                                Provider.of<OfferLogic>(context, listen: false)
+                                    .setOffer = snapshot.data![index];
+                                //push to details screen
+                                // action();
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => OfferDetailsScreen(),
+                                ));
+                              },
+                            ),
+                            //openBuilder: (context, action) =>
+                            //  OfferDetailsScreen(),
+                            //)
+                          );
                         } else if (snapshot.hasError) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
